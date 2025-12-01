@@ -192,6 +192,7 @@ function renderProducts(items) {
             </div>
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description || ''}</p>
                 <p class="product-sku">${product.sku || ''}</p>
                 
                 ${colorsHtml}
@@ -203,8 +204,8 @@ function renderProducts(items) {
                 ` : ''}
                 
                 <div class="price-container">
-                    ${product.originalPrice ? `<p class="original-price">Bs ${product.originalPrice.toLocaleString()}</p>` : ''}
-                    <p class="product-price">Bs ${product.price.toLocaleString()}</p>
+                    ${product.originalPrice && product.originalPrice != 0 ? `<p class="original-price">Bs ${Number(product.originalPrice).toLocaleString()}</p>` : ''}
+                    ${product.price && product.price != 0 ? `<p class="product-price">Bs ${Number(product.price).toLocaleString()}</p>` : ''}
                 </div>
                 
                 <button class="buy-btn" onclick="window.open('${product.link}', '_blank')">Más información</button>
