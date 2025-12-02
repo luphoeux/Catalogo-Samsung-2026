@@ -260,8 +260,9 @@ header {
 
 /* Product Details */
 .badge {
-    display: inline-block;
-    margin-bottom: 1rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
     background-color: var(--samsung-blue);
     color: white;
     padding: 0.25rem 0.75rem;
@@ -419,13 +420,12 @@ header {
     cursor: pointer;
     transition: all var(--transition-speed);
     border: 1px solid transparent;
-    border-radius: 0.5rem;
-    background-color: #f5f5f5;
+    border-radius: 2rem;
     color: var(--samsung-black);
 }
 
 .storage-badge.active {
-    background-color: #f5f5f5;
+    background-color: transparent;
 }
 
 .storage-badge:hover {
@@ -611,13 +611,13 @@ header {
 }
 
 .feature-icon {
-    color: #000000;
+    color: var(--samsung-blue);
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 120px;
-    height: 120px;
+    width: 60px;
+    height: 60px;
     background-color: white;
     border-radius: 50%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
