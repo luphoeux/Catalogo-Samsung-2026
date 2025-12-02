@@ -79,19 +79,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imagen = product[imagenKey];
                 const hex = product[hexKey];
 
-                // Only add variant if SKU, Color, and Image are present
-                if (sku && sku.trim() !== '' && color && color.trim() !== '' && imagen && imagen.trim() !== '') {
-                    variants.push({
-                        color: color,
-                        hex: (hex && hex.trim() !== '') ? hex : (product.colorCodes?.[color] || '#CCCCCC'),
-                        sku: sku,
-                        image: imagen
-                    });
-
-                    // First variant is the default
+                // Check if we have valid SKU and Image
+                if (sku && sku.trim() !== '' && imagen && imagen.trim() !== '') {
+                    // Always set default if it's the first one, regardless of color presence
                     if (variantNum === 1) {
                         defaultSku = sku;
                         defaultImage = imagen;
+                    }
+
+                    // Only add to variants list if color is also present
+                    if (color && color.trim() !== '') {
+                        variants.push({
+                            color: color,
+                            hex: (hex && hex.trim() !== '') ? hex : (product.colorCodes?.[color] || '#CCCCCC'),
+                            sku: sku,
+                            image: imagen
+                        });
                     }
                 }
 
@@ -320,20 +323,23 @@ function renderProducts(items) {
         card.id = `product-${product.id}`;
         card.innerHTML = `
             <div class="product-image-container">
-                ${badgeHtml}
                 <img src="${product.image}" alt="${product.name}" class="product-image" id="img-${card.id}">
             </div>
+            
             <div class="product-info">
-                <p class="product-sku">${product.sku || ''}</p>
                 <h3 class="product-name">${product.name}</h3>
-                <p class="product-description">${product.description || ''}</p>
-                
-                ${colorsHtml}
-
-                ${product.storage && product.storage.length > 0 ? `
+                <p class="product-sku">${product.sku || ''}</p>
                 <div class="product-storage">
                     ${product.storage.map((s, i) => `<span class="storage-badge ${i === product.storage.length - 1 ? 'active' : ''}">${s}</span>`).join('')}
                 </div>
+                <p class="product-description">${product.description || ''}</p>
+                
+                ${badgeHtml}
+
+                ${colorsHtml}
+
+                ${product.storage && product.storage.length > 0 ? `
+                
                 ` : ''}
                 
                 <div class="price-container">
@@ -341,7 +347,7 @@ function renderProducts(items) {
                     ${product.price && product.price != 0 ? `<p class="product-price">Bs ${Number(product.price).toLocaleString()}</p>` : ''}
                 </div>
                 
-                <button class="buy-btn" onclick="window.open('${product.link}', '_blank')">Más información</button>
+                <button class="buy-btn" onclick="window.open('${product.link}', '_blank')">Ver producto</button>
             </div>
         `;
 
