@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dataJsPath = path.join(__dirname, '..', 'data.js');
-const csvFilePath = path.join(__dirname, '..', 'productos.csv');
+const csvFilePath = path.join(__dirname, '..', 'data', 'csv', 'productos.csv');
 
 console.log(`Reading data from local CSV: ${csvFilePath}`);
 

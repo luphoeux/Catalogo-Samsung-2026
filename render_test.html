@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render 'Tab S6 Lite' Final</title>
+    <style>
+        @font-face {
+            font-family: 'SamsungSharpSans';
+            src: url('fonts/SamsungSharpSans-Bold.woff2') format('woff2');
+            font-weight: bold;
+        }
+
+        @font-face {
+            font-family: 'SamsungOne';
+            src: url('fonts/SamsungOne-400.woff2') format('woff2');
+            font-weight: normal;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            font-family: 'SamsungOne', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            width: 340px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            border: 1px solid #eee;
+        }
+
+        /* --- BADGES --- */
+        .badge {
+            position: absolute;
+            top: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            color: white;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .badge-left {
+            left: 20px;
+            background-color: #0056b3;
+        }
+
+        .badge-right {
+            right: 20px;
+            background-color: #d93025;
+        }
+
+        .product-image-container {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .product-image {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-sku {
+            color: #999;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-family: 'SamsungSharpSans', sans-serif;
+            font-size: 1.5rem;
+            line-height: 1.2;
+            color: #000;
+            margin: 0 0 0.8rem 0;
+        }
+
+        .product-desc {
+            color: #777;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            min-height: 2.8em;
+        }
+
+        .color-label {
+            font-size: 0.8rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.15);
+        }
+
+        .color-swatch.active {
+            transform: scale(0.9);
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #000;
+        }
+
+        /* Variables Grid (Por defecto) */
+        .variable-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            padding: 0 10px;
+        }
+
+        /* Variables Centradas (Si son 2 o menos) */
+        .variable-options.flex-center {
+            display: flex;
+            justify-content: center;
+            grid-template-columns: none;
+        }
+
+        .variable-options.flex-center .variable-capsule {
+            min-width: 90px;
+            max-width: 140px;
+        }
+
+        .variable-capsule {
+            background: #fff;
+            padding: 8px 5px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .variable-capsule span.small-label {
+            font-size: 0.65rem;
+            color: #888;
+            margin-bottom: 3px;
+        }
+
+        .variable-capsule.active {
+            background: #f8f9fa;
+            border: 1px solid #000;
+            color: #000;
+        }
+
+        .variable-capsule.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
+        .price-container {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 12px;
+            height: 40px;
+        }
+
+        .current-price {
+            font-family: 'SamsungSharpSans', sans-serif;
+            font-size: 1.6rem;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .btn-outline {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            border: 1px solid #000;
+            background: transparent;
+            color: #000;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover:not(.disabled) {
+            background: #000;
+            color: white;
+        }
+
+        .btn-outline.disabled {
+            border-color: #ccc;
+            color: #999;
+            background: #f9f9f9;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="demo-container"></div>
+
+    <script>
+        // === DATOS SIMULADOS ===
+        const colorVariables = {
+            "c001": { id: "c001", name: "Gray", hex: "#7a7a7a" },
+            "c002": { id: "c002", name: "Blue", hex: "#6b8bc2" },
+            "c003": { id: "c003", name: "Pink", hex: "#f0c4d4" },
+            "c004": { id: "c004", name: "Mint", hex: "#b4dca6" },
+            "c005": { id: "c005", name: "Dark Gray", hex: "#333333" }
+        };
+
+        const textVariables = {
+            "v001": { id: "v001", name: "Memoria", text: "64GB" }
+        };
+
+        const productData = {
+            id: "p003",
+            name: "Tab S6 Lite + S Pen",
+            description: "Pantalla de 10.4\", Batería de 7,040mAh, MicroSD expandible.",
+            tags: ["Cargador de Regalo"],
+            variants: [
+                { uniqueId: 1, colorId: "c001", sku: "SM-P625-GRAY", image: "https://images.samsung.com/is/image/samsung/p6pim/bo/sm-p613nzaabvo/gallery/bo-galaxy-tab-s6-lite-2022-sm-p613-sm-p613nzaabvo-532212971?$650_519_PNG$", variableId: "v001", price: 2800, promoPrice: 2499, active: true, link: "#" },
+                { uniqueId: 2, colorId: "c002", sku: "SM-P625-BLUE", image: "https://images.samsung.com/is/image/samsung/p6pim/bo/sm-p613nzbabvo/gallery/bo-galaxy-tab-s6-lite-2022-sm-p613-sm-p613nzbabvo-532213166?$650_519_PNG$", variableId: "v001", price: 2800, promoPrice: 2499, active: true, link: "#" },
+                { uniqueId: 3, colorId: "c003", sku: "SM-P625-PINK", image: "https://images.samsung.com/is/image/samsung/p6pim/bo/sm-p613nziabvo/gallery/bo-galaxy-tab-s6-lite-2022-sm-p613-sm-p613nziabvo-532213386?$650_519_PNG$", variableId: "v001", price: 2800, promoPrice: 0, active: false, link: "#" },
+                { uniqueId: 4, colorId: "c004", sku: "SM-P625-MINT", image: "https://images.samsung.com/is/image/samsung/p6pim/bo/sm-p613nzgabvo/gallery/bo-galaxy-tab-s6-lite-2022-sm-p613-sm-p613nzgabvo-532213600?$650_519_PNG$", variableId: "v001", price: 2800, promoPrice: 2499, active: true, link: "#" },
+                { uniqueId: 5, colorId: "c005", sku: "SM-P625-DARK", image: "https://images.samsung.com/is/image/samsung/p6pim/bo/sm-p613nzaabvo/gallery/bo-galaxy-tab-s6-lite-2022-sm-p613-sm-p613nzaabvo-532212971?$650_519_PNG$", variableId: "v001", price: 2800, promoPrice: 2499, active: true, link: "#" }
+            ]
+        };
+
+        let currentState = { selectedColorId: "c001", selectedVariableId: "v001" };
+
+        function renderCard() {
+            const container = document.getElementById('demo-container');
+            const variantsForColor = productData.variants.filter(v => v.colorId === currentState.selectedColorId);
+            let currentVariant = variantsForColor.find(v => v.variableId === currentState.selectedVariableId);
+
+            if (!currentVariant && variantsForColor.length > 0) {
+                currentVariant = variantsForColor[0];
+                currentState.selectedVariableId = currentVariant.variableId;
+            }
+            if (!currentVariant) return;
+
+            const original = currentVariant.price;
+            const promo = currentVariant.promoPrice || 0;
+            const hasPromo = promo > 0 && promo < original;
+            const finalPrice = hasPromo ? promo : original;
+            const isActive = currentVariant.active;
+
+            let leftBadgeHtml = productData.tags.length > 0 ? `<div class="badge badge-left">${productData.tags[0]}</div>` : '';
+            let rightBadgeHtml = (hasPromo && isActive) ? `<div class="badge badge-right">-${Math.round(((original - promo) / original) * 100)}%</div>` : '';
+
+            let priceHtml = (hasPromo && isActive)
+                ? `<div class="old-price">Bs ${original}</div><div class="current-price">Bs ${finalPrice}</div>`
+                : `<div class="current-price">Bs ${finalPrice}</div>`;
+
+            const uniqueColors = [...new Set(productData.variants.map(v => v.colorId))];
+            const colorsHtml = uniqueColors.map(cId => {
+                const c = colorVariables[cId];
+                const act = cId === currentState.selectedColorId ? 'active' : '';
+                return `<div class="color-swatch ${act}" style="background-color:${c.hex}" onclick="selectColor('${cId}')" title="${c.name}"></div>`;
+            }).join('');
+
+            // === Lógica Inteligente para layout de variables ===
+            const uniqueVariables = [...new Set(productData.variants.map(v => v.variableId))];
+            let containerClass = "variable-options";
+            // Si hay 2 o menos variables, centramos. Si hay más, usamos Grid.
+            if (uniqueVariables.length <= 2) {
+                containerClass += " flex-center";
+            }
+
+            const variablesHtml = uniqueVariables.map(vId => {
+                const t = textVariables[vId];
+                const act = vId === currentState.selectedVariableId ? 'active' : '';
+                const exists = variantsForColor.find(v => v.variableId === vId);
+                const disabled = !exists || !exists.active ? 'disabled' : '';
+                return `<div class="variable-capsule ${act} ${disabled}" onclick="selectVariable('${vId}')">
+                            <span class="small-label">${t.name}</span>
+                            <span>${t.text}</span>
+                        </div>`;
+            }).join('');
+
+            let btnText = isActive ? "MÁS INFORMACIÓN" : "SIN STOCK";
+            let btnClass = isActive ? "btn-outline" : "btn-outline disabled";
+            let btnLink = isActive ? currentVariant.link : "javascript:void(0)";
+
+            container.innerHTML = `
+                <div class="product-card">
+                    ${leftBadgeHtml}
+                    ${rightBadgeHtml}
+                    <div class="product-image-container"><img src="${currentVariant.image}" class="product-image"></div>
+                    <div class="product-sku">${currentVariant.sku}</div>
+                    <h2 class="product-name">${productData.name}</h2>
+                    <p class="product-desc">${productData.description}</p>
+                    <div class="color-label">Color: ${colorVariables[currentState.selectedColorId].name}</div>
+                    <div class="color-options">${colorsHtml}</div>
+                    <div class="${containerClass}">${variablesHtml}</div>
+                    <div class="price-container">${priceHtml}</div>
+                    <a href="${btnLink}" class="${btnClass}">${btnText}</a>
+                </div>
+            `;
+        }
+
+        window.selectColor = (cId) => { currentState.selectedColorId = cId; renderCard(); };
+        window.selectVariable = (vId) => { currentState.selectedVariableId = vId; renderCard(); };
+        renderCard();
+    </script>
+</body>
+
+</html>

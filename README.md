@@ -1,182 +1,133 @@
-# Samsung Catálogo 2026 - Sistema Completo
+# Samsung Catálogo 2026
 
-Sistema de gestión y visualización de catálogo de productos Samsung con panel de administración.
+Sistema de gestión de catálogos de productos Samsung con panel de administración.
 
 ## 📁 Estructura del Proyecto
 
 ```
 Samsung Catalogo/
-├── catalog-template/          # 🎨 Template del catálogo (frontend)
-│   ├── index.html            # Página del catálogo
-│   ├── style.css             # Estilos
-│   ├── script.js             # Lógica frontend
-│   ├── data.js               # Datos de productos
-│   └── README.md             # Documentación del template
+├── admin/                      # Panel de administración
+│   ├── admin.html             # Interfaz del admin
+│   ├── admin.js               # Lógica del admin
+│   └── admin_color_modal_fragment.html
 │
-├── admin.html                # 🔧 Panel de administración
-├── admin.js                  # Lógica del admin
-├── color-variables.js        # Variables globales de colores
+├── assets/                     # Recursos estáticos
+│   ├── fonts/                 # Fuentes personalizadas
+│   └── images/                # Imágenes del proyecto
 │
-├── scripts/                  # 📜 Scripts de utilidad
-│   ├── download_csv.js       # Descargar CSV desde Google Sheets
-│   ├── update_from_local_csv.js  # Actualizar data.js desde CSV
-│   ├── update_prices.js      # Actualizar precios masivamente
-│   └── extract_colors.js     # Extraer colores únicos
+├── catalog/                    # Archivos del catálogo (legacy)
+│   ├── data.js
+│   └── script.js
 │
-└── server.js                 # Servidor local (opcional)
+├── data/                       # Datos de la aplicación
+│   └── csv/                   # Archivos CSV
+│       ├── productos.csv      # Base de datos de productos
+│       └── database_export.csv # Exportación de la BD
+│
+├── database/                   # Archivos Excel
+│   ├── Catalogo empresa 10122025.xlsx
+│   ├── Database_samsung_catalogo.xlsx
+│   └── Samsung_Colores.xlsx
+│
+├── docs/                       # Documentación
+│   ├── CSV_FORMAT.md
+│   ├── DATABASE_README.md
+│   ├── MEJORAS_JULIUS.md
+│   ├── PERSISTENCIA.md
+│   ├── README.md
+│   └── SISTEMA_CATEGORIAS.md
+│
+├── scripts/                    # Scripts de Node.js
+│   ├── download_csv.js
+│   ├── extract_colors.js
+│   ├── maintenance.js
+│   ├── update_data_from_csv.js
+│   └── ... (otros scripts)
+│
+├── index.html                  # Página principal del catálogo
+├── script.js                   # Lógica principal
+├── style.css                   # Estilos principales
+├── data.js                     # Datos de productos
+├── color-variables.js          # Variables de colores
+├── server.js                   # Servidor Node.js
+└── package.json               # Configuración de npm
 ```
 
-## 🎯 Componentes Principales
+## 🚀 Inicio Rápido
 
-### 1. **Catalog Template** (`catalog-template/`)
-Template estático del catálogo de productos para el cliente final.
-- Visualización de productos
-- Filtros y búsqueda
-- Selector de colores
-- Responsive design
+### Instalación
 
-### 2. **Panel de Administración** (`admin.html`)
-Sistema de gestión completo con:
-- **Base de Datos**: Ver y editar todos los productos
-- **Catálogos**: Gestionar catálogos por categoría
-- **Variables**: Gestionar colores globales
+```bash
+npm install
+```
 
-### 3. **Variables de Colores** (`color-variables.js`)
-Sistema centralizado de colores:
-- 30 colores predefinidos
-- Sincronización automática
-- Gestión desde el admin
+### Ejecutar el proyecto
 
-## 🚀 Flujo de Trabajo
+```bash
+# Servidor de desarrollo
+npm start
 
-### Opción 1: Gestión desde Admin (Recomendado)
+# O usar http-server para archivos estáticos
+npx http-server -p 3000 -o
+```
 
-1. **Abrir Admin**
-   ```
-   Abre admin.html en tu navegador
-   ```
+### Acceder a la aplicación
 
-2. **Gestionar Productos**
-   - Ve a "Base de Datos"
-   - Agrega/Edita/Elimina productos
-   - Los colores se seleccionan de las variables
-
-3. **Gestionar Colores**
-   - Ve a "Variables"
-   - Agrega/Edita colores
-   - Los cambios se aplican automáticamente
-
-4. **Generar Catálogo**
-   - Ve a "Catálogos"
-   - Selecciona una categoría
-   - Click en "Exportar Excel"
-   - Guarda el archivo
-
-5. **Actualizar Template**
-   - Ejecuta: `npm run update-data`
-   - Copia `data.js` a `catalog-template/`
-
-### Opción 2: Desde Google Sheets
-
-1. **Descargar CSV**
-   ```bash
-   node scripts/download_csv.js
-   ```
-
-2. **Actualizar Data**
-   ```bash
-   npm run update-data
-   ```
-
-3. **Copiar a Template**
-   ```bash
-   Copy-Item data.js catalog-template/
-   ```
-
-## 📊 Gestión de Catálogos
-
-El sistema permite crear catálogos por categoría:
-
-- 📱 Smartphones
-- 📱 Tablets
-- ⌚ Smartwatches
-- 🎧 Buds
-- 💻 Laptops
-- 📺 Televisores
-- 🖥️ Monitores
-- 🧺 Lavadoras
-- ❄️ Refrigeradores
-- 🏠 Línea Blanca
-- 🔌 Accesorios
-
-Cada catálogo se exporta como Excel independiente.
-
-## 🎨 Sistema de Variables de Colores
-
-### Ventajas:
-- ✅ Centralizado - Un solo lugar para todos los colores
-- ✅ Automático - Los hex se llenan solos al seleccionar
-- ✅ Consistente - Imposible tener duplicados
-- ✅ Trazable - Sabes dónde se usa cada color
-
-### Uso:
-1. Define colores en "Variables"
-2. Al agregar productos, selecciona del dropdown
-3. El hex se llena automáticamente
-4. Si cambias un color, se actualiza en todos los productos
-
-## 🔄 Modo Preview
-
-Antes de exportar, puedes previsualizar:
-1. Ve a "Catálogos"
-2. Click en "👁️ Previsualizar"
-3. Se abre el catálogo con los datos actuales
-4. Banner naranja indica modo preview
+- **Catálogo público**: http://localhost:3000/
+- **Panel de administración**: http://localhost:3000/admin/admin.html
 
 ## 📝 Scripts Disponibles
 
 ```bash
-# Iniciar servidor local
-npm start
-
-# Modo desarrollo con auto-reload
-npm run dev
-
-# Actualizar data.js desde CSV local
+# Actualizar datos desde CSV
 npm run update-data
+
+# Sincronizar desde Excel
+npm run sync-from-excel
+
+# Sincronizar a Excel
+npm run sync-to-excel
+
+# Analizar archivo Excel
+npm run analyze-excel
+
+# Crear preview CSV
+npm run create-preview
 ```
 
-## 🛠️ Tecnologías
+## 🎨 Características
 
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Admin**: JavaScript (Vanilla)
-- **Export**: SheetJS (xlsx)
-- **Backend**: Node.js (opcional, solo para scripts)
+- ✅ Panel de administración completo
+- ✅ Gestión de productos y catálogos
+- ✅ Sistema de categorías
+- ✅ Variables de colores personalizables
+- ✅ Exportación a CSV y Excel
+- ✅ Interfaz responsive
+- ✅ Persistencia de datos en localStorage
 
-## 📦 Instalación
+## 📦 Tecnologías
 
-```bash
-# Instalar dependencias
-npm install
+- **Frontend**: HTML, CSS, JavaScript (Vanilla)
+- **Backend**: Node.js
+- **Datos**: CSV, Excel (xlsx)
+- **Servidor**: http-server / Express
 
-# Listo para usar
-# Abre admin.html o catalog-template/index.html
-```
+## 🔧 Mantenimiento
 
-## 🎯 Próximos Pasos
+Los archivos CSV de ejemplo/prueba han sido eliminados para mantener el proyecto limpio:
+- ❌ accesorios_gaming.csv
+- ❌ catalogo_verano_2026.csv
+- ❌ lanzamiento_galaxy_z.csv
+- ❌ ofertas_cyber_monday.csv
+- ❌ outlet_tablets.csv
+- ❌ preview_catalogo.csv
 
-1. ✅ Sistema de variables implementado
-2. ✅ CRUD completo de productos
-3. ✅ Exportación por categorías
-4. ⏳ Persistencia de datos (guardar cambios automáticamente)
-5. ⏳ Sincronización con Google Sheets desde admin
-6. ⏳ Sistema de usuarios y autenticación
+Solo se mantienen los archivos CSV activos en `data/csv/`.
 
 ## 📄 Licencia
 
-Proyecto interno Samsung Bolivia
+MIT
 
 ---
 
-**Versión**: 2.2
-**Última actualización**: Diciembre 2025
+**Samsung Catalog v2.3** - Sistema de gestión de catálogos

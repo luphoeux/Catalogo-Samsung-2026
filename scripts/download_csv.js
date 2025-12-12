@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuLe28pznqPjc7LrqZiDee4yxlO2w1KMhjuxP6-nd-FVM6_V6RrTCOHtnowZsjiOKE9H6YeZ4ycUOH/pub?gid=0&single=true&output=csv';
-const dest = path.join(__dirname, '..', 'productos.csv');
+const dest = path.join(__dirname, '..', 'data', 'csv', 'productos.csv');
 
 function download(url, dest) {
     console.log(`Downloading CSV from ${url}...`);
