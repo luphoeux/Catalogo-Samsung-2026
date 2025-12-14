@@ -11,21 +11,34 @@
             const savedColors = localStorage.getItem(COLORS_STORAGE_KEY);
 
             if (savedProducts) {
-                window.products = JSON.parse(savedProducts);
-                console.log('âœ… Productos cargados desde localStorage');
+                const parsed = JSON.parse(savedProducts);
+                if (Array.isArray(parsed)) {
+                    window.products = parsed;
+                    console.log('✅ Productos cargados desde localStorage');
+                } else if (parsed && Array.isArray(parsed.products)) {
+                    // Recovery from corrupted save
+                    window.products = parsed.products;
+                    console.log('⚠️ Detectada estructura anidada incorrecta, reparando...');
+                } else {
+                    console.error('❌ Datos de productos en localStorage corruptos');
+                }
+            } else if (typeof window.products !== 'undefined') {
+                // Check if data.js loaded a corrupted structure
+                if (!Array.isArray(window.products) && window.products && Array.isArray(window.products.products)) {
+                    window.products = window.products.products;
+                    console.log('⚠️ Detectada estructura anidada incorrecta en data.js, reparando...');
+                }
             }
 
             if (savedColors) {
                 const parsedColors = JSON.parse(savedColors);
-                // Check if colors have the new structure with IDs
                 const firstColor = Object.values(parsedColors)[0];
                 if (firstColor && typeof firstColor === 'string') {
-                    // Old format detected (just hex strings), clear it
-                    console.log('âš ï¸ Formato antiguo de colores detectado, limpiando localStorage...');
+                    console.log('⚠️ Formato antiguo de colores detectado, limpiando localStorage...');
                     localStorage.removeItem(COLORS_STORAGE_KEY);
                 } else {
                     window.colorVariables = parsedColors;
-                    console.log('âœ… Variables de color cargadas desde localStorage');
+                    console.log('✅ Variables de color cargadas desde localStorage');
                 }
             }
         } catch (e) {
@@ -38,7 +51,7 @@
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
             localStorage.setItem(COLORS_STORAGE_KEY, JSON.stringify(colorVariables));
-            console.log('ðŸ’¾ Datos guardados automÃ¡ticamente');
+            console.log(' Datos guardados automáticamente');
 
             // Update last save time
             const now = new Date().toLocaleString('es-BO');
@@ -70,7 +83,7 @@
         link.href = URL.createObjectURL(blob);
         link.download = 'data.js';
         link.click();
-        alert('âœ… Archivo data.js descargado. ReemplÃ¡zalo en catalog-template/ para actualizar el catÃ¡logo.');
+        alert('Archivo data.js descargado. ReemplÃ¡zalo en catalog-template/ para actualizar el catÃ¡logo.');
     }
 
     // Export color-variables.js file
@@ -95,7 +108,7 @@
 
     // Reset to original data.js
     window.resetData = function () {
-        if (confirm('âš ï¸ Â¿EstÃ¡s seguro? Esto eliminarÃ¡ todos los cambios no exportados y volverÃ¡ a los datos originales de data.js')) {
+        if (confirm('¿Estás seguro? Esto eliminará todos los cambios no exportados y volverá a los datos originales de data.js')) {
             localStorage.removeItem(STORAGE_KEY);
             localStorage.removeItem(COLORS_STORAGE_KEY);
             location.reload();
@@ -164,10 +177,12 @@
             return null;
         }
 
-        // Clean up variants - remove empty ones
+        // Clean up variants - keep them if they have color OR price/variable info
         if (cleaned.variants && Array.isArray(cleaned.variants)) {
             cleaned.variants = cleaned.variants.filter(v => {
-                return v.color && v.color.trim() !== '';
+                const hasColor = v.color && v.color.trim() !== '';
+                const hasPriceSpec = v.variableId || (v.variableText && v.variableText.trim() !== '') || v.price > 0;
+                return hasColor || hasPriceSpec;
             });
         }
 
@@ -278,21 +293,21 @@
             const isValid = firstCategory && firstCategory.id && firstCategory.icon;
 
             if (!isValid) {
-                console.log('âš ï¸ Formato incompleto de categorÃ­as detectado, reiniciando...');
+                console.log('Formato incompleto de categoría detectado, reiniciando...');
                 categories = { ...defaultCategories };
                 localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
-                console.log('âœ… CategorÃ­as reiniciadas con iconos y IDs');
+                console.log('categorías reiniciadas con iconos y IDs');
             } else {
                 categories = parsedCategories;
-                console.log('âœ… CategorÃ­as cargadas desde localStorage');
+                console.log('categorías cargadas desde localStorage');
             }
         } else {
             categories = { ...defaultCategories };
             localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
-            console.log('âœ… CategorÃ­as inicializadas con valores por defecto');
+            console.log('categorías inicializadas con valores por defecto');
         }
     } catch (e) {
-        console.error('Error cargando categorÃ­as:', e);
+        console.error('Error cargando categorías:', e);
         categories = { ...defaultCategories };
     }
 
@@ -300,10 +315,10 @@
     function saveCategories() {
         try {
             localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
-            console.log('ðŸ’¾ CategorÃ­as guardadas');
+            console.log(' categoríasguardadas');
             autoSave(); // Also trigger general auto-save
         } catch (e) {
-            console.error('Error guardando categorÃ­as:', e);
+            console.error('Error guardando categorías:', e);
         }
     }
 
@@ -315,11 +330,15 @@
         link.href = URL.createObjectURL(blob);
         link.download = 'categories.json';
         link.click();
-        alert('âœ… CategorÃ­as exportadas correctamente');
+        alert('categoríasexportadas correctamente');
     }
 
     // State
     let filteredProducts = [...products];
+    let filteredCategories = [];
+    let filteredVariables = [];
+    let filteredTags = [];
+    let filteredPromotions = [];
     let currentView = 'catalogs';
 
     // DOM Elements - Navigation
@@ -344,27 +363,102 @@
     const variantsContainer = document.getElementById('variantsContainer');
     const addVariantBtn = document.getElementById('addVariantBtn');
 
+    // DOM Elements - Categories View
+    const categoriesTableBody = document.getElementById('categoriesTableBody');
+    const categorySearch = document.getElementById('categorySearch');
+    const addCategoryBtn = document.getElementById('addCategoryBtn');
+    const categoryModal = document.getElementById('categoryModal');
+    const closeCategoryModalBtn = document.getElementById('closeCategoryModal');
+    const cancelCategoryBtn = document.getElementById('cancelCategoryBtn');
+    const categoryForm = document.getElementById('categoryForm');
+    // Optional category elements
+    const categoryIconInput = document.getElementById('categoryIcon');
+    const categoryIconPreview = document.getElementById('categoryIconPreview');
+
+    // DOM Elements - Promotions View
+    const promotionsTableBody = document.getElementById('promotionsTableBody');
+    const promotionSearch = document.getElementById('promotionSearch');
+    const addPromotionBtn = document.getElementById('addPromotionBtn');
+    const promotionModal = document.getElementById('promotionModal');
+    const closePromotionModalBtn = document.getElementById('closePromotionModal');
+    const cancelPromotionBtn = document.getElementById('cancelPromotionBtn');
+    const promotionForm = document.getElementById('promotionForm');
+
     // Initial Render
     renderCatalogs();
 
     // Form Submit Handler
+    // Form Submit Handler
     if (productForm) {
-        productForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent default form submission
-            saveProduct();
-        });
+        // Use a flag on the element to prevent double-binding if this script re-runs
+        if (productForm.dataset.listenerAttached === 'true') {
+            console.log('⚠️ Listener already attached to productForm');
+        } else {
+            productForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                const btn = this.querySelector('button[type="submit"]');
+                if (btn && btn.disabled) return;
+
+                if (btn) {
+                    btn.disabled = true;
+                    // Use innerHTML to keep styling if needed, or textContent
+                    // Save original text?
+                    if (!btn.dataset.originalText) btn.dataset.originalText = btn.textContent;
+
+                    btn.innerHTML = '<span class="material-icons spin" style="font-size:16px;">autorenew</span> Guardando...';
+
+                    // Fallback to re-enable
+                    setTimeout(() => {
+                        if (btn.disabled) {
+                            btn.disabled = false;
+                            btn.textContent = btn.dataset.originalText || 'Guardar Producto';
+                        }
+                    }, 5000);
+                }
+
+                saveProduct();
+            });
+            productForm.dataset.listenerAttached = 'true';
+        }
     }
 
     // Navigation
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const view = item.getAttribute('data-view');
-            switchView(view);
+            // Update URL hash
+            window.location.hash = view;
         });
+    });
+
+    // Hash change listener for browser back/forward and direct URLs
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.substring(1); // Remove #
+        if (hash) {
+            switchView(hash);
+        }
+    });
+
+    // Load view from hash on page load
+    window.addEventListener('load', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            switchView(hash);
+        } else {
+            // Default view
+            switchView('products');
+        }
     });
 
     function switchView(view) {
         currentView = view;
+
+        // Update URL hash if not already set
+        if (window.location.hash.substring(1) !== view) {
+            window.location.hash = view;
+        }
 
         // Update nav
         navItems.forEach(item => {
@@ -389,229 +483,33 @@
         } else if (view === 'categories') {
             document.getElementById('categoriesView').classList.add('active');
             renderCategoriesTable();
+        } else if (view === 'colors') {
+            document.getElementById('configView').classList.add('active');
+            if (typeof renderColorsTable === 'function') renderColorsTable();
         } else if (view === 'config') {
             document.getElementById('configView').classList.add('active');
+        }
+
+        // Update header title and subtitle
+        if (typeof window.updateHeader === 'function') {
+            window.updateHeader(view);
         }
     }
 
     // Catalogs View Functions
-    function renderCatalogs() {
-        catalogsGrid.innerHTML = '';
-
-        Object.keys(categories).forEach(catKey => {
-            const catInfo = categories[catKey];
-            const productsInCat = products.filter(p => p.category === catKey);
-
-            const card = document.createElement('div');
-            card.className = 'catalog-card';
-            card.innerHTML = `
-                <div class="catalog-header">
-                    <div>
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">${catInfo.icon}</div>
-                        <div class="catalog-title">${catInfo.name}</div>
-                    </div>
-                    <div class="catalog-count">${productsInCat.length} items</div>
-                </div>
-                <div class="catalog-actions">
-                    <button class="catalog-btn preview" onclick="window.previewCatalog('${catKey}')"><span class="material-icons">visibility</span> Previsualizar</button>
-                    <button class="catalog-btn view" onclick="window.viewCatalogProducts('${catKey}')" style="background: #fff3e0; color: #f57c00;"><span class="material-icons">list_alt</span> Ver Productos</button>
-                    <button class="catalog-btn export" onclick="window.exportCatalog('${catKey}')"><span class="material-icons">download</span> Exportar Excel</button>
-                </div>
-            `;
-            catalogsGrid.appendChild(card);
-        });
-    }
-
-    window.previewCatalog = function (category) {
-        const catalogProducts = products.filter(p => p.category === category);
-        try {
-            sessionStorage.setItem('samsung_catalog_preview_data', JSON.stringify(catalogProducts));
-            sessionStorage.setItem('samsung_catalog_preview_active', 'true');
-            window.open('index.html', '_blank');
-        } catch (e) {
-            alert('Error al generar previsualizaciÃ³n: ' + e.message);
+    async function renderCatalogs() {
+        // Delegate to new catalog system if available
+        if (typeof window.loadCatalogs === 'function') {
+            window.loadCatalogs();
+        } else {
+            console.error('Catalog system not loaded');
+            catalogsGrid.innerHTML = '<p style="text-align: center; padding: 3rem; color: #d32f2f;">Error: Sistema de catálogos no cargado</p>';
         }
     }
 
-    // Catalog Detail View
-    let currentCatalogCategory = null;
-    let catalogProducts = [];
+    // Old catalog functions removed. Replaced by catalog-system.js
 
-    window.viewCatalogProducts = function (category) {
-        currentCatalogCategory = category;
-        catalogProducts = products.filter(p => p.category === category);
 
-        // Update title
-        const catInfo = categories[category];
-        document.getElementById('catalogDetailTitle').textContent = `${catInfo.icon} ${catInfo.name}`;
-        document.getElementById('catalogDetailSubtitle').textContent = `${catalogProducts.length} productos en este catÃ¡logo`;
-
-        // Switch to catalog detail view
-        viewSections.forEach(section => section.classList.remove('active'));
-        document.getElementById('catalogDetailView').classList.add('active');
-
-        renderCatalogProducts();
-    }
-
-    window.backToCatalogs = function () {
-        currentCatalogCategory = null;
-        switchView('catalogs');
-    }
-
-    function renderCatalogProducts() {
-        const catalogTableBody = document.getElementById('catalogTableBody');
-        const catalogSearch = document.getElementById('catalogSearch');
-
-        if (!catalogTableBody) return;
-
-        const searchTerm = catalogSearch ? catalogSearch.value.toLowerCase() : '';
-        const filtered = catalogProducts.filter(p =>
-            p.name.toLowerCase().includes(searchTerm) ||
-            (p.sku && p.sku.toLowerCase().includes(searchTerm))
-        );
-
-        catalogTableBody.innerHTML = '';
-
-        if (filtered.length === 0) {
-            catalogTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 2rem;">No se encontraron productos</td></tr>';
-            return;
-        }
-
-        filtered.forEach(product => {
-            const tr = document.createElement('tr');
-            const imageSrc = product.image && product.image.trim() !== '' ? product.image : 'https://via.placeholder.com/50?text=No+Img';
-
-            tr.innerHTML = `
-                <td><img src="${imageSrc}" class="product-mini-img" alt="img" onerror="this.src='https://via.placeholder.com/50?text=Err'"></td>
-                <td style="font-weight: 500;">${product.name}</td>
-                <td style="color:#666; font-size: 0.9em;">${product.sku || '-'}</td>
-                <td>${product.price}</td>
-                <td>
-                    <span class="action-icon" title="Editar" onclick="window.editProduct(${product.id})"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Quitar del catÃ¡logo" onclick="window.removeFromCatalog(${product.id})" style="color: #d93025;">ðŸ—‘ï¸</span>
-                </td>
-            `;
-            catalogTableBody.appendChild(tr);
-        });
-    }
-
-    window.removeFromCatalog = function (productId) {
-        if (confirm('Â¿Quitar este producto del catÃ¡logo? (No se eliminarÃ¡ de la base de datos)')) {
-            catalogProducts = catalogProducts.filter(p => p.id !== productId);
-            renderCatalogProducts();
-
-            // Update subtitle
-            const catInfo = categories[currentCatalogCategory];
-            document.getElementById('catalogDetailSubtitle').textContent = `${catalogProducts.length} productos en este catÃ¡logo`;
-        }
-    }
-
-    // Event listener for catalog search
-    const catalogSearchInput = document.getElementById('catalogSearch');
-    if (catalogSearchInput) {
-        catalogSearchInput.addEventListener('input', renderCatalogProducts);
-    }
-
-    // Event listener for add to catalog button
-    const addToCatalogBtn = document.getElementById('addToCatalogBtn');
-    if (addToCatalogBtn) {
-        addToCatalogBtn.addEventListener('click', () => {
-            alert('Funcionalidad de agregar productos prÃ³ximamente...');
-        });
-    }
-
-    window.exportCatalog = function (category) {
-        const catalogProducts = products.filter(p => p.category === category);
-
-        if (catalogProducts.length === 0) {
-            alert('No hay productos en esta categorÃ­a.');
-            return;
-        }
-
-        // Prepare data for Excel
-        const excelData = [];
-
-        // Add headers
-        excelData.push([
-            'ID', 'Nombre', 'CategorÃ­a', 'Precio', 'Precio Original', 'Link', 'DescripciÃ³n', 'Badge', 'Almacenamiento',
-            'SKU1', 'Color1', 'Link1', 'ImÃ¡genes1', 'Hex1',
-            'SKU2', 'Color2', 'Link2', 'ImÃ¡genes2', 'Hex2',
-            'SKU3', 'Color3', 'Link3', 'ImÃ¡genes3', 'Hex3',
-            'SKU4', 'Color4', 'Link4', 'ImÃ¡genes4', 'Hex4',
-            'SKU5', 'Color5', 'Link5', 'ImÃ¡genes5', 'Hex5'
-        ]);
-
-        // Add product rows
-        catalogProducts.forEach(p => {
-            const row = [];
-            row.push(p.id);
-            row.push(p.name);
-            row.push(p.category);
-            row.push(p.price);
-            row.push(p.originalPrice || 0);
-            row.push(p.link || '');
-            row.push(p.description || '');
-            row.push(p.badge || '');
-
-            // Storage Options Logic
-            let storageStr = '';
-            if (p.storageOptions && Array.isArray(p.storageOptions) && p.storageOptions.length > 0) {
-                storageStr = p.storageOptions.map(s => `${s.capacity} ($${s.price})`).join(' | ');
-            } else if (p.storage && Array.isArray(p.storage)) {
-                storageStr = p.storage.join(', ');
-            } else if (p.storage) {
-                storageStr = String(p.storage);
-            }
-            row.push(storageStr);
-
-            // Variants (up to 5)
-            const vars = p.variants || [];
-            for (let i = 0; i < 5; i++) {
-                if (i < vars.length) {
-                    const v = vars[i];
-                    // Images to string (comma separated)
-                    let imgs = v.images && v.images.length > 0 ? v.images.join(', ') : (v.image || '');
-
-                    row.push(v.sku || '');
-                    row.push(v.color || '');
-                    row.push(v.link || '');
-                    row.push(imgs);
-                    row.push(v.hex || '');
-                } else {
-                    row.push('', '', '', '', '');
-                }
-            }
-
-            excelData.push(row);
-        });
-
-        // Create workbook and worksheet using SheetJS
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet(excelData);
-
-        // Set column widths
-        const colWidths = [
-            { wch: 5 }, { wch: 30 }, { wch: 15 }, { wch: 10 }, { wch: 12 }, { wch: 40 }, { wch: 40 }, { wch: 10 }, { wch: 25 }
-        ];
-
-        // Add widths for variant columns
-        for (let i = 0; i < 5; i++) {
-            colWidths.push({ wch: 15 }); // SKU
-            colWidths.push({ wch: 15 }); // Color
-            colWidths.push({ wch: 30 }); // Link
-            colWidths.push({ wch: 40 }); // ImÃ¡genes
-            colWidths.push({ wch: 10 }); // Hex
-        }
-
-        ws['!cols'] = colWidths;
-
-        // Add worksheet to workbook
-        XLSX.utils.book_append_sheet(wb, ws, 'Productos');
-
-        // Generate Excel file
-        const categoryName = categories[category].name.replace(/\s+/g, '_');
-        XLSX.writeFile(wb, `Catalogo_${categoryName}.xlsx`);
-    }
 
     // Products Database View Functions
     function renderProductsTable() {
@@ -838,7 +736,7 @@
         fetch('/api/save-products', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ products })
+            body: JSON.stringify(products)
         })
             .then(response => response.json())
             .then(data => {
@@ -958,34 +856,45 @@
     }
 
     window.deleteProduct = function (id) {
-        if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            const index = products.findIndex(p => p.id == id); // Use == to handle string/number comparison
-            if (index > -1) {
-                products.splice(index, 1);
-                handleFilter();
-                renderCatalogs(); // Update catalog counts
-                autoSave(); // Save changes to localStorage
+        console.log('Attempting to delete product ID:', id);
 
-                // Save to server to persist changes
-                fetch('/api/save-products', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(products)
+        if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) return;
+
+        // Find index (handle string vs number type mismatch)
+        const index = window.products.findIndex(p => p.id == id);
+
+        if (index > -1) {
+            // Remove from array
+            window.products.splice(index, 1);
+            console.log('Product removed. Remaining count:', window.products.length);
+
+            // Update UI immediately
+            handleFilter();
+            renderCatalogs();
+            autoSave();
+
+            // Persist to server
+            fetch('/api/save-products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(window.products)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('✅ Producto eliminado y guardado en el servidor');
+                    } else {
+                        console.error('SERVER ERROR:', data.message);
+                        alert('Error al guardar cambios en el servidor.');
+                    }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log('Producto eliminado y guardado en el servidor');
-                        } else {
-                            console.error('Error guardando en el servidor:', data.message);
-                            alert('Producto eliminado localmente, pero hubo un error al guardar en el servidor.');
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Error de red:', err);
-                        alert('Producto eliminado localmente, pero no se pudo conectar con el servidor.');
-                    });
-            }
+                .catch(err => {
+                    console.error('NETWORK ERROR:', err);
+                    alert('Error de conexión al guardar cambios.');
+                });
+        } else {
+            console.error('Product not found for deletion. ID:', id);
+            alert('Error: No se encontró el producto para eliminar.');
         }
     }
 
@@ -997,6 +906,8 @@
 
     // Function to add a color row (visual only, no pricing)
     window.addColorRow = function (data = {}) {
+        console.log('🎨 addColorRow called with data:', data);
+
         const container = document.getElementById('colorsContainer');
         const card = document.createElement('div');
         card.className = 'variant-card';
@@ -1005,17 +916,12 @@
 
         // Color Options
         let colorOptions = '<option value="">Seleccionar Color...</option>';
-        let defaultColorId = data.colorId || '';
+        let defaultColorId = data.colorId || data.id || '';
 
-        // If no color is provided, try to find "Negro" as default
-        if (!defaultColorId && typeof colorVariables !== 'undefined') {
-            for (const [name, colorData] of Object.entries(colorVariables)) {
-                if (name.toLowerCase() === 'negro') {
-                    defaultColorId = colorData.id;
-                    break;
-                }
-            }
-        }
+        console.log('🔍 Looking for color with ID:', defaultColorId);
+        console.log('📚 Available colorVariables:', window.colorVariables ? Object.keys(window.colorVariables).length + ' colors' : 'undefined');
+
+        // Don't force any default color - let user choose
 
         if (typeof colorVariables !== 'undefined') {
             const sortedColors = Object.entries(colorVariables).map(([name, val]) => ({
@@ -1026,8 +932,15 @@
 
             sortedColors.forEach(c => {
                 const selected = defaultColorId === c.id ? 'selected' : '';
+                if (selected) {
+                    console.log('✅ Found matching color:', c.name, 'with ID:', c.id);
+                }
                 colorOptions += `<option value="${c.id}" ${selected}>${c.name}</option>`;
             });
+
+            if (defaultColorId && !sortedColors.find(c => c.id === defaultColorId)) {
+                console.warn('⚠️ Color ID not found in colorVariables:', defaultColorId);
+            }
         }
 
         card.innerHTML = `
@@ -1098,28 +1011,55 @@
         container.appendChild(card);
 
         // Update color preview if color is selected (including default)
+        // Do this AFTER appending to DOM so the select element exists
+        // Use setTimeout to ensure the element is fully rendered
         if (defaultColorId) {
-            updateColorPreview(card.querySelector('.color-select'));
+            setTimeout(() => {
+                const selectElement = card.querySelector('.color-select');
+                if (selectElement) {
+                    console.log('🎨 Updating color preview for:', defaultColorId);
+                    updateColorPreview(selectElement);
+                }
+            }, 10);
         }
     }
 
     // Function to update color preview box
     window.updateColorPreview = function (select) {
+        console.log('🔍 updateColorPreview called');
+
         const card = select.closest('.variant-card');
-        const preview = card.querySelector('.color-preview');
+        const preview = card ? card.querySelector('.color-preview') : null;
         const colorId = select.value;
+
+        console.log('  - Card found:', !!card);
+        console.log('  - Preview element found:', !!preview);
+        console.log('  - Color ID:', colorId);
+        console.log('  - colorVariables exists:', !!window.colorVariables);
 
         if (colorId && colorVariables) {
             let colorHex = '#f0f0f0';
+            let found = false;
             for (const [name, data] of Object.entries(colorVariables)) {
                 if (data.id === colorId) {
                     colorHex = data.hex || '#f0f0f0';
+                    found = true;
+                    console.log('  ✅ Color found:', name, 'hex:', colorHex);
                     break;
                 }
             }
-            preview.style.background = colorHex;
+            if (!found) {
+                console.warn('  ⚠️ Color ID not found in colorVariables:', colorId);
+            }
+            if (preview) {
+                preview.style.backgroundColor = colorHex;
+                console.log('  ✅ Preview updated to:', colorHex);
+            }
         } else {
-            preview.style.background = '#f0f0f0';
+            if (preview) {
+                preview.style.backgroundColor = '#f0f0f0';
+                console.log('  ⚠️ No color selected, using default gray');
+            }
         }
     }
 
@@ -1211,15 +1151,6 @@
                         <input type="number" class="form-input price-promo" placeholder="0" value="${data.promoPrice || ''}"
                                style="color:#d32f2f;">
                     </div>
-                </div>
-
-                <!-- Link -->
-                <div>
-                    <label class="form-label" style="font-size:0.75rem; margin-bottom:4px; font-weight:600;">
-                        Link E-Store <span style="color:#d32f2f;">*</span>
-                    </label>
-                    <input type="url" class="form-input price-link" placeholder="https://samsung.com/..." value="${data.link || ''}"
-                           style="font-size:0.8rem;">
                 </div>
             </div>
         `;
@@ -1443,141 +1374,239 @@
     }
 
     function saveProduct() {
-        const idStr = document.getElementById('editProductId').value;
-        const name = document.getElementById('prodName').value;
-        const category = document.getElementById('prodCategory').value;
-        const badge = document.getElementById('prodBadge').value;
+        try {
+            const idStr = document.getElementById('editProductId').value;
+            const name = document.getElementById('prodName').value;
+            const category = document.getElementById('prodCategory').value;
+            const badge = document.getElementById('prodBadge').value;
+            const basePriceInput = document.getElementById('prodBasePrice').value;
+            const basePromoInput = document.getElementById('prodBasePromo').value;
+            const baseLinkInput = document.getElementById('prodBaseLink').value;
 
-        // 1. Collect Storage Options
-        const storageOptions = [];
-        document.querySelectorAll('.storage-row').forEach(row => {
-            const capacity = row.querySelector('.sto-capacity').value.trim();
-            const price = Number(row.querySelector('.sto-price').value) || 0;
-            const originalPrice = Number(row.querySelector('.sto-original').value) || 0;
-            if (capacity || price > 0) {
-                storageOptions.push({ capacity, price, originalPrice });
-            }
-        });
+            // 1. Gather Colors (From Section 2)
+            // ----------------------------------------------------------------
+            const colors = [];
+            console.log('🎨 Starting to gather colors...');
+            document.querySelectorAll('#colorsContainer .variant-card').forEach((card, index) => {
+                const select = card.querySelector('.color-select');
+                console.log(`Color card ${index + 1}:`, {
+                    hasSelect: !!select,
+                    selectValue: select ? select.value : 'NO SELECT',
+                    selectedIndex: select ? select.selectedIndex : 'NO SELECT',
+                    selectedText: select && select.selectedIndex >= 0 ? select.options[select.selectedIndex].text : 'NO TEXT'
+                });
 
-        // 2. Collect Variants
-        const variants = [];
-        document.querySelectorAll('.variant-card').forEach(card => {
-            const colorSelect = card.querySelector('.var-color-select');
-            const variableSelect = card.querySelector('.var-variable-select');
-            const activeCheckbox = card.querySelector('.var-active');
+                if (!select || !select.value) {
+                    console.warn(`⚠️ Skipping color card ${index + 1} - no color selected`);
+                    return;
+                }
 
-            if (!colorSelect || !colorSelect.value) return; // Skip if no color selected
+                const colorId = select.value;
+                const sku = card.querySelector('.color-sku') ? card.querySelector('.color-sku').value.trim() : '';
 
-            const colorId = colorSelect.value;
-            const variableId = variableSelect ? variableSelect.value : '';
+                // Get Images
+                const images = [];
+                card.querySelectorAll('.color-image-input').forEach(input => {
+                    if (input.value.trim()) images.push(input.value.trim());
+                });
 
-            // Get color name and hex from colorVariables
-            let colorName = '';
-            let hex = '';
-            if (colorVariables) {
-                for (const [name, data] of Object.entries(colorVariables)) {
-                    if (data.id === colorId) {
-                        colorName = name;
-                        hex = data.hex || '';
-                        break;
+                // Resolve Name/Hex
+                let colorName = '';
+                let hex = '';
+                if (window.colorVariables && select.selectedIndex >= 0) {
+                    // Check if option text matches key or if we need to search by ID
+                    // Ideally we used ID as value.
+                    // Let's safe-search by ID
+                    if (window.colorVariables) {
+                        for (const [cName, cData] of Object.entries(window.colorVariables)) {
+                            if (cData.id === colorId) {
+                                colorName = cName;
+                                hex = cData.hex;
+                                break;
+                            }
+                        }
                     }
                 }
-            }
 
-            // Get variable text if selected
-            let variableText = '';
-            if (variableId && textVariables) {
-                const varData = Object.values(textVariables).find(v => v.id === variableId);
-                if (varData) variableText = varData.text || '';
-            }
+                console.log(`✅ Color ${index + 1} resolved:`, { colorId, colorName, hex, sku, imageCount: images.length });
 
-            const sku = card.querySelector('.var-sku') ? card.querySelector('.var-sku').value.trim() : '';
-            const price = card.querySelector('.var-price') ? Number(card.querySelector('.var-price').value) || 0 : 0;
-            const promoPrice = card.querySelector('.var-promo') ? Number(card.querySelector('.var-promo').value) || 0 : 0;
-            const link = card.querySelector('.var-link') ? card.querySelector('.var-link').value.trim() : '';
-            const variantBadge = card.querySelector('.var-badge') ? card.querySelector('.var-badge').value.trim() : '';
-            const active = activeCheckbox ? activeCheckbox.checked : true;
-
-            // Collect images from the image list
-            const images = [];
-            const imageInputs = card.querySelectorAll('.var-images-list .var-image-input');
-            imageInputs.forEach(input => {
-                const url = input.value.trim();
-                if (url) images.push(url);
+                colors.push({
+                    id: colorId,           // For new structure
+                    colorId: colorId,      // For backward compatibility
+                    name: colorName,
+                    hex: hex,
+                    sku: sku,
+                    images: images,
+                    image: images[0] || ''
+                });
             });
 
-            variants.push({
-                sku,
-                color: colorName,
-                colorId,
-                hex,
-                variableId,
-                variableText,
-                price,
-                promoPrice,
-                link,
-                badge: variantBadge,
-                active,
-                images,
-                image: images[0] || '' // Fallback property for legacy compatibility (first image)
+            console.log(`📦 Total colors gathered: ${colors.length}`, colors);
+
+            // 2. Gather Price Variants (From Section 3)
+            // ----------------------------------------------------------------
+            const priceVariants = [];
+            document.querySelectorAll('#priceVariantsContainer .variant-card').forEach(card => {
+                const select = card.querySelector('.price-variable-select');
+                const variableId = select ? select.value : '';
+                // Get text safely
+                const variableText = (select && select.selectedIndex >= 0) ? select.options[select.selectedIndex].text : '';
+
+                const price = Number(card.querySelector('.price-price').value) || 0;
+                const promoPrice = Number(card.querySelector('.price-promo').value) || 0;
+                const active = card.querySelector('.price-active') ? card.querySelector('.price-active').checked : true;
+
+                priceVariants.push({
+                    variableId: variableId,
+                    variableText: variableText,
+                    price: price,
+                    promoPrice: promoPrice,
+                    active: active
+                });
             });
-        });
 
-        // 3. Determine Base Price (Lowest from options or 0)
-        let basePrice = 0;
-        let baseOriginalPrice = 0;
-        if (storageOptions.length > 0) {
-            basePrice = storageOptions[0].price;
-            baseOriginalPrice = storageOptions[0].originalPrice;
-        }
+            // 3. Generate Unified Variants (Cartesian Product for compatibility)
+            // ----------------------------------------------------------------
+            let variants = [];
 
-        // 4. Construct Product Object
-        const productData = {
-            id: idStr ? Number(idStr) : generateId(),
-            name,
-            category,
-            badge,
-            price: basePrice, // Legacy compatibility
-            originalPrice: baseOriginalPrice, // Legacy compatibility
-            storageOptions,
-            variants,
-            // Legacy fallbacks for main listing
-            storage: storageOptions.map(s => s.capacity),
-            link: variants.length > 0 ? variants[0].link : '',
-            image: variants.length > 0 && variants[0].images.length > 0 ? variants[0].images[0] : ''
-        };
+            if (colors.length > 0 && priceVariants.length > 0) {
+                // Cartesian: Colors x Prices
+                colors.forEach(c => {
+                    priceVariants.forEach(p => {
+                        variants.push({
+                            // Combined IDs
+                            id: `${c.id}_${p.variableId}`,
 
-        if (idStr) {
-            const index = products.findIndex(p => p.id === Number(idStr));
-            if (index !== -1) {
-                products[index] = productData;
+                            // Visuals (From Color)
+                            color: c.name,
+                            colorId: c.id,
+                            hex: c.hex,
+                            images: c.images,
+                            image: c.image,
+
+                            // SKU (From Color - user constraint: no SKU in price section)
+                            sku: c.sku,
+
+                            // Price & Specs (From PriceVariant)
+                            price: p.price,
+                            promoPrice: p.promoPrice,
+                            active: p.active,
+                            variableId: p.variableId,
+                            variableText: p.variableText,
+
+                            // Metadata
+                            type: 'combination'
+                        });
+                    });
+                });
+            } else if (colors.length > 0) {
+                // Only colors (use Base Price)
+                colors.forEach(c => {
+                    variants.push({
+                        color: c.name,
+                        colorId: c.id,
+                        hex: c.hex,
+                        images: c.images,
+                        image: c.image,
+                        sku: c.sku,
+                        price: Number(basePriceInput) || 0,
+                        promoPrice: Number(basePromoInput) || 0,
+                        link: baseLinkInput,
+                        active: true
+                    });
+                });
+            } else if (priceVariants.length > 0) {
+                // Only prices (No colors)
+                priceVariants.forEach(p => {
+                    variants.push({
+                        price: p.price,
+                        promoPrice: p.promoPrice,
+                        link: p.link,
+                        active: p.active,
+                        variableId: p.variableId,
+                        variableText: p.variableText,
+                        // Defaults
+                        color: '',
+                        images: [],
+                        image: ''
+                    });
+                });
+            } else {
+                // Base Product (No variants)
+                variants.push({
+                    sku: '',
+                    price: Number(basePriceInput) || 0,
+                    promoPrice: Number(basePromoInput) || 0,
+                    link: baseLinkInput,
+                    active: true
+                });
             }
-        } else {
-            products.unshift(productData);
-        }
 
-        closeModal();
-        handleFilter(); // Re-render table
-        renderCatalogs();
-        autoSave();
+            // 4. Construct Final Product Object
+            // ----------------------------------------------------------------
+            const productData = {
+                id: idStr ? Number(idStr) : generateId(),
+                name: name,
+                category: category,
+                badge: badge,
 
-        // Save to server to persist changes
-        fetch('/api/save-products', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(products)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('âœ… Producto guardado en el servidor');
+                // New Structured Data
+                colors: colors,
+                priceVariants: priceVariants,
+
+                // Generated Flat Variants (for compatibility)
+                variants: variants,
+
+                // Base Info (Legacy/Fallback)
+                basePrice: Number(basePriceInput) || 0,
+                basePromo: Number(basePromoInput) || 0,
+                baseLink: baseLinkInput,
+                price: (priceVariants.length > 0) ? priceVariants[0].price : (Number(basePriceInput) || 0),
+                image: (colors.length > 0) ? colors[0].image : ''
+            };
+
+            // 5. Update Local State
+            // ----------------------------------------------------------------
+            if (idStr) {
+                const index = products.findIndex(p => p.id === Number(idStr));
+                if (index !== -1) {
+                    products[index] = productData;
                 } else {
-                    console.error('Error guardando en el servidor:', data.message);
+                    products.push(productData);
                 }
+            } else {
+                products.unshift(productData);
+            }
+
+            // 6. UI & Persistence
+            // ----------------------------------------------------------------
+            closeModal();
+            handleFilter(); // Updates table
+            renderCatalogs();
+            autoSave();
+
+            // Save to Server
+            fetch('/api/save-products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(products)
             })
-            .catch(err => {
-                console.error('Error de red:', err);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('✅ Producto guardado en el servidor');
+                    } else {
+                        console.error('Error guardando en el servidor:', data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error de red:', err);
+                });
+
+        } catch (error) {
+            console.error('CRITICAL ERROR in saveProduct:', error);
+            alert('Error crítico al guardar producto (Ver consola).');
+        }
     }
 
     function generateId() {
@@ -1775,7 +1804,10 @@
             document.getElementById('colorModalTitle').textContent = 'Nuevo Color';
             document.getElementById('editColorOldName').value = '';
             colorForm.reset();
-            document.getElementById('colorPicker').value = '#000000';
+            // Don't force black color - let user choose
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+            document.getElementById('colorPicker').value = randomColor;
+            document.getElementById('colorHex').value = randomColor;
         }
 
         updateColorPreview();
@@ -1923,7 +1955,7 @@
     function saveColorVariables() {
         // Use API to save directly to Excel
         const btn = document.getElementById('saveVariablesBtn');
-        const originalText = btn ? btn.innerHTML : 'ðŸ’¾ Guardar Variables';
+        const originalText = btn ? btn.innerHTML : ' Guardar Variables';
         if (btn) btn.innerHTML = 'â³ Guardando...';
 
         fetch('/api/save-colors', {
@@ -1936,7 +1968,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('âœ… ' + data.message);
+                    alert('' + data.message);
                 } else {
                     alert('Error al guardar: ' + data.message);
                 }
@@ -1953,17 +1985,6 @@
     // ==================== CATEGORY MANAGEMENT ====================
 
     // DOM Elements for Categories
-    const categoriesTableBody = document.getElementById('categoriesTableBody');
-    const categorySearch = document.getElementById('categorySearch');
-    const addCategoryBtn = document.getElementById('addCategoryBtn');
-    const categoryModal = document.getElementById('categoryModal');
-    const closeCategoryModalBtn = document.getElementById('closeCategoryModal');
-    const cancelCategoryBtn = document.getElementById('cancelCategoryBtn');
-    const categoryForm = document.getElementById('categoryForm');
-    const categoryIconInput = document.getElementById('categoryIcon');
-    const categoryIconPreview = document.getElementById('categoryIconPreview');
-
-    let filteredCategories = [];
 
     // Event listeners for category management
     if (categorySearch) {
@@ -2012,7 +2033,7 @@
         categoriesTableBody.innerHTML = '';
 
         if (filteredCategories.length === 0) {
-            categoriesTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 2rem;">No se encontraron categorÃ­as</td></tr>';
+            categoriesTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 2rem;">No se encontraron categorías</td></tr>';
             return;
         }
 
@@ -2044,12 +2065,12 @@
 
         if (categoryName) {
             // Edit mode
-            document.getElementById('categoryModalTitle').textContent = 'Editar CategorÃ­a';
+            document.getElementById('categoryModalTitle').textContent = 'Editar categoría';
             document.getElementById('editCategoryOldName').value = categoryName;
             document.getElementById('categoryName').value = categories[categoryName].name;
         } else {
             // Add mode
-            document.getElementById('categoryModalTitle').textContent = 'Nueva CategorÃ­a';
+            document.getElementById('categoryModalTitle').textContent = 'Nueva categoría';
             document.getElementById('editCategoryOldName').value = '';
             categoryForm.reset();
         }
@@ -2064,7 +2085,7 @@
         const newName = document.getElementById('categoryName').value.trim();
 
         if (!newName) {
-            alert('Por favor ingresa un nombre para la categorÃ­a');
+            alert('Por favor ingresa un nombre para la categoría');
             return;
         }
 
@@ -2081,7 +2102,7 @@
         // If editing and name changed, update all products
         if (oldName && oldName !== newName) {
             if (categories[newName]) {
-                alert('Ya existe una categorÃ­a con ese nombre');
+                alert('Ya existe una categoría con ese nombre');
                 return;
             }
 
@@ -2098,7 +2119,7 @@
 
         // Check if name already exists (for new categories)
         if (!oldName && categories[newName]) {
-            alert('Ya existe una categorÃ­a con ese nombre');
+            alert('Ya existe una categoría con ese nombre');
             return;
         }
 
@@ -2120,7 +2141,7 @@
         const productsInCategory = products.filter(p => p.category === categoryKey);
 
         if (productsInCategory.length > 0) {
-            if (!confirm(`La categorÃ­a "${categories[categoryKey].name}" tiene ${productsInCategory.length} producto(s). Â¿EstÃ¡s seguro de eliminarla? Los productos quedarÃ¡n sin categorÃ­a.`)) {
+            if (!confirm(`La categoría "${categories[categoryKey].name}" tiene ${productsInCategory.length} producto(s). Estás seguro de eliminarla? Los productos quedarÃ¡n sin categoría.`)) {
                 return;
             }
 
@@ -2144,8 +2165,6 @@
     if (typeof textVariables === 'undefined') {
         window.textVariables = {};
     }
-
-    let filteredVariables = [];
 
     // DOM Elements for Variables
     const variablesTableBody = document.getElementById('variablesTableBody');
@@ -2299,7 +2318,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log('âœ… Variables guardadas en archivo');
+                    console.log('Variables guardadas en archivo');
                 } else {
                     console.error('Error guardando variables:', data.message);
                 }
@@ -2314,11 +2333,31 @@
     }
 
     window.deleteVariable = function (variableText) {
-        if (confirm(`Â¿EstÃ¡s seguro de eliminar la variable "${variableText}"?`)) {
-            delete textVariables[variableText];
+        console.log('Solicitud de borrar:', variableText);
+        const key = variableText;
+
+        if (confirm(`¿Estás seguro de eliminar la variable "${key}"?`)) {
+            // Try direct key
+            if (Object.prototype.hasOwnProperty.call(textVariables, key)) {
+                delete textVariables[key];
+            } else {
+                // Try parsing/trimming just in case
+                console.warn('Key directa no encontrada, probando trim');
+                const trimmed = key.trim();
+                if (textVariables[trimmed]) {
+                    delete textVariables[trimmed];
+                } else {
+                    console.error('No se encontró la variable para borrar:', key);
+                    // Force refresh just in case UI is stale
+                    renderVariablesTable();
+                    return;
+                }
+            }
+
             renderVariablesTable();
             localStorage.setItem(VARIABLES_STORAGE_KEY, JSON.stringify(textVariables));
             saveTextVariables(); // Persist to file via API
+            console.log('Variable borrada y guardada:', key);
         }
     }
 
@@ -2348,8 +2387,6 @@
     if (typeof tags === 'undefined') {
         window.tags = {};
     }
-
-    let filteredTags = [];
 
     // DOM Elements for Tags
     const tagsTableBody = document.getElementById('tagsTableBody');
@@ -2493,7 +2530,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log('âœ… Etiquetas guardadas en archivo');
+                    console.log('Etiquetas guardadas en archivo');
                 } else {
                     console.error('Error guardando etiquetas:', data.message);
                 }
@@ -2508,7 +2545,7 @@
     }
 
     window.deleteTag = function (tagName) {
-        if (confirm(`Â¿EstÃ¡s seguro de eliminar la etiqueta "${tagName}"?`)) {
+        if (confirm(`Estás seguro de eliminar la etiqueta "${tagName}"?`)) {
             delete tags[tagName];
             renderTagsTable();
             localStorage.setItem(TAGS_STORAGE_KEY, JSON.stringify(tags));
@@ -2525,16 +2562,7 @@
         window.promotions = {};
     }
 
-    let filteredPromotions = [];
 
-    // DOM Elements for Promotions
-    const promotionsTableBody = document.getElementById('promotionsTableBody');
-    const promotionSearch = document.getElementById('promotionSearch');
-    const addPromotionBtn = document.getElementById('addPromotionBtn');
-    const promotionModal = document.getElementById('promotionModal');
-    const closePromotionModalBtn = document.getElementById('closePromotionModal');
-    const cancelPromotionBtn = document.getElementById('cancelPromotionBtn');
-    const promotionForm = document.getElementById('promotionForm');
 
     // Event listeners for promotion management
     if (promotionSearch) {
@@ -2582,7 +2610,7 @@
         filteredPromotions.forEach(([promoName, promoData]) => {
             const promoId = promoData.id || '';
             const imageUrl = promoData.image || '';
-            const imagePreview = imageUrl ? `<a href="${imageUrl}" target="_blank" style="color: var(--samsung-blue); text-decoration: none;">Ver imagen â†—</a>` : 'Sin imagen';
+            const imagePreview = imageUrl ? `<a href="${imageUrl}" target="_blank" style="color: var(--samsung-blue); text-decoration: none;">Ver imagen</a>` : 'Sin imagen';
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -2605,13 +2633,13 @@
 
         if (promoName) {
             // Edit mode
-            document.getElementById('promotionModalTitle').textContent = 'Editar PromociÃ³n';
+            document.getElementById('promotionModalTitle').textContent = 'Editar promoción';
             document.getElementById('editPromotionOldName').value = promoName;
             document.getElementById('promotionName').value = promotions[promoName].name;
             document.getElementById('promotionImage').value = promotions[promoName].image;
         } else {
             // Add mode
-            document.getElementById('promotionModalTitle').textContent = 'Nueva PromociÃ³n';
+            document.getElementById('promotionModalTitle').textContent = 'Nueva promoción';
             document.getElementById('editPromotionOldName').value = '';
             promotionForm.reset();
         }
@@ -2644,7 +2672,7 @@
         // If editing and name changed, remove old entry
         if (oldName && oldName !== name) {
             if (promotions[name]) {
-                alert('Ya existe una promociÃ³n con ese nombre');
+                alert('Ya existe una promoción con ese nombre');
                 return;
             }
             delete promotions[oldName];
@@ -2652,7 +2680,7 @@
 
         // Check if name already exists (for new promotions)
         if (!oldName && promotions[name]) {
-            alert('Ya existe una promociÃ³n con ese nombre');
+            alert('Ya existe una promoción con ese nombre');
             return;
         }
 
@@ -2663,7 +2691,7 @@
         renderPromotionsTable();
         localStorage.setItem(PROMOTIONS_STORAGE_KEY, JSON.stringify(promotions));
         savePromotions(); // Persist to file via API
-        console.log(`PromociÃ³n "${name}" (${promoId}) guardada`);
+        console.log(`promoción "${name}" (${promoId}) guardada`);
     }
 
     // Save promotions to file via API
@@ -2676,7 +2704,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log('âœ… Promociones guardadas en archivo');
+                    console.log('Promociones guardadas en archivo');
                 } else {
                     console.error('Error guardando promociones:', data.message);
                 }
@@ -2691,7 +2719,7 @@
     }
 
     window.deletePromotion = function (promoName) {
-        if (confirm(`Â¿EstÃ¡s seguro de eliminar la promociÃ³n "${promoName}"?`)) {
+        if (confirm(`Estás seguro de eliminar la promoción "${promoName}"?`)) {
             delete promotions[promoName];
             renderPromotionsTable();
             localStorage.setItem(PROMOTIONS_STORAGE_KEY, JSON.stringify(promotions));
@@ -2706,7 +2734,7 @@
         const badge = document.getElementById('prodBadge').value;
 
         if (!name || !category) {
-            alert('Nombre y CategorÃ­a son obligatorios');
+            alert('Nombre y categoría son obligatorios');
             return;
         }
 

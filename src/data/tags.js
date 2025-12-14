@@ -32,9 +32,5 @@ var tags = {
     "Próximamente": {
         "id": "e008",
         "name": "Próximamente"
-    },
-    "test": {
-        "id": "e009",
-        "name": "test"
     }
 };

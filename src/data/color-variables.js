@@ -120,9 +120,5 @@ var colorVariables = {
     "Violeta": {
         "id": "c030",
         "hex": "#b6c0d6"
-    },
-    "test": {
-        "id": "c031",
-        "hex": "#000000"
     }
 };

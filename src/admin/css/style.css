@@ -1,21 +1,21 @@
 /* Global Styles */
 @font-face {
     font-family: 'SamsungOne';
-    src: url('fonts/SamsungOne-400.ttf') format('truetype');
+    src: url('../../assets/fonts/SamsungOne-400.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SamsungOne';
-    src: url('fonts/SamsungOne-700.ttf') format('truetype');
+    src: url('../../assets/fonts/SamsungOne-700.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SamsungSharpSans';
-    src: url('fonts/SamsungSharpSans-Bold.ttf') format('truetype');
+    src: url('../../assets/fonts/SamsungSharpSans-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }

@@ -50,10 +50,5 @@ var textVariables = {
         "id": "v010",
         "name": "Batería",
         "text": "5000 mAh"
-    },
-    "test": {
-        "id": "v011",
-        "name": "test",
-        "text": "test"
     }
 };

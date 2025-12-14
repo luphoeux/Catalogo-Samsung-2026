@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test Modal</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #999;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test Modal</h1>
+    <button type="button" onclick="openModal()">Open Modal</button>
+
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Test Modal</h2>
+            <p>This is a test modal</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            console.log('Opening modal...');
+            const modal = document.getElementById('testModal');
+            console.log('Modal element:', modal);
+            modal.style.display = 'block';
+            console.log('Modal display:', modal.style.display);
+        }
+
+        function closeModal() {
+            console.log('Closing modal...');
+            document.getElementById('testModal').style.display = 'none';
+        }
+
+        // Close when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('testModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+
+</html>

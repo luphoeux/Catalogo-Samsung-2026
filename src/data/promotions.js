@@ -9,12 +9,7 @@ var promotions = {
     "Black Friday": {
         "id": "pr002",
         "name": "Black Friday",
-        "image": "https://example.com/blackfriday.jpg"
-    },
-    "Cyber Monday": {
-        "id": "pr003",
-        "name": "Cyber Monday",
-        "image": "https://example.com/cybermonday.jpg"
+        "image": "https://samsung.com.bo/assets/img/landings/navidad2025/bandeo2.png"
     },
     "Regreso a Clases": {
         "id": "pr004",

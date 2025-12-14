@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Samsung</title>
+    <style>
+        @font-face {
+            font-family: 'SamsungSharpSans';
+            src: url('/src/assets/fonts/SamsungSharpSans-Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+
+        @font-face {
+            font-family: 'SamsungOne';
+            src: url('/src/assets/fonts/SamsungOne-400.ttf') format('truetype');
+            font-weight: normal;
+        }
+
+        :root {
+            --primary: #1428a0;
+            --text-dark: #000000;
+            --text-gray: #555555;
+            --bg-light: #f7f7f7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SamsungOne', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-year {
+            position: absolute;
+            font-family: 'SamsungSharpSans', sans-serif;
+            font-size: 15vw;
+            font-weight: bold;
+            color: #f2f2f2;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 2;
+            font-family: 'SamsungSharpSans', sans-serif;
+            font-size: 3rem;
+            color: #000;
+            margin: 0;
+            text-align: center;
+        }
+
+        .catalog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Complex Card Styles */
+        .complex-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .complex-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #0b57d0;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }
+
+        .card-image-container {
+            background: #f6f6f6;
+            border-radius: 20px;
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .card-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-sku {
+            color: #999;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-family: 'SamsungSharpSans', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: black;
+            line-height: 1.2;
+        }
+
+        .card-color-label {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 0.75rem;
+        }
+
+        .swatch-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .swatch {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .swatch.active {
+            border: 1px solid white;
+            box-shadow: 0 0 0 2px black;
+        }
+
+        .variant-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .variant-btn {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 8px 16px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            flex: 1;
+            min-width: 80px;
+            max-width: 120px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .variant-btn:hover {
+            border-color: #999;
+        }
+
+        .variant-btn.active {
+            border-color: black;
+            border-width: 1.5px;
+            background: white;
+        }
+
+        .variant-label {
+            font-size: 0.7rem;
+            color: #888;
+            margin-bottom: 2px;
+            text-transform: capitalize;
+        }
+
+        .variant-value {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: black;
+        }
+
+        .price-box {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .current-price {
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'SamsungSharpSans', sans-serif;
+            color: black;
+        }
+
+        .card-action-btn {
+            background: white;
+            color: black;
+            border: 1.5px solid black;
+            border-radius: 50px;
+            padding: 14px 0;
+            width: 100%;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .card-action-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .loader {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 5rem;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 200px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-year {
+                font-size: 20vw;
+            }
+
+            .complex-card {
+                padding: 1.5rem;
+            }
+
+            .current-price {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="hero-year" id="heroYear">2026</div>
+        <h1 id="heroTitle">Catálogo Samsung</h1>
+    </section>
+
+    <div class="catalog-container">
+        <div class="products-grid" id="productsGrid">
+            <div class="loader">Cargando productos...</div>
+        </div>
+    </div>
+
+    <script>
+        window.catalogProducts = {};
+
+        // Helper to format price
+        const formatPrice = (price) => `Bs ${price}`;
+
+        // Helper to select color
+        window.selectColor = function (displayId, colorId) {
+            const product = window.catalogProducts[displayId];
+            if (!product) return;
+
+            // Update Active State
+            document.querySelectorAll(`#card-${displayId} .swatch`).forEach(el => el.classList.remove('active'));
+            document.querySelector(`#card-${displayId} .swatch[data-color="${colorId}"]`).classList.add('active');
+
+            // Find Color Data
+            const colorData = product.colors.find(c => c.id === colorId || c.colorId === colorId);
+            if (colorData) {
+                // Update Image
+                const img = document.querySelector(`#card-${displayId} .card-image`);
+                img.src = colorData.image;
+
+                // Update Label
+                const label = document.querySelector(`#card-${displayId} .card-color-names`);
+                if (label) label.textContent = colorData.name;
+            }
+        };
+
+        // Helper to select variant
+        window.selectVariant = function (displayId, variantIndex) {
+            const product = window.catalogProducts[displayId];
+            if (!product) return;
+
+            // Update Active State
+            document.querySelectorAll(`#card-${displayId} .variant-btn`).forEach(el => el.classList.remove('active'));
+            document.querySelector(`#card-${displayId} .variant-btn[data-idx="${variantIndex}"]`).classList.add('active');
+
+            // Find Variant Data
+            const variantData = product.priceVariants && product.priceVariants[variantIndex];
+            if (variantData) {
+                // Update Price
+                const priceEl = document.querySelector(`#card-${displayId} .current-price`);
+                const oldPriceEl = document.querySelector(`#card-${displayId} .old-price`);
+
+                priceEl.textContent = formatPrice(variantData.price);
+                if (variantData.promoPrice && variantData.promoPrice > 0 && variantData.promoPrice < variantData.price) {
+                    priceEl.textContent = formatPrice(variantData.promoPrice);
+                    oldPriceEl.textContent = formatPrice(variantData.price);
+                    oldPriceEl.style.display = 'inline';
+                } else {
+                    oldPriceEl.style.display = 'none';
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const pathParts = window.location.pathname.split('/');
+            const catalogId = pathParts[pathParts.length - 1];
+
+            if (!catalogId) {
+                document.getElementById('productsGrid').innerHTML = '<div class="loader">Catálogo no especificado</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/catalogs/${catalogId}/products`);
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message);
+                }
+
+                // Update Hero
+                const metadata = data.metadata || {};
+                const humanName = decodeURIComponent(catalogId).replace(/_/g, ' ');
+                document.getElementById('heroTitle').textContent = metadata.title || humanName;
+                document.getElementById('heroYear').textContent = metadata.text || metadata.year || '2026';
+                document.title = (metadata.title || humanName) + ' - Samsung';
+
+                if (metadata.banner) {
+                    const hero = document.querySelector('.hero');
+                    hero.style.backgroundImage = `url('${metadata.banner}')`;
+                    hero.style.backgroundSize = 'cover';
+                    hero.style.backgroundPosition = 'center';
+                }
+
+                const grid = document.getElementById('productsGrid');
+                if (data.products.length === 0) {
+                    grid.innerHTML = '<div class="loader">Este catálogo está vacío.</div>';
+                    return;
+                }
+
+                grid.innerHTML = data.products.map(product => {
+                    // Store in global
+                    const displayId = product.id;
+                    window.catalogProducts[displayId] = product;
+
+                    // Parse Data
+                    const badge = product.badge || '';
+                    const colors = product.colors || [];
+                    const variants = product.priceVariants || [];
+
+                    // Defaults
+                    const defaultColor = colors.length > 0 ? colors[0] : { image: product.image, name: 'Default', id: 'def', hex: '#000' };
+                    const displayColors = colors.length > 0 ? colors : [];
+
+                    // Display Price Logic
+                    let currentPrice = product.basePrice || 0;
+                    let oldPrice = 0;
+                    let hasVariants = variants.length > 0;
+
+                    if (hasVariants) {
+                        const v0 = variants[0];
+                        currentPrice = v0.price;
+                        if (v0.promoPrice && v0.promoPrice > 0 && v0.promoPrice < v0.price) {
+                            oldPrice = v0.price;
+                            currentPrice = v0.promoPrice;
+                        }
+                    }
+
+                    // Render Swatches
+                    const swatchesHtml = displayColors.map((c, idx) => `
+                        <div class="swatch ${idx === 0 ? 'active' : ''}" 
+                             style="background-color: ${c.hex};" 
+                             data-color="${c.id || c.colorId}"
+                             onclick="selectColor('${displayId}', '${c.id || c.colorId}')">
+                        </div>
+                    `).join('');
+
+                    // Render Variants Buttons
+                    const variantsHtml = variants.map((v, idx) => {
+                        const parts = (v.variableText || '').split(':');
+                        const label = parts.length > 1 ? parts[0] : 'Opción';
+                        const val = parts.length > 1 ? parts[1].trim() : parts[0];
+                        return `
+                            <div class="variant-btn ${idx === 0 ? 'active' : ''}" 
+                                 data-idx="${idx}"
+                                 onclick="selectVariant('${displayId}', ${idx})">
+                                <span class="variant-label">${label}</span>
+                                <span class="variant-value">${val}</span>
+                            </div>
+                        `;
+                    }).join('');
+
+                    const oldPriceDisplay = oldPrice > 0 ? formatPrice(oldPrice) : '';
+                    const oldPriceStyle = oldPrice > 0 ? '' : 'display:none;';
+                    const currentPriceDisplay = formatPrice(currentPrice);
+
+                    return `
+                        <div class="complex-card" id="card-${displayId}">
+                            ${badge ? `<div class="card-badge">${badge}</div>` : ''}
+                            
+                            <div class="card-image-container">
+                                <img src="${defaultColor.image}" class="card-image" alt="${product.name}">
+                            </div>
+
+                            <div class="card-sku">${product.sku || (colors[0] ? colors[0].sku : '') || '123123'}</div>
+                            
+                            <h3 class="card-title">${product.name}</h3>
+
+                            ${displayColors.length > 0 ? `
+                                <div class="card-color-label">Color: <span class="card-color-names">${defaultColor.name}</span></div>
+                                <div class="swatch-container">
+                                    ${swatchesHtml}
+                                </div>
+                            ` : ''}
+
+                            ${hasVariants ? `
+                                <div class="variant-selector">
+                                    ${variantsHtml}
+                                </div>
+                            ` : ''}
+
+                            <div class="price-box">
+                                <span class="old-price" style="${oldPriceStyle}">${oldPriceDisplay}</span>
+                                <span class="current-price">${currentPriceDisplay}</span>
+                            </div>
+
+                            <a href="#" class="card-action-btn">MÁS INFORMACIÓN</a>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Error loading catalog:', error);
+                document.getElementById('productsGrid').innerHTML = `<div class="loader">Error: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+
+</html>
