@@ -76,6 +76,10 @@ function injectHeader() {
             <p class="header-subtitle" id="headerSubtitle">Panel de Control</p>
         </div>
         <div class="header-right" id="headerActions">
+            <button class="btn-secondary" id="previewShopBtn" style="gap:5px; margin-right:10px;">
+                <span class="material-icons" style="font-size:18px;">visibility</span>
+                Previsualizar Tienda
+            </button>
             <!-- Dynamic Actions -->
         </div>
     `;
@@ -88,6 +92,32 @@ function injectHeader() {
         mainContent.prepend(header);
     } else {
         document.body.appendChild(header);
+    }
+
+    // Attach functionality
+    const btn = header.querySelector('#previewShopBtn');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            if (typeof window.products === 'undefined') {
+                // Try to fallback to localStorage if global vars aren't ready (rare)
+                const stored = localStorage.getItem('samsung_catalog_products');
+                if (stored) {
+                    window.products = JSON.parse(stored);
+                } else {
+                    alert('No hay productos cargados para previsualizar');
+                    return;
+                }
+            }
+            
+            // Save to Session Storage for the main page to pick up
+            sessionStorage.setItem('samsung_catalog_preview_active', 'true');
+            sessionStorage.setItem('samsung_catalog_preview_data', JSON.stringify(window.products));
+            
+            // Open index.html in new tab
+            // We use absolute path from root relative to current location
+            // Since admin is at /src/admin/, root is ../../
+            window.open('../../index.html', '_blank');
+        });
     }
 }
 
