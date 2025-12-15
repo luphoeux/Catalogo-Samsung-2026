@@ -8,13 +8,13 @@
     <style>
         @font-face {
             font-family: 'SamsungSharpSans';
-            src: url('/src/assets/fonts/SamsungSharpSans-Bold.ttf') format('truetype');
+            src: url('/assets/fonts/SamsungSharpSans-Bold.ttf') format('truetype');
             font-weight: bold;
         }
 
         @font-face {
             font-family: 'SamsungOne';
-            src: url('/src/assets/fonts/SamsungOne-400.ttf') format('truetype');
+            src: url('/assets/fonts/SamsungOne-400.ttf') format('truetype');
             font-weight: normal;
         }
 
@@ -76,7 +76,7 @@
         }
 
         .catalog-container {
-            max-width: 1200px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 0 1rem;
             padding-bottom: 4rem;
@@ -85,8 +85,26 @@
         /* Products Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+        }
+
+        @media (max-width: 1440px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Complex Card Styles */
@@ -124,7 +142,7 @@
         }
 
         .card-image-container {
-            background: #f6f6f6;
+            background: #ffffff;
             border-radius: 20px;
             width: 100%;
             aspect-ratio: 1;
@@ -378,11 +396,17 @@
                 } else {
                     oldPriceEl.style.display = 'none';
                 }
+
+                // Update Link
+                const linkBtn = document.querySelector(`#card-${displayId} .card-action-btn`);
+                if (linkBtn) {
+                    linkBtn.href = variantData.link || '#';
+                }
             }
         };
 
         document.addEventListener('DOMContentLoaded', async () => {
-            const pathParts = window.location.pathname.split('/');
+            const pathParts = window.location.pathname.replace(/\/$/, '').split('/');
             const catalogId = pathParts[pathParts.length - 1];
 
             if (!catalogId) {
@@ -419,6 +443,7 @@
                 }
 
                 grid.innerHTML = data.products.map(product => {
+                    if (!product) return '';
                     // Store in global
                     const displayId = product.id;
                     window.catalogProducts[displayId] = product;
@@ -504,7 +529,7 @@
                                 <span class="current-price">${currentPriceDisplay}</span>
                             </div>
 
-                            <a href="#" class="card-action-btn">MÁS INFORMACIÓN</a>
+                            <a href="${(hasVariants ? variants[0].link : (product.baseLink || product.link)) || '#'}" class="card-action-btn" target="_blank">MÁS INFORMACIÓN</a>
                         </div>
                     `;
                 }).join('');

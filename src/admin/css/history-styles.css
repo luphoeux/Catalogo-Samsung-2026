@@ -1,0 +1,30 @@
+/* History Controls */
+.history-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.history-btn:hover:not(:disabled) {
+    background-color: #f0f4f9;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.history-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+.history-btn .material-icons {
+    font-size: 20px;
+}

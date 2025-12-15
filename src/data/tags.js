@@ -9,10 +9,6 @@ var tags = {
         "id": "e002",
         "name": "Oferta"
     },
-    "2x1": {
-        "id": "e003",
-        "name": "2x1"
-    },
     "Nuevo": {
         "id": "e004",
         "name": "Nuevo"
@@ -32,5 +28,9 @@ var tags = {
     "Próximamente": {
         "id": "e008",
         "name": "Próximamente"
+    },
+    "test": {
+        "id": "e009",
+        "name": "test"
     }
 };

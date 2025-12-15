@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combos - Admin</title>
+    <link rel="icon" type="image/png" href="../../image/favicon.png">
+    <link rel="stylesheet" href="css/admin-layout.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <div class="main-content">
+        <div id="combosView" class="view-section active">
+            <div class="header-actions">
+                <div>
+                    <h1 class="page-title">Combos</h1>
+                    <p class="page-subtitle">Gestiona combos de productos</p>
+                </div>
+                <div>
+                    <button class="btn-primary" id="bulkDeleteCombosBtn"
+                        style="display: none; background-color: #d32f2f; margin-right: 1rem;">
+                        <span class="material-icons" style="font-size: 16px;">delete</span>
+                        Eliminar (<span id="bulkDeleteCombosCount">0</span>)
+                    </button>
+                    <button class="btn-primary" id="addComboBtn">
+                        <span class="material-icons" style="font-size: 16px;">add</span>
+                        Nuevo Combo
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-filters" style="margin-bottom: 1rem;">
+                <input type="text" class="search-admin" placeholder="Buscar combo..." id="comboSearch">
+            </div>
+
+            <div class="products-table-container">
+                <table style="font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th width="40" style="text-align:center;">
+                                <input type="checkbox" id="selectAllCombos"
+                                    style="width:18px; height:18px; cursor:pointer;" title="Seleccionar todos">
+                            </th>
+                            <th width="300">Nombre</th>
+                            <th width="120">Productos</th>
+                            <th width="100">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="combosTableBody">
+                        <!-- Combo rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Combo Edit Modal -->
+    <div id="comboModal" class="modal">
+        <div class="modal-content modal-md modal-content-padded">
+            <div class="modal-header">
+                <h2 class="modal-title" id="comboModalTitle">Editar Combo</h2>
+                <button class="close-modal" id="closeComboModal">&times;</button>
+            </div>
+            <form id="comboForm">
+                <input type="hidden" id="editComboOldName">
+
+                <div class="form-group">
+                    <label class="form-label">Nombre del Combo</label>
+                    <input type="text" class="form-input" id="comboName" required placeholder="Ej: Pack Home Office">
+                    <small class="form-hint">ID automático (cb001, etc.)</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Productos (IDs separados por coma)</label>
+                    <textarea class="form-input" id="comboProducts" rows="3" placeholder="Ej: 101, 204, 305"></textarea>
+                    <small class="form-hint">Ingresa los IDs de los productos que componen este
+                        combo.</small>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelComboBtn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Combo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

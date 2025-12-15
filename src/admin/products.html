@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos Master - Admin</title>
+    <link rel="icon" type="image/png" href="../../image/favicon.png">
+    <link rel="stylesheet" href="css/admin-layout.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+</head>
+
+<body>
+    <!-- Main Content (Sidebar and Header injected via layout.js) -->
+    <div class="main-content">
+        <!-- PRODUCTS VIEW -->
+        <div id="productsView" class="view-section active">
+            <div class="header-actions">
+                <div>
+                    <button class="btn-primary" id="bulkDeleteBtn"
+                        style="display: none; background-color: #d32f2f; margin-right: 1rem;">
+                        <span class="material-icons" style="font-size: 16px;">delete</span>
+                        Eliminar (<span id="bulkDeleteCount">0</span>)
+                    </button>
+                </div>
+                <div>
+                    <button class="btn-primary" id="addProductBtn">
+                        <span class="material-icons" style="font-size: 16px;">add</span>
+                        Nuevo Producto
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-filters">
+                <input type="text" class="search-admin" placeholder="Buscar productos..." id="productSearch">
+                <select class="select-filter" id="categoryFilter">
+                    <option value="all">Todas las Categorías</option>
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
+            <div class="products-table-container">
+                <table style="font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th width="40" style="text-align:center;">
+                                <input type="checkbox" id="selectAllProducts"
+                                    style="width:18px; height:18px; cursor:pointer;" title="Seleccionar todos">
+                            </th>
+                            <th>Producto</th>
+                            <th width="120">Categoría</th>
+                            <th width="150">SKU (Var)</th>
+                            <th width="120">Precio</th>
+                            <th width="100">Stock</th>
+                            <th width="100">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Rows will be injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal (Available Globally for now, but mainly used here) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Nuevo Producto</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+
+            <div class="modal-body modal-body-split">
+                <!-- Left Column: Form -->
+                <div style="flex: 1; min-width: 0;">
+                    <form id="productForm">
+                        <input type="hidden" id="editProductId">
+
+                        <!-- SECCIÓN 1: INFORMACIÓN GENERAL -->
+                        <div class="modal-section">
+                            <div class="modal-section-title">
+                                <h3 class="section-header-title">
+                                    <span class="material-icons">info</span>
+                                    1. Información General
+                                </h3>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-input" id="prodName" required
+                                    placeholder="Ej: Galaxy S24 Ultra">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Descripción</label>
+                                <textarea class="form-input" id="prodDescription" rows="3"
+                                    placeholder="Ej: Diseño ultra delgado 8.9mm, Cámara 200MP, Snapdragon 8 Elite y Galaxy AI."
+                                    style="resize: vertical; font-family: inherit;"></textarea>
+                                <small class="form-hint">Descripción breve del producto que se
+                                    mostrará en el catálogo</small>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Categoría</label>
+                                    <select class="form-select" id="prodCategory" required>
+                                        <option value="">Seleccione...</option>
+                                        <!-- Javascript populates this -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Badge (Etiqueta)</label>
+                                    <input type="text" class="form-input" id="prodBadge" list="badgeList"
+                                        placeholder="Ej: Nuevo, Oferta">
+                                    <datalist id="badgeList"></datalist>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 2: COLORES DEL PRODUCTO -->
+                        <div class="modal-section">
+                            <div class="modal-section-title">
+                                <div>
+                                    <h3 class="section-header-title">
+                                        <span class="material-icons">palette</span>
+                                        2. Colores Disponibles
+                                    </h3>
+                                    <p class="section-header-desc">
+                                        Define los colores en los que est disponible el producto (solo visual, no
+                                        afecta precio)
+                                    </p>
+                                </div>
+                                <button type="button" class="btn-secondary" onclick="addColorRow()"
+                                    style="padding:6px 12px; font-size:0.85rem;">
+                                    <span class="material-icons"
+                                        style="font-size:16px; vertical-align:middle;">add</span>
+                                    Agregar Color
+                                </button>
+                            </div>
+                            <div id="colorsContainer">
+                                <!-- Filas de colores dinámicas -->
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 3: VARIANTES DE PRECIO -->
+                        <div class="modal-section">
+                            <div class="modal-section-title">
+                                <div>
+                                    <h3 class="section-header-title">
+                                        <span class="material-icons">monetization_on</span>
+                                        3. Variantes de Precio
+                                    </h3>
+                                    <p class="section-header-desc">
+                                        Crea variantes que modifican el precio (ej: Capacidad, Tamaño)
+                                    </p>
+                                </div>
+                                <button type="button" class="btn-secondary" onclick="addPriceVariantRow()"
+                                    style="padding:6px 12px; font-size:0.85rem;">
+                                    <span class="material-icons"
+                                        style="font-size:16px; vertical-align:middle;">add</span>
+                                    Agregar Variante
+                                </button>
+                            </div>
+
+                            <div id="priceVariantsContainer">
+                                <!-- Price Variant Cards -->
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- Right Column: Live Preview -->
+                <div class="preview-col">
+                    <div class="preview-card">
+                        <h4
+                            style="margin:0 0 15px 0; color:#444; font-size: 0.9rem; text-transform:uppercase; letter-spacing:1px; text-align:center;">
+                            Vista Previa</h4>
+                        <div id="productPreviewContainer">
+                            <!-- Preview Card Rendered Here -->
+                            <div style="text-align: center; color: #999; padding: 2rem;">
+                                Complete los datos para ver la previsualización
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelBtn">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-primary" id="saveProductBtn">
+                    <span class="material-icons" style="font-size: 16px;">save</span>
+                    Guardar Producto
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Load Data -->
+    <script src="../data/color-variables.js"></script>
+    <script src="../data/text-variables.js"></script>
+    <script src="../data/categories.js"></script>
+    <script src="../data/tags.js"></script>
+    <script src="../data/promotions.js"></script>
+    <script src="../data/products.js"></script>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Admin Logic -->
+    <script src="js/layout.js"></script>
+    <script src="js/preview.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

@@ -4,6 +4,9 @@ const DEFAULT_PLACEHOLDER_IMAGE = 'data:image/svg+xml,<svg xmlns="http://www.w3.
 
 /**
  * Creates a product preview card DOM element
+ * Supports New Data Structure: 
+ * - colors: Array of {name, hex, images[]}
+ * - priceVariants: Array of {variableText, price}
  * @param {Object} product - Product data object
  * @returns {HTMLElement} - The preview card element
  */
@@ -20,30 +23,47 @@ function createPreviewCard(product) {
         border: 1px solid #eee;
     `;
 
-    const firstColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
     const uniqueId = 'preview-' + Math.random().toString(36).substr(2, 9);
 
-    // Badge (top-left, blue background like render_test.html)
+    // Store in global for interactions
+    if (!window.previewDataStore) window.previewDataStore = {};
+    window.previewDataStore[uniqueId] = product;
+
+    // 1. Resolve Colors
+    const hasColors = product.colors && Array.isArray(product.colors) && product.colors.length > 0;
+    const firstColorObj = hasColors ? product.colors[0] : null;
+    const firstColorName = firstColorObj ? (firstColorObj.name || 'Color') : '';
+
+    // 2. Resolve Main Image
+    // Priority: First color's image -> Product main image -> Placeholder
+    let mainImage = product.image;
+    if (firstColorObj) {
+        if (firstColorObj.image) mainImage = firstColorObj.image;
+        else if (firstColorObj.images && firstColorObj.images.length > 0) mainImage = firstColorObj.images[0];
+    }
+
+    // Badge
     const badgeHtml = product.badge ? `<div style="position: absolute; top: 20px; left: 20px; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; color: white; text-transform: uppercase; z-index: 10; background-color: #0056b3;">${product.badge}</div>` : '';
 
-    // Colors section
+    // Colors HTML
     let colorsHtml = '';
-    if (product.colors && product.colors.length > 0) {
+    if (hasColors) {
         colorsHtml = `
             <div style="margin-bottom: 1.2rem;">
-                <div style="font-size: 0.8rem; color: #333; margin-bottom: 0.5rem; font-weight: 600;">Color: <span class="preview-selected-color" id="color-name-${uniqueId}">${firstColor}</span></div>
+                <div style="font-size: 0.8rem; color: #333; margin-bottom: 0.5rem; font-weight: 600;">
+                    Color: <span class="preview-selected-color" id="color-name-${uniqueId}">${firstColorName}</span>
+                </div>
                 <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                    ${product.colors.map((color, index) => {
-            const hex = product.colorCodes && product.colorCodes[color] ? product.colorCodes[color] : '#CCCCCC';
+                    ${product.colors.map((colorObj, index) => {
+            const hex = colorObj.hex || '#CCCCCC';
             const activeStyle = index === 0 ? 'transform: scale(0.9); box-shadow: 0 0 0 2px white, 0 0 0 4px #000;' : '';
+            const colorName = colorObj.name || '';
 
-            // Clean logic: NO data URLs in attributes to avoid errors
-            // Use index to lookup data
             return `<div class="preview-color-dot ${index === 0 ? 'active' : ''}" 
                                      style="width: 22px; height: 22px; border-radius: 50%; background-color: ${hex}; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); transition: transform 0.2s; position: relative; ${activeStyle}"
-                                     data-color="${color}"
                                      data-index="${index}"
                                      data-card-id="${uniqueId}"
+                                     title="${colorName}"
                                      onclick="window.changePreviewColor(this, '${uniqueId}')"
                                      onmouseover="if(!this.classList.contains('active')) this.style.transform='scale(1.15)'"
                                      onmouseout="if(!this.classList.contains('active')) this.style.transform='scale(1)'">
@@ -54,54 +74,62 @@ function createPreviewCard(product) {
         `;
     }
 
-    // Storage badges 
-    let storageHtml = '';
-    if (product.storage && product.storage.length > 0) {
-        const containerStyle = product.storage.length <= 2
+    // Price Variants (or Storage for legacy)
+    let variantsHtml = '';
+    if (product.priceVariants && product.priceVariants.length > 0) {
+        const containerStyle = product.priceVariants.length <= 2
             ? 'display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem;'
             : 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; padding: 0 10px;';
 
-        storageHtml = `
+        variantsHtml = `
             <div style="${containerStyle}">
-                ${product.storage.map((s, i) => {
-            const isActive = i === 0;
+                ${product.priceVariants.map((v, i) => {
+            const isActive = i === 0; // Select first by default
             const activeStyle = isActive ? 'background: #f8f9fa; border: 1px solid #000; color: #000;' : 'background: #fff; border: 1px solid #ddd; color: #333;';
-            const minWidth = product.storage.length <= 2 ? 'min-width: 90px; max-width: 140px;' : '';
-            return `<div style="${activeStyle} padding: 8px 5px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; line-height: 1; white-space: nowrap; ${minWidth}">
-                                <span style="font-size: 0.65rem; color: #888; margin-bottom: 3px;">Memoria</span>
-                                <span>${s}</span>
+            // Fallback for different data structures (variableText, text, or just the string if array of strings)
+            const text = v.variableText || v.text || (typeof v === 'string' ? v : ('Opción ' + (i + 1)));
+            return `<div style="${activeStyle} padding: 8px 5px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; line-height: 1; white-space: nowrap;">
+                                <span style="font-size: 0.65rem; color: #888; margin-bottom: 3px;">Opción</span>
+                                <span>${text}</span>
                             </div>`;
         }).join('')}
             </div>
         `;
     }
 
-    // Price section 
-    let priceHtml = '';
-    if (product.originalPrice && product.originalPrice != 0 && product.price && product.price != 0) {
-        priceHtml = `
-            <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: baseline; gap: 12px; height: 40px;">
-                <div style="text-decoration: line-through; color: #999; font-size: 1rem; font-weight: 400;">Bs ${Number(product.originalPrice).toLocaleString()}</div>
-                <div style="font-family: 'SamsungSharpSans', sans-serif; font-size: 1.6rem; color: #000; font-weight: bold;">Bs ${Number(product.price).toLocaleString()}</div>
-            </div>
-        `;
-    } else if (product.price && product.price != 0) {
-        priceHtml = `
-            <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: baseline; gap: 12px; height: 40px;">
-                <div style="font-family: 'SamsungSharpSans', sans-serif; font-size: 1.6rem; color: #000; font-weight: bold;">Bs ${Number(product.price).toLocaleString()}</div>
-            </div>
-        `;
+    // Price Display
+    // Logic: If priceVariants exist, show first one. Else show base price.
+    let price = product.price || 0;
+    let promoPrice = product.promoPrice || 0;
+
+    if (product.priceVariants && product.priceVariants.length > 0) {
+        price = product.priceVariants[0].price || 0;
+        promoPrice = product.priceVariants[0].promoPrice || 0;
     }
 
-    // Store product data in a global variable for lookup by ID (to avoid putting data URLs in DOM)
-    if (!window.previewDataStore) window.previewDataStore = {};
-    window.previewDataStore[uniqueId] = product;
+    let priceHtml = '';
+    if (Number(price) > 0) {
+        if (Number(promoPrice) > 0) { // Should be price > promoPrice usually, but just check existence
+            priceHtml = `
+                <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: baseline; gap: 12px; height: 40px;">
+                    <div style="text-decoration: line-through; color: #999; font-size: 1rem; font-weight: 400;">Bs ${Number(price).toLocaleString()}</div>
+                    <div style="font-family: 'SamsungSharpSans', sans-serif; font-size: 1.6rem; color: #000; font-weight: bold;">Bs ${Number(promoPrice).toLocaleString()}</div>
+                </div>
+            `;
+        } else {
+            priceHtml = `
+                <div style="margin-bottom: 1.5rem; display: flex; justify-content: center; align-items: baseline; gap: 12px; height: 40px;">
+                    <div style="font-family: 'SamsungSharpSans', sans-serif; font-size: 1.6rem; color: #000; font-weight: bold;">Bs ${Number(price).toLocaleString()}</div>
+                </div>
+            `;
+        }
+    }
 
     card.innerHTML = `
         ${badgeHtml}
         <div style="height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; margin-top: 1rem; background: #f5f5f5; border-radius: 12px;">
-            ${product.image ? `
-                <img src="${product.image}" alt="${product.name}" 
+            ${mainImage ? `
+                <img src="${mainImage}" alt="${product.name}" 
                      id="img-${uniqueId}"
                      style="max-height: 100%; max-width: 100%; object-fit: contain; transition: opacity 0.3s ease;"
                      onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color:#999; font-size:0.9rem;\\'>Sin Imagen</div>'">
@@ -109,11 +137,12 @@ function createPreviewCard(product) {
                 <div style="color:#999; font-size:0.9rem;">Sin Imagen</div>
             `}
         </div>
-        <div id="sku-${uniqueId}" style="color: #999; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">${product.sku || ''}</div>
-        <h2 style="font-family: 'SamsungSharpSans', sans-serif; font-size: 1.5rem; line-height: 1.2; color: #000; margin: 0 0 0.8rem 0;">${product.name}</h2>
-        <p style="color: #777; font-size: 0.8rem; line-height: 1.4; margin-bottom: 1rem; min-height: 2.8em;">${product.description || ''}</p>
+        <div id="sku-${uniqueId}" style="color: #999; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">${product.sku || (firstColorObj ? firstColorObj.sku : '') || ''}</div>
+        <h2 style="font-family: 'SamsungSharpSans', sans-serif; font-size: 1.5rem; line-height: 1.2; color: #000; margin: 0 0 0.5rem 0;">${product.name || 'Nombre del Producto'}</h2>
+        ${product.description ? `<p style="color: #666; font-size: 0.8rem; line-height: 1.4; margin: 0 0 1rem 0; min-height: 2.4rem;">${product.description}</p>` : ''}
+
         ${colorsHtml}
-        ${storageHtml}
+        ${variantsHtml}
         ${priceHtml}
         <a href="#" style="display: block; width: 100%; padding: 14px 0; border: 1px solid #000; background: transparent; color: #000; border-radius: 25px; text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.2s; box-sizing: border-box;">MÁS INFORMACIÓN</a>
     `;
@@ -127,9 +156,10 @@ window.changePreviewColor = function (dot, uniqueId) {
 
     const product = window.previewDataStore[uniqueId];
     const index = parseInt(dot.getAttribute('data-index'));
-    const color = dot.getAttribute('data-color');
 
-    if (!color || isNaN(index)) return;
+    if (isNaN(index) || !product.colors || !product.colors[index]) return;
+
+    const colorObj = product.colors[index];
 
     // Update active state
     const dots = dot.parentElement.querySelectorAll('.preview-color-dot');
@@ -143,10 +173,9 @@ window.changePreviewColor = function (dot, uniqueId) {
     dot.style.transform = 'scale(0.9)';
     dot.style.boxShadow = '0 0 0 2px white, 0 0 0 4px #000';
 
-    // Get variant data
-    const variant = product.variants && product.variants[color] ? product.variants[color] : null;
-    const image = variant ? variant.image : (product.colors && product.colors.indexOf(color) === 0 ? product.image : '');
-    const sku = variant ? variant.sku : (product.colors && product.colors.indexOf(color) === 0 ? product.sku : '');
+    // Update data
+    const image = colorObj.image || (colorObj.images && colorObj.images[0]) || product.image || '';
+    const sku = colorObj.sku || product.sku || '';
 
     // Update image
     const imgContainer = document.getElementById(`img-${uniqueId}`)?.parentElement;
@@ -163,9 +192,9 @@ window.changePreviewColor = function (dot, uniqueId) {
 
     // Update SKU
     const skuEl = document.getElementById(`sku-${uniqueId}`);
-    if (skuEl) skuEl.textContent = sku || '';
+    if (skuEl) skuEl.textContent = sku;
 
     // Update color name
     const colorNameEl = document.getElementById(`color-name-${uniqueId}`);
-    if (colorNameEl) colorNameEl.textContent = color;
+    if (colorNameEl) colorNameEl.textContent = colorObj.name || '';
 }

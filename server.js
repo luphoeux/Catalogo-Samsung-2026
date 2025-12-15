@@ -20,6 +20,25 @@ const xlsx = require('xlsx');
 const { loadJSData } = require('./load-js-data');
 
 const server = http.createServer((req, res) => {
+    // Enable CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle OPTIONS method
+    if (req.method === 'OPTIONS') {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
+
+    // Handle Favicon to prevent 404
+    if (req.url === '/favicon.ico') {
+        res.writeHead(204); // No Content
+        res.end();
+        return;
+    }
+
     console.log(`Request: ${req.url}`);
 
     // API Endpoint: Save Colors
@@ -394,6 +413,61 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // API Endpoint: Remove Product from Catalog
+    if (req.method === 'POST' && req.url === '/api/catalogs/remove-product') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', () => {
+            try {
+                const { catalogId, productId } = JSON.parse(body);
+                if (!catalogId || !productId) throw new Error('Catalog ID and Product ID required');
+
+                const catalogFileName = `Catalogo_${catalogId}.xlsx`;
+                const catalogPath = path.join(__dirname, 'database', 'catalogs', catalogFileName);
+
+                if (!fs.existsSync(catalogPath)) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Catálogo no encontrado' }));
+                    return;
+                }
+
+                // Read catalog
+                const workbook = xlsx.readFile(catalogPath);
+                const sheet = workbook.Sheets['Productos'];
+                const data = xlsx.utils.sheet_to_json(sheet);
+
+                // Filter out the product to remove
+                const filteredData = data.filter(row => String(row.ID) !== String(productId));
+
+                if (filteredData.length === data.length) {
+                    // Product not found in catalog
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Producto no encontrado en el catálogo' }));
+                    return;
+                }
+
+                // Update the sheet with filtered data
+                const newSheet = xlsx.utils.json_to_sheet(filteredData);
+                workbook.Sheets['Productos'] = newSheet;
+
+                // Save the updated catalog
+                xlsx.writeFile(workbook, catalogPath);
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({
+                    success: true,
+                    message: 'Producto eliminado del catálogo',
+                    remainingProducts: filteredData.length
+                }));
+            } catch (err) {
+                console.error('Error removing product from catalog:', err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: err.message }));
+            }
+        });
+        return;
+    }
+
     // API Endpoint: Get Catalog Products
     if (req.method === 'GET' && req.url.startsWith('/api/catalogs/')) {
         try {
@@ -452,6 +526,74 @@ const server = http.createServer((req, res) => {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ success: true, products: products, metadata: metadata }));
             }
+            // EXPORT CATALOG (Detailed Excel)
+            else if (urlParts[4] === 'export') {
+                const safeName = catalogName.replace(/\s+/g, '_');
+                const catalogFileName = `Catalogo_${safeName}.xlsx`;
+                const catalogPath = path.join(__dirname, 'database', 'catalogs', catalogFileName);
+
+                if (!fs.existsSync(catalogPath)) {
+                    res.writeHead(404);
+                    res.end(JSON.stringify({ success: false, message: 'Catalog not found' }));
+                    return;
+                }
+
+                const workbook = xlsx.readFile(catalogPath);
+                const sheet = workbook.Sheets['Productos'];
+                const rawData = xlsx.utils.sheet_to_json(sheet);
+
+                // Map to Friendly Format
+                const exportData = rawData.map(row => {
+                    let p = {};
+                    try {
+                        p = JSON.parse(row['Datos Completos'] || '{}');
+                    } catch (e) { p = row; }
+
+                    const flat = {
+                        'ID': p.id,
+                        'Nombre': p.name,
+                        'Categoría': p.category,
+                        'Precio': p.basePrice || p.price || 0,
+                        'Precio Promo': p.basePromo || p.promoPrice || 0,
+                        'Link': p.baseLink || '',
+                        'Descripción': p.description || '',
+                        'Badge': p.badge || ''
+                    };
+
+                    // Flatten Variants (Max 5 for example, or dynamic?)
+                    // User image showed SKU1, Color1...
+                    // We will add up to 5 variants columns
+                    const variants = p.colors || []; // Primary variants usually colors in this system
+
+                    variants.forEach((v, i) => {
+                        const idx = i + 1;
+                        flat[`SKU${idx}`] = v.sku || '';
+                        flat[`Color${idx}`] = v.name || '';
+                        flat[`Link${idx}`] = v.link || ''; // If link exists on color
+                        flat[`Hex${idx}`] = v.hex || '';
+                    });
+
+                    return flat;
+                });
+
+                const exportWB = xlsx.utils.book_new();
+                const exportWS = xlsx.utils.json_to_sheet(exportData);
+
+                // Adjust column widths
+                const wscols = Object.keys(exportData[0] || {}).map(k => ({ wch: 20 }));
+                exportWS['!cols'] = wscols;
+
+                xlsx.utils.book_append_sheet(exportWB, exportWS, 'Productos');
+
+                const buffer = xlsx.write(exportWB, { type: 'buffer', bookType: 'xlsx' });
+
+                res.writeHead(200, {
+                    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Disposition': `attachment; filename="Export_${catalogFileName}"`,
+                    'Content-Length': buffer.length
+                });
+                res.end(buffer);
+            }
         } catch (err) {
             console.error('Error getting catalog products:', err);
             res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -502,10 +644,15 @@ const server = http.createServer((req, res) => {
                         message: 'Productos guardados correctamente'
                     }));
                 }
+                // Update Single Product in Catalog
+                else if (urlParts[4] === 'update-product') {
+                    console.log('🔄 Data received to update in catalog');
+                    const { product } = JSON.parse(body);
 
-                // Add Products to Catalog
-                else if (urlParts[4] === 'add-products') {
-                    const { productIds } = JSON.parse(body);
+                    if (!product || !product.id) {
+                        throw new Error('Datos de producto inválidos');
+                    }
+
                     const catalogFileName = `Catalogo_${catalogName}.xlsx`;
                     const catalogPath = path.join(__dirname, 'database', 'catalogs', catalogFileName);
 
@@ -513,10 +660,154 @@ const server = http.createServer((req, res) => {
                         throw new Error('Catálogo no encontrado');
                     }
 
+                    // Read Catalog
+                    const workbook = xlsx.readFile(catalogPath);
+                    const sheet = workbook.Sheets['Productos'];
+                    const data = xlsx.utils.sheet_to_json(sheet);
+
+                    // Find Product
+                    const index = data.findIndex(row => String(row.ID || row.id) === String(product.id));
+
+                    if (index === -1) {
+                        throw new Error('Producto no encontrado en este catálogo');
+                    }
+
+                    // Update Row
+                    const row = data[index];
+
+                    // Update columns
+                    row.Nombre = product.name;
+                    row['Categoría'] = product.category;
+                    row.Badge = product.badge || '';
+                    row['Precio Base'] = product.basePrice || product.price || 0;
+                    row['Precio Promo'] = product.basePromo || product.promoPrice || 0;
+                    row.Link = product.baseLink || product.link || '';
+
+                    // CRITICAL: Update the JSON Dump
+                    row['Datos Completos'] = JSON.stringify(product);
+
+                    // Update Sheet
+                    data[index] = row;
+                    const newSheet = xlsx.utils.json_to_sheet(data);
+                    workbook.Sheets['Productos'] = newSheet;
+
+                    // Save
+                    xlsx.writeFile(workbook, catalogPath);
+
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({
+                        success: true,
+                        message: 'Producto actualizado en el catálogo'
+                    }));
+                }
+
+                // (Export moved to GET handler)
+
+                // IMPORT CATALOG (Update from Excel)
+                else if (urlParts[4] === 'import') {
+                    console.log('📥 Import Request for:', catalogName);
+                    // Note: BODY here is the raw binary or base64? 
+                    // Since we are inside the 'data' listener that accumulates body string, this won't work for binary upload.
+                    // We need to handle this differently or ensure client sends JSON with base64.
+                    // IMPORTANT: The main loop above accumulates `body` as string. If client sends binary, it corrupts.
+                    // We will assume client sends JSON { "fileData": "base64..." } or we need to change how we parse body.
+
+                    // BUT: `server.js` seems to handle /api/import as binary stream in lines 810+.
+                    // For consistence let's expect the client to send JSON with base64 encoded file for simplicity in this block
+                    // OR we should move this out of the string accumulator block.
+
+                    const { fileData } = JSON.parse(body);
+                    const buffer = Buffer.from(fileData, 'base64');
+
+                    const safeName = catalogName.replace(/\s+/g, '_');
+                    const catalogFileName = `Catalogo_${safeName}.xlsx`;
+                    const catalogPath = path.join(__dirname, 'database', 'catalogs', catalogFileName);
+
+                    if (!fs.existsSync(catalogPath)) {
+                        throw new Error('Catalog not found');
+                    }
+
+                    const currentWB = xlsx.readFile(catalogPath);
+                    const currentSheet = currentWB.Sheets['Productos'];
+                    let currentRows = xlsx.utils.sheet_to_json(currentSheet);
+
+                    // Parse Uploaded
+                    const importWB = xlsx.read(buffer, { type: 'buffer' });
+                    const importSheet = importWB.Sheets[importWB.SheetNames[0]]; // Assume first sheet
+                    const importRows = xlsx.utils.sheet_to_json(importSheet);
+
+                    let updatedCount = 0;
+
+                    importRows.forEach(imported => {
+                        const id = imported.ID;
+                        if (!id) return;
+
+                        const index = currentRows.findIndex(r => String(r.ID || r.id) === String(id));
+                        if (index !== -1) {
+                            // Update logic
+                            const existingRow = currentRows[index];
+                            let product = {};
+                            try { product = JSON.parse(existingRow['Datos Completos']); } catch (e) { }
+
+                            // Update Fields
+                            if (imported.Nombre) product.name = imported.Nombre;
+                            if (imported.Precio !== undefined) {
+                                product.basePrice = imported.Precio;
+                                product.price = imported.Precio;
+                            }
+                            if (imported['Precio Promo'] !== undefined) {
+                                product.basePromo = imported['Precio Promo'];
+                                product.promoPrice = imported['Precio Promo'];
+                            }
+                            if (imported.Badge !== undefined) product.badge = imported.Badge;
+
+                            // Update row columns
+                            existingRow.Nombre = product.name;
+                            existingRow['Precio Base'] = product.basePrice;
+                            existingRow['Precio Promo'] = product.basePromo;
+                            existingRow.Badge = product.badge;
+
+                            // TODO: Handle Variants Update if needed (complex)
+
+                            // Save back JSON
+                            existingRow['Datos Completos'] = JSON.stringify(product);
+                            currentRows[index] = existingRow;
+                            updatedCount++;
+                        }
+                    });
+
+                    // Write back to Catalog File
+                    const newSheet = xlsx.utils.json_to_sheet(currentRows);
+                    currentWB.Sheets['Productos'] = newSheet;
+                    xlsx.writeFile(currentWB, catalogPath);
+
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, message: `Actualizados ${updatedCount} productos.` }));
+                }
+
+                // Add Products to Catalog
+                else if (urlParts[4] === 'add-products') {
+                    console.log('📦 Add Products Request Received');
+                    const { productIds } = JSON.parse(body);
+                    console.log('Product IDs to add:', productIds);
+
+                    const catalogFileName = `Catalogo_${catalogName}.xlsx`;
+                    const catalogPath = path.join(__dirname, 'database', 'catalogs', catalogFileName);
+                    console.log('Catalog path:', catalogPath);
+
+                    if (!fs.existsSync(catalogPath)) {
+                        console.error('❌ Catalog not found:', catalogPath);
+                        throw new Error('Catálogo no encontrado');
+                    }
+
                     // Load Global Products
                     const productsPath = path.join(__dirname, 'src', 'data', 'products.js');
+                    console.log('Loading products from:', productsPath);
                     const allProducts = loadJSData(productsPath) || [];
+                    console.log('Total products loaded:', allProducts.length);
                     const newProducts = allProducts.filter(p => productIds.includes(String(p.id)));
+                    console.log('Products to add:', newProducts.length);
+
 
                     if (newProducts.length === 0) {
                         throw new Error('No se encontraron los productos seleccionados');

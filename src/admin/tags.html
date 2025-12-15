@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etiquetas - Admin</title>
+    <link rel="icon" type="image/png" href="../../image/favicon.png">
+    <link rel="stylesheet" href="css/admin-layout.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <div class="main-content">
+        <div id="tagsView" class="view-section active">
+            <div class="header-actions">
+                <div>
+                    <h1 class="page-title">Etiquetas (Badges)</h1>
+                    <p class="page-subtitle">Gestiona etiquetas promocionales (Nuevo, Oferta, etc.)</p>
+                </div>
+                <div>
+                    <button class="btn-primary" id="bulkDeleteTagsBtn"
+                        style="display: none; background-color: #d32f2f; margin-right: 1rem;">
+                        <span class="material-icons" style="font-size: 16px;">delete</span>
+                        Eliminar (<span id="bulkDeleteTagsCount">0</span>)
+                    </button>
+                    <button class="btn-primary" id="addTagBtn">
+                        <span class="material-icons" style="font-size: 16px;">add</span>
+                        Nueva Etiqueta
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-filters" style="margin-bottom: 1rem;">
+                <input type="text" class="search-admin" placeholder="Buscar etiqueta..." id="tagSearch">
+            </div>
+
+            <div class="products-table-container">
+                <table style="font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th width="40" style="text-align:center;">
+                                <input type="checkbox" id="selectAllTags"
+                                    style="width:18px; height:18px; cursor:pointer;" title="Seleccionar todos">
+                            </th>
+                            <th>Nombre</th>
+                            <th width="120" style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tagsTableBody">
+                        <!-- Tag rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tag Edit Modal -->
+    <div id="tagModal" class="modal">
+        <div class="modal-content modal-sm modal-content-padded">
+            <div class="modal-header">
+                <h2 class="modal-title" id="tagModalTitle">Editar Etiqueta</h2>
+                <button class="close-modal" id="closeTagModal">&times;</button>
+            </div>
+            <form id="tagForm">
+                <input type="hidden" id="editTagOldName">
+
+                <div class="form-group">
+                    <label class="form-label">Nombre de la Etiqueta</label>
+                    <input type="text" class="form-input" id="tagName" required placeholder="Ej: Oferta, Nuevo, 2x1">
+                    <small class="form-hint">El ID se generará automáticamente (e001, e002,
+                        etc.)</small>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelTagBtn">Cancelar</button>
+                    <button type="submit" class="btn-primary" style="display: inline-flex;">Guardar
+                        Etiqueta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../data/tags.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

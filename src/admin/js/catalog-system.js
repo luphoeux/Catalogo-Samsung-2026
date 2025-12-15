@@ -95,6 +95,9 @@ function renderCatalogsGrid() {
                     <button class="btn-icon" onclick="exportCatalog('${catalog.id}')" title="Exportar Excel" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #2e7d32; cursor: pointer;">
                         <span class="material-icons" style="font-size: 18px;">download</span>
                     </button>
+                    <button class="btn-icon" onclick="importCatalog('${catalog.id}')" title="Importar Excel" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #f57c00; cursor: pointer;">
+                        <span class="material-icons" style="font-size: 18px;">upload</span>
+                    </button>
                     <button class="btn-icon" onclick="deleteCatalog('${catalog.id}')" title="Eliminar" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #fee2e2; border-radius: 4px; color: #ef4444; cursor: pointer;">
                         <span class="material-icons" style="font-size: 18px;">delete</span>
                     </button>
@@ -196,7 +199,7 @@ async function addToCatalog(e) {
         .map(cb => cb.value);
 
     if (selectedProducts.length === 0) {
-        alert('No has seleccionado nuevos productos.');
+        window.showToast('No has seleccionado nuevos productos', 'info');
         return;
     }
 
@@ -209,14 +212,14 @@ async function addToCatalog(e) {
         const result = await response.json();
 
         if (result.success) {
-            alert(result.message);
+            window.showToast(result.message, 'success');
             closeCreateCatalogModal();
             manageCatalog(currentCatalogId); // Reload
         } else {
-            alert('Error: ' + result.message);
+            window.showToast('Error: ' + result.message, 'error');
         }
     } catch (err) {
-        alert('Error conectando al servidor');
+        window.showToast('Error conectando al servidor', 'error');
     }
 }
 
@@ -230,6 +233,7 @@ window.closeCreateCatalogModal = function () {
         document.querySelectorAll('.catalog-meta-field').forEach(el => el.style.display = 'block');
     }
 };
+
 
 // Load products into modal
 function loadProductsIntoModal() {
@@ -285,7 +289,7 @@ async function createCatalog(e) {
     const selectedProducts = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
 
     if (!name || selectedProducts.length === 0) {
-        alert('Nombre y al menos un producto requeridos.');
+        window.showToast('Nombre y al menos un producto requeridos', 'info');
         return;
     }
 
@@ -316,11 +320,16 @@ async function createCatalog(e) {
         });
         const result = await response.json();
         if (result.success) {
-            alert('Catálogo creado');
+            window.showToast('Catálogo creado', 'success');
             closeCreateCatalogModal();
             loadCatalogs();
-        } else alert(result.message);
-    } catch (e) { alert('Error creando catálogo'); }
+        } else {
+            window.showToast(result.message, 'error');
+        }
+    } catch (e) {
+        console.error('Error creando catálogo:', e);
+        window.showToast('Error creando catálogo', 'error');
+    }
 }
 
 // Edit Catalog (Meta)
@@ -362,14 +371,6 @@ window.manageCatalog = async function (catalogId) {
             currentCatalogProducts = data.products || [];
             console.log('Catalog data:', data);
 
-            // DEBUG ALERT (INSPECT DATA)
-            // if (currentCatalogProducts.length > 0) {
-            //     // Safe stringify
-            //     try {
-            //         alert('Primer Producto: ' + JSON.stringify(currentCatalogProducts[0]));
-            //     } catch (e) { alert('Error leyendo datos producto'); }
-            // }
-
             const catalogName = data.metadata?.title || catalogId.replace(/_/g, ' ');
             document.getElementById('catalogDetailTitle').textContent = `Detalle: ${catalogName}`;
 
@@ -377,7 +378,6 @@ window.manageCatalog = async function (catalogId) {
             const tbody = document.getElementById('catalogDetailTableBody');
             if (!tbody) {
                 console.error('CRITICAL: tbody catalogDetailTableBody not found!');
-                // alert('Error UI: Tabla no encontrada');
                 return;
             }
 
@@ -409,9 +409,14 @@ window.manageCatalog = async function (catalogId) {
                                 <td style="padding: 0.75rem;">${sku}</td>
                                 <td style="padding: 0.75rem;">Bs ${price}</td>
                                 <td style="padding: 0.75rem;">
-                                    <button class="btn-icon" style="color: #666;" title="Editar en Catálogo" onclick="editCatalogProduct('${p.id || p.ID}')">
-                                        <span class="material-icons" style="font-size: 18px;">edit</span>
-                                    </button>
+                                    <div style="display: flex; gap: 4px;">
+                                        <button class="btn-icon" style="color: #666;" title="Editar Producto en Catálogo" onclick="window.location.href='products.html?catalogId=${catalogId}&edit=${p.id || p.ID}'">
+                                            <span class="material-icons" style="font-size: 18px;">edit</span>
+                                        </button>
+                                        <button class="btn-icon delete" style="color: #dc2626;" title="Quitar del Catálogo" onclick="removeProductFromCatalog('${currentCatalogId}', '${p.id || p.ID}')">
+                                            <span class="material-icons" style="font-size: 18px;">remove_circle</span>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         `}).join('');
@@ -425,142 +430,156 @@ window.manageCatalog = async function (catalogId) {
         }
     } catch (e) {
         console.error(e);
-        alert('Error cargando catálogo');
+        window.showToast('Error cargando catálogo', 'error');
     }
 };
-
-// Edit Catalog Product
-window.editCatalogProduct = function (productId) {
-    const product = currentCatalogProducts.find(p => String(p.id || p.ID) === String(productId));
-    if (!product) { alert('Producto no encontrado'); return; }
-
-    // Open Global Modal
-    if (typeof openProductModal === 'function') {
-        openProductModal(); // This clears form
-    } else {
-        document.getElementById('productModal').classList.add('active');
-    }
-
-    // Populate Form (Reuse admin.js logic or manual)
-    // We populate manually to be safe
-    document.getElementById('productName').value = product.name || product.Nombre || '';
-    document.getElementById('productCategory').value = product.category || product.Categoría || '';
-    document.getElementById('productSKU').value = product.sku || product.SKU || '';
-    document.getElementById('productPrice').value = product.basePrice || product['Precio Base'] || 0;
-
-    // Change Save Button
-    const saveBtn = document.getElementById('saveProductBtn');
-    const originalText = saveBtn.innerHTML;
-    const originalOnclick = saveBtn.onclick;
-
-    saveBtn.innerHTML = 'Guardar en Catálogo';
-    saveBtn.onclick = function () {
-        saveCatalogProduct(product, originalOnclick, originalText);
-    };
-
-    // Handle Close to reset button
-    const closeBtn = document.querySelector('#productModal .btn-secondary');
-    if (closeBtn) {
-        const oldClose = closeBtn.onclick;
-        closeBtn.onclick = function () {
-            saveBtn.innerHTML = originalText;
-            saveBtn.onclick = originalOnclick;
-            if (oldClose) oldClose();
-            document.getElementById('productModal').classList.remove('active');
-        };
-    }
-};
-
-async function saveCatalogProduct(originalProduct, originalOnclick, originalText) {
-    // Construct updated product
-    const updatedProduct = {
-        ...originalProduct,
-        name: document.getElementById('productName').value,
-        category: document.getElementById('productCategory').value,
-        sku: document.getElementById('productSKU').value,
-        basePrice: document.getElementById('productPrice').value
-    };
-
-    try {
-        const response = await fetch(`/api/catalogs/${currentCatalogId}/update-product`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ product: updatedProduct })
-        });
-        const res = await response.json();
-        if (res.success) {
-            alert('Producto actualizado en el catálogo');
-            document.getElementById('productModal').classList.remove('active');
-            // Restore button
-            const saveBtn = document.getElementById('saveProductBtn');
-            saveBtn.innerHTML = originalText;
-            saveBtn.onclick = originalOnclick;
-
-            manageCatalog(currentCatalogId); // Reload
-        } else {
-            alert('Error: ' + res.message);
-        }
-    } catch (e) { alert('Error de conexión'); }
-}
-
 
 // Export catalog
 window.exportCatalog = function (catalogId) {
     const catalog = catalogs.find(c => c.id === catalogId);
-    if (!catalog || !catalog.products || catalog.products.length === 0) {
-        alert('Este catálogo está vacío o no existe.');
+    let catalogName = catalogId; // Fallback
+    if (catalog) {
+        catalogName = catalog.name;
+    }
+    window.location.href = `/api/catalogs/${encodeURIComponent(catalogName)}/export`;
+};
+
+// Import catalog (Update from Excel)
+window.importCatalog = function (catalogId) {
+    // Create hidden file input
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx, .xls';
+
+    input.onchange = async function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function (evt) {
+            const base64Ref = evt.target.result.split(',')[1]; // Remove data:application/vnd...base64,
+
+            try {
+                // Show Loading
+                window.showToast('Importando datos...', 'info');
+
+                // Resolve Catalog Name 
+                const catalog = catalogs.find(c => c.id === catalogId);
+                let catalogName = catalogId;
+                if (catalog) catalogName = catalog.name;
+
+                const response = await fetch(`/api/catalogs/${encodeURIComponent(catalogName)}/import`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fileData: base64Ref })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    window.showToast(result.message, 'success');
+                    // Refresh view
+                    if (document.getElementById('catalogDetailView').style.display === 'block') {
+                        manageCatalog(catalogId);
+                    } else {
+                        loadCatalogs();
+                    }
+                } else {
+                    window.showToast('Error: ' + result.message, 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                window.showToast('Error de conexión al importar', 'error');
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
+    input.click();
+};
+
+// Remove product from catalog
+window.removeProductFromCatalog = async function (catalogId, productId) {
+    const catalog = catalogs.find(c => c.id === catalogId);
+    if (!catalog) {
+        window.showToast('Catálogo no encontrado', 'error');
         return;
     }
 
-    const catalogProducts = catalog.products;
-    const excelData = [];
+    const product = currentCatalogProducts.find(p => String(p.id || p.ID) === String(productId));
+    const productName = product ? (product.name || product.Nombre || 'este producto') : 'este producto';
 
-    // Add headers
-    excelData.push([
-        'ID', 'Nombre', 'Categoría', 'Precio', 'Precio Original', 'Link', 'Descripción', 'Badge', 'Almacenamiento',
-        'SKU1', 'Color1', 'Link1', 'Imágenes1', 'Hex1',
-        'SKU2', 'Color2', 'Link2', 'Imágenes2', 'Hex2'
-    ]);
+    if (typeof window.showConfirm === 'function') {
+        window.showConfirm(
+            'Quitar Producto',
+            `¿Estás seguro de quitar "${productName}" de este catálogo?`,
+            async () => {
+                try {
+                    const response = await fetch('/api/catalogs/remove-product', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ catalogId, productId })
+                    });
 
-    // Add product rows
-    catalogProducts.forEach(p => {
-        const row = [];
-        row.push(p.id);
-        row.push(p.name);
-        row.push(p.category);
-        row.push(p.basePrice || p.price);
-        row.push(p.originalPrice || 0);
-        row.push(p.link || '');
-        row.push(p.description || '');
-        row.push(p.badge || '');
-        row.push(''); // Storage
-        // Variants (simplified)
-        if (p.variants && p.variants.length) {
-            p.variants.forEach(v => {
-                row.push(v.sku, v.color, v.link, v.image, v.hex);
-            });
-        }
-        excelData.push(row);
-    });
-
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(excelData);
-    XLSX.utils.book_append_sheet(wb, ws, 'Productos');
-    const catalogName = catalog.name.replace(/\s+/g, '_');
-    XLSX.writeFile(wb, `Catalogo_${catalogName}.xlsx`);
+                    const result = await response.json();
+                    if (result.success) {
+                        if (typeof window.pushHistoryState === 'function') {
+                            window.pushHistoryState('Quitar Producto del Catálogo');
+                        }
+                        await manageCatalog(catalogId);
+                        await loadCatalogs();
+                        window.showToast('Producto quitado del catálogo', 'success');
+                    } else {
+                        window.showToast(result.message || 'Error al quitar producto', 'error');
+                    }
+                } catch (e) {
+                    console.error(e);
+                    window.showToast('Error al quitar producto del catálogo', 'error');
+                }
+            },
+            null,
+            true
+        );
+    }
 };
 
-// Delete catalog (Same as before)
+// Delete catalog
 window.deleteCatalog = async function (catalogId) {
-    if (!confirm('¿Eliminar catálogo permanentemente?')) return;
-    try {
-        await fetch('/api/catalogs/delete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ catalogId })
-        });
-        loadCatalogs();
-    } catch (e) { }
+    const catalog = catalogs.find(c => c.id === catalogId);
+    const name = catalog ? catalog.name : 'este catálogo';
+
+    if (typeof window.showConfirm !== 'function') {
+        if (!confirm(`¿Eliminar catálogo "${name}" permanentemente?`)) return;
+        try {
+            await fetch('/api/catalogs/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ catalogId })
+            });
+            loadCatalogs();
+        } catch (e) { }
+        return;
+    }
+
+    window.showConfirm(
+        'Eliminar Catálogo',
+        `¿Estás seguro de eliminar el catálogo "${name}"?`,
+        async () => {
+            try {
+                await fetch('/api/catalogs/delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ catalogId })
+                });
+                window.showToast('Catálogo eliminado', 'success');
+                loadCatalogs();
+            } catch (e) {
+                window.showToast('Error eliminando catálogo', 'error');
+            }
+        },
+        null,
+        true
+    );
 };
 
 document.addEventListener('DOMContentLoaded', function () {

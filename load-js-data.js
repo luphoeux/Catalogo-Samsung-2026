@@ -1,31 +1,20 @@
-// Helper script to load data from JS files
 const fs = require('fs');
-const path = require('path');
 
 function loadJSData(filePath) {
     try {
+        if (!fs.existsSync(filePath)) return null;
         const content = fs.readFileSync(filePath, 'utf8');
-        // Remove comments and execute
-        const cleanContent = content;
-
-        // Create a sandbox to execute the code
-        const sandbox = { products: null, colorVariables: null, categories: null, textVariables: null, tags: null, promotions: null };
-        const vm = require('vm');
-        vm.createContext(sandbox);
-        vm.runInContext(cleanContent, sandbox);
-
-        // Return the first non-null variable
-        for (const key in sandbox) {
-            if (sandbox[key] !== null) {
-                return sandbox[key];
-            }
+        // Match "var variableName = " ... ";"
+        // We match explicitly var \w+ = 
+        // We look for the start of the object/array and assume it ends at the last semi-colon or end of file
+        const match = content.match(/var\s+\w+\s*=\s*([\s\S]*?);?\s*$/);
+        if (match && match[1]) {
+            return JSON.parse(match[1]);
         }
-
-        return null;
-    } catch (err) {
-        console.error(`Error loading ${filePath}:`, err.message);
-        return null;
+    } catch (e) {
+        console.error(`Error loading JS data from ${filePath}:`, e);
     }
+    return null;
 }
 
 module.exports = { loadJSData };
