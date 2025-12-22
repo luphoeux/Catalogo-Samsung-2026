@@ -38,7 +38,7 @@ function renderCatalogsGrid() {
     if (catalogs.length === 0) {
         grid.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #999;">
-                <span class="material-icons" style="font-size: 48px; opacity: 0.3;">folder_open</span>
+                <svg class="icon-svg" style="width:48px;height:48px;opacity:0.3;margin:0 auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 7-1.116-2.231c-.32-.642-.481-.963-.72-1.198a2 2 0 0 0-.748-.462C10.1 3 9.74 3 9.022 3H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 4.52 2 5.08 2 6.2V7m0 0h15.2c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C22 9.28 22 10.12 22 11.8v4.4c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C19.72 21 18.88 21 17.2 21H6.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C2 18.72 2 17.88 2 16.2V7Z"></path></svg>
                 <p style="margin-top: 1rem;">No hay catálogos creados</p>
                 <p style="font-size: 0.875rem;">Crea tu primer catálogo haciendo clic en el botón "Crear Catálogo"</p>
             </div>
@@ -68,8 +68,8 @@ function renderCatalogsGrid() {
         <tr style="border-bottom: 1px solid #f0f0f0;">
             <td style="padding: 1rem; vertical-align: middle;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="width: 32px; height: 32px; background: #e3f2fd; color: #1565c0; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-                        <span class="material-icons" style="font-size: 18px;">folder</span>
+                    <div ondblclick="manageCatalog('${catalog.id}')" title="Doble clic para entrar" style="width: 32px; height: 32px; background: #e3f2fd; color: #1565c0; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 7-1.116-2.231c-.32-.642-.481-.963-.72-1.198a2 2 0 0 0-.748-.462C10.1 3 9.74 3 9.022 3H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 4.52 2 5.08 2 6.2V7m0 0h15.2c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C22 9.28 22 10.12 22 11.8v4.4c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C19.72 21 18.88 21 17.2 21H6.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C2 18.72 2 17.88 2 16.2V7Z"></path></svg>
                     </div>
                     <div>
                         <div style="font-weight: 600; color: #2c3e50; font-size: 0.9rem;">${catalog.name}</div>
@@ -85,25 +85,25 @@ function renderCatalogsGrid() {
             <td style="padding: 1rem; text-align: right; vertical-align: middle;">
                 <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
                     <button class="btn-icon" onclick="manageCatalog('${catalog.id}')" title="Gestionar Productos" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #1565c0; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">inventory_2</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 7.278 12 12m0 0L3.5 7.278M12 12v9.5m9-5.441V7.942c0-.343 0-.514-.05-.667a1 1 0 0 0-.215-.364c-.109-.119-.258-.202-.558-.368l-7.4-4.111c-.284-.158-.425-.237-.575-.267a1 1 0 0 0-.403 0c-.15.03-.292.11-.576.267l-7.4 4.11c-.3.167-.45.25-.558.369a1 1 0 0 0-.215.364C3 7.428 3 7.599 3 7.942v8.117c0 .342 0 .514.05.666a1 1 0 0 0 .215.364c.109.119.258.202.558.368l7.4 4.111c.284.158.425.237.576.268.133.027.27.027.402 0 .15-.031.292-.11.576-.268l7.4-4.11c.3-.167.45-.25.558-.369a.999.999 0 0 0 .215-.364c.05-.152.05-.324.05-.666ZM16.5 9.5l-9-5"></path></svg>
                     </button>
                     <button class="btn-icon" onclick="previewCatalog('${catalog.id}')" title="Previsualizar" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">visibility</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.42 12.713c-.136-.215-.204-.323-.242-.49a1.173 1.173 0 0 1 0-.446c.038-.167.106-.274.242-.49C3.546 9.505 6.895 5 12 5s8.455 4.505 9.58 6.287c.137.215.205.323.243.49.029.125.029.322 0 .446-.038.167-.106.274-.242.49C20.455 14.495 17.105 19 12 19c-5.106 0-8.455-4.505-9.58-6.287Z"></path><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path></svg>
                     </button>
                     <button class="btn-icon" onclick="editCatalog('${catalog.id}')" title="Editar Metadatos" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">edit</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
                     </button>
                     <button class="btn-icon" onclick="duplicateCatalog('${catalog.id}')" title="Duplicar Catálogo" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">content_copy</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-.932 0-1.398 0-1.765-.152a2 2 0 0 1-1.083-1.083C2 13.398 2 12.932 2 12V5.2c0-1.12 0-1.68.218-2.108a2 2 0 0 1 .874-.874C3.52 2 4.08 2 5.2 2H12c.932 0 1.398 0 1.765.152a2 2 0 0 1 1.083 1.083C15 3.602 15 4.068 15 5m-2.8 17h6.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874C22 20.48 22 19.92 22 18.8v-6.6c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C20.48 9 19.92 9 18.8 9h-6.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C9 10.52 9 11.08 9 12.2v6.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C10.52 22 11.08 22 12.2 22Z"></path></svg>
                     </button>
                     <button class="btn-icon" onclick="exportCatalog('${catalog.id}')" title="Exportar Excel" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #2e7d32; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">download</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v1.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C18.72 21 17.88 21 16.2 21H7.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3 18.72 3 17.88 3 16.2V15m14-5-5 5m0 0-5-5m5 5V3"></path></svg>
                     </button>
                     <button class="btn-icon" onclick="importCatalog('${catalog.id}')" title="Importar Excel" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #f57c00; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">upload</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v1.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C18.72 21 17.88 21 16.2 21H7.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3 18.72 3 17.88 3 16.2V15m14-7-5-5m0 0L7 8m5-5v12"></path></svg>
                     </button>
                     <button class="btn-icon" onclick="deleteCatalog('${catalog.id}')" title="Eliminar" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #fee2e2; border-radius: 4px; color: #ef4444; cursor: pointer;">
-                        <span class="material-icons" style="font-size: 18px;">delete</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
                     </button>
                 </div>
             </td>
@@ -146,7 +146,7 @@ window.openCreateCatalogModal = function () {
     const btn = modal.querySelector('.modal-footer .btn-primary');
     if (title) title.textContent = 'Crear Nuevo Catálogo';
     if (btn) {
-        btn.innerHTML = '<span class="material-icons" style="font-size: 16px;">add</span> Crear Catálogo';
+        btn.innerHTML = '<svg class="icon-svg" style="width:16px;height:16px;margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7h14"></path></svg> Crear Catálogo';
         btn.onclick = null; // Rely on form submit
     }
 
@@ -175,7 +175,7 @@ window.openAddToCatalogModal = function () {
     const btn = modal.querySelector('.modal-footer .btn-primary');
     if (title) title.textContent = 'Agregar Productos al Catálogo';
     if (btn) {
-        btn.innerHTML = '<span class="material-icons" style="font-size: 16px;">save</span> Agregar Seleccionados';
+        btn.innerHTML = '<svg class="icon-svg" style="width:16px;height:16px;margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v3.4c0 .56 0 .84.109 1.054a1 1 0 0 0 .437.437C7.76 8 8.04 8 8.6 8h6.8c.56 0 .84 0 1.054-.109a1 1 0 0 0 .437-.437C17 7.24 17 6.96 17 6.4V4m0 17v-6.4c0-.56 0-.84-.109-1.054a1 1 0 0 0-.437-.437C16.24 13 15.96 13 15.4 13H8.6c-.56 0-.84 0-1.054.109a1 1 0 0 0-.437.437C7 13.76 7 14.04 7 14.6V21M21 9.325V16.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C18.72 21 17.88 21 16.2 21H7.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3 18.72 3 17.88 3 16.2V7.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C5.28 3 6.12 3 7.8 3h6.875c.489 0 .733 0 .963.055.204.05.4.13.579.24.201.123.374.296.72.642l3.126 3.126c.346.346.519.519.642.72.11.18.19.374.24.579.055.23.055.474.055.963Z"></path></svg> Agregar Seleccionados';
         btn.onclick = addToCatalog;
     }
 
@@ -403,7 +403,7 @@ window.editCatalog = function (catalogId) {
     const btn = modal.querySelector('.modal-footer .btn-primary');
     if (title) title.textContent = 'Editar Catálogo';
     if (btn) {
-        btn.innerHTML = '<span class="material-icons" style="font-size: 16px;">save</span> Guardar Cambios';
+        btn.innerHTML = '<svg class="icon-svg" style="width:16px;height:16px;margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v3.4c0 .56 0 .84.109 1.054a1 1 0 0 0 .437.437C7.76 8 8.04 8 8.6 8h6.8c.56 0 .84 0 1.054-.109a1 1 0 0 0 .437-.437C17 7.24 17 6.96 17 6.4V4m0 17v-6.4c0-.56 0-.84-.109-1.054a1 1 0 0 0-.437-.437C16.24 13 15.96 13 15.4 13H8.6c-.56 0-.84 0-1.054.109a1 1 0 0 0-.437.437C7 13.76 7 14.04 7 14.6V21M21 9.325V16.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C18.72 21 17.88 21 16.2 21H7.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3 18.72 3 17.88 3 16.2V7.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C5.28 3 6.12 3 7.8 3h6.875c.489 0 .733 0 .963.055.204.05.4.13.579.24.201.123.374.296.72.642l3.126 3.126c.346.346.519.519.642.72.11.18.19.374.24.579.055.23.055.474.055.963Z"></path></svg> Guardar Cambios';
         btn.onclick = null; // Rely on form submit event listener
     }
 
@@ -496,13 +496,13 @@ window.manageCatalog = async function (catalogId) {
                                 <td style="padding: 0.75rem;">${sku}</td>
                                 <td style="padding: 0.75rem;">Bs ${price}</td>
                                 <td style="padding: 0.75rem;">
-                                    <div style="display: flex; gap: 4px;">
-                                        <button class="btn-icon" style="color: #666;" title="Editar Producto en Catálogo" onclick="window.location.href='products.html?catalogId=${catalogId}&edit=${p.id || p.ID}'">
-                                            <span class="material-icons" style="font-size: 18px;">edit</span>
-                                        </button>
-                                        <button class="btn-icon delete" style="color: #dc2626;" title="Quitar del Catálogo" onclick="removeProductFromCatalog('${currentCatalogId}', '${p.id || p.ID}')">
-                                            <span class="material-icons" style="font-size: 18px;">remove_circle</span>
-                                        </button>
+                                    <div style="display: flex; gap: 4px; justify-content: center;">
+                                        <span class="action-icon" title="Editar Producto en Catálogo" onclick="window.location.href='products.html?catalogId=${catalogId}&edit=${p.id || p.ID}'">
+                                            <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                                        </span>
+                                        <span class="action-icon" title="Quitar del Catálogo" onclick="removeProductFromCatalog('${currentCatalogId}', '${p.id || p.ID}')">
+                                            <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                                        </span>
                                     </div>
                                 </td>
                             </tr>
@@ -673,9 +673,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initCatalogSystem();
     const modal = document.getElementById('createCatalogModal');
     if (modal) {
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) closeCreateCatalogModal();
-        });
+        // Disabled: Modal should only close via X or Cancel button
+        // modal.addEventListener('click', function (e) {
+        //     if (e.target === modal) closeCreateCatalogModal();
+        // });
     }
 
     const form = document.getElementById('createCatalogForm');

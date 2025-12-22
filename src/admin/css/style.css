@@ -37,7 +37,7 @@
 }
 
 body {
-    font-family: 'SamsungOne', 'Inter', sans-serif;
+    font-family: 'SamsungOne', sans-serif;
     background-color: var(--samsung-white);
     color: var(--text-color);
     line-height: 1.6;

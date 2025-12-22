@@ -11,6 +11,8 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "@untitledui-pro/icons": "^0.0.2",
+        "@untitledui/icons": "^0.0.19",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {

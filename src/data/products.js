@@ -5,7 +5,7 @@ var products = [
         "name": "Galaxy Z Fold7",
         "description": "Diseño ultra delgado 8.9mm, Cámara 200MP, Snapdragon 8 Elite y Galaxy AI.",
         "category": "Smartphones",
-        "badge": "",
+        "badge": "Nuevo",
         "colors": [
             {
                 "id": "c005",
@@ -21,17 +21,27 @@ var products = [
         ],
         "priceVariants": [
             {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 512 GB - RAM 12GB",
+                "variableId": "v003",
+                "variableText": "Almacenamiento: 512GB",
                 "price": 19866,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-fold7",
-                "active": true
+                "active": true,
+                "isInformative": false
+            },
+            {
+                "variableId": "v005",
+                "variableText": "RAM: 4 GB",
+                "price": 19866,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold7",
+                "active": true,
+                "isInformative": true
             }
         ],
         "variants": [
             {
-                "id": "c005_v001",
+                "id": "c005_v003",
                 "color": "Azul Metálico",
                 "colorId": "c005",
                 "hex": "#3c5b8a",
@@ -44,10 +54,31 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-fold7",
                 "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 512 GB - RAM 12GB",
+                "isInformative": false,
+                "variableId": "v003",
+                "variableText": "Almacenamiento: 512GB",
                 "type": "combination",
-                "title": "Azul Metálico - Almacenamiento: 512 GB - RAM 12GB"
+                "title": "Azul Metálico - Almacenamiento: 512GB"
+            },
+            {
+                "id": "c005_v005",
+                "color": "Azul Metálico",
+                "colorId": "c005",
+                "hex": "#3c5b8a",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_REVFsxTyaj9XMYmDK7Qf.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_REVFsxTyaj9XMYmDK7Qf.png",
+                "sku": "SM-F966BDBKCHO",
+                "price": 19866,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold7",
+                "active": true,
+                "isInformative": true,
+                "variableId": "v005",
+                "variableText": "RAM: 4 GB",
+                "type": "combination",
+                "title": "Azul Metálico - RAM: 4 GB"
             }
         ],
         "price": 19866,
@@ -78,7 +109,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 10511,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-flip7",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 10511,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-flip7",
@@ -134,8 +173,32 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
                 "price": 16286,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
+                "price": 16286,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 512 GB",
+                "price": 16690,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
+                "price": 16690,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
                 "active": true
@@ -169,62 +232,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
     },
     {
-        "id": 4,
-        "name": "Galaxy Z Fold 5",
-        "description": "La potencia de una PC, ahora, en tu bolsillo.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c009",
-                "colorId": "c009",
-                "name": "Crema",
-                "hex": "#f8f4eb",
-                "sku": "SM-F946BZEKBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 512 GB - RAM 12GB",
-                "price": 16690,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c009_v001",
-                "color": "Crema",
-                "colorId": "c009",
-                "hex": "#f8f4eb",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png",
-                "sku": "SM-F946BZEKBVO",
-                "price": 16690,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 512 GB - RAM 12GB",
-                "type": "combination",
-                "title": "Crema - Almacenamiento: 512 GB - RAM 12GB"
-            }
-        ],
-        "price": 16690,
-        "basePrice": 16690,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
-    },
-    {
         "id": 5,
         "name": "Galaxy S25 Ultra",
         "description": "Cámara 200MP + 50MP, Titanio, Snapdragon 8 Elite y bat. 5000 mAh.",
@@ -246,8 +253,32 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 512 GB - RAM 12GB",
+                "variableText": "Almacenamiento: 512 GB",
                 "price": 11839,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
+                "price": 11839,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 10915,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
+                "price": 10915,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
                 "active": true
@@ -281,62 +312,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qI9E4ZaOzVG1HFbrLPlf.png"
     },
     {
-        "id": 6,
-        "name": "Galaxy S25 Ultra",
-        "description": "Cámara 200MP + 50MP, Titanio, Snapdragon 8 Elite y bat. 5000 mAh.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c011",
-                "colorId": "c011",
-                "name": "Gris",
-                "hex": "#938e8a",
-                "sku": "SM-S938BZTKBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qI9E4ZaOzVG1HFbrLPlf.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qI9E4ZaOzVG1HFbrLPlf.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
-                "price": 10915,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c011_v001",
-                "color": "Gris",
-                "colorId": "c011",
-                "hex": "#938e8a",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qI9E4ZaOzVG1HFbrLPlf.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qI9E4ZaOzVG1HFbrLPlf.png",
-                "sku": "SM-S938BZTKBVO",
-                "price": 10915,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
-                "type": "combination",
-                "title": "Gris - Almacenamiento: 256 GB - RAM 12GB"
-            }
-        ],
-        "price": 10915,
-        "basePrice": 10915,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-s25-ultra",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qI9E4ZaOzVG1HFbrLPlf.png"
-    },
-    {
         "id": 7,
         "name": "Galaxy S25+",
         "description": "Pantalla QHD+ 6.7, batería 4900 mAh, Armor Aluminum y Galaxy AI.",
@@ -358,7 +333,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 9644,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-s25",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 9644,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-s25",
@@ -414,7 +397,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 8258,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-s25",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 8258,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-s25",
@@ -470,8 +461,32 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
                 "price": 4216,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
+                "price": 4216,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 3962,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
+                "price": 3962,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
                 "active": true
@@ -505,62 +520,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
     },
     {
-        "id": 10,
-        "name": "Galaxy-A56 5G",
-        "description": "Pantalla Super AMOLED, cuerpo de 7.4mm, Super HDR y marco de aluminio.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c010",
-                "colorId": "c010",
-                "name": "Grafito",
-                "hex": "#53565a",
-                "sku": "SM-S731BDBKBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 8GB",
-                "price": 3962,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c010_v001",
-                "color": "Grafito",
-                "colorId": "c010",
-                "hex": "#53565a",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png",
-                "sku": "SM-S731BDBKBVO",
-                "price": 3962,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 8GB",
-                "type": "combination",
-                "title": "Grafito - Almacenamiento: 256GB - RAM 8GB"
-            }
-        ],
-        "price": 3962,
-        "basePrice": 3962,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
-    },
-    {
         "id": 11,
         "name": "Galaxy-A55 5G",
         "description": "Pantalla Super AMOLED, cuerpo de 7.4mm, Super HDR y marco de aluminio.",
@@ -582,7 +541,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 8GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 4158,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a55-5g",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
                 "price": 4158,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a55-5g",
@@ -638,7 +605,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 8GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 3361,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a36-5g-awesome-black-256gb-sm-a366ezkgbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
                 "price": 3361,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a36-5g-awesome-black-256gb-sm-a366ezkgbvo",
@@ -694,7 +669,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 8GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 3581,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a35-5g",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
                 "price": 3581,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a35-5g",
@@ -750,8 +733,32 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 6GB",
+                "variableText": "Almacenamiento: 256 GB",
                 "price": 2680,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 6 GB",
+                "price": 2680,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 2506,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 6 GB",
+                "price": 2506,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
                 "active": true
@@ -785,62 +792,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CzrmjgMaNsDTUn1v6bcu.png"
     },
     {
-        "id": 15,
-        "name": "Galaxy-A26 5G",
-        "description": "Pantalla 6.7 Super AMOLED, IP67, Batería 5000mAh y diseño Key Island.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c017",
-                "colorId": "c017",
-                "name": "Negro",
-                "hex": "#2d2926",
-                "sku": "SM-A266MZKDBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CzrmjgMaNsDTUn1v6bcu.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CzrmjgMaNsDTUn1v6bcu.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB - RAM 6GB",
-                "price": 2506,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c017_v001",
-                "color": "Negro",
-                "colorId": "c017",
-                "hex": "#2d2926",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CzrmjgMaNsDTUn1v6bcu.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CzrmjgMaNsDTUn1v6bcu.png",
-                "sku": "SM-A266MZKDBVO",
-                "price": 2506,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB - RAM 6GB",
-                "type": "combination",
-                "title": "Negro - Almacenamiento: 128 GB - RAM 6GB"
-            }
-        ],
-        "price": 2506,
-        "basePrice": 2506,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a26-5g-black-256gb-sm-a266mzkhbvo",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CzrmjgMaNsDTUn1v6bcu.png"
-    },
-    {
         "id": 16,
         "name": "Galaxy-A25",
         "description": "Rápido, espacioso y poderoso. Todo lo que necesitas para hacer más",
@@ -862,7 +813,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB - RAM 6GB",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 2287,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a25-5g-blue-black-256gb-sm-a256ezkhbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 6 GB",
                 "price": 2287,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a25-5g-blue-black-256gb-sm-a256ezkhbvo",
@@ -918,8 +877,32 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 8GB",
+                "variableText": "Almacenamiento: 256 GB",
                 "price": 2333,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
+                "price": 2333,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 1906,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 6 GB",
+                "price": 1906,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
                 "active": true
@@ -953,62 +936,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_plKXQsWNif5GCyvtuD8S.png"
     },
     {
-        "id": 18,
-        "name": "Galaxy-A17",
-        "description": "Diseño moderno, cámara principal 50MP y batería de 5000mAh para todo el día.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c017",
-                "colorId": "c017",
-                "name": "Negro",
-                "hex": "#404145",
-                "sku": "SM-A175FZKGBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_plKXQsWNif5GCyvtuD8S.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_plKXQsWNif5GCyvtuD8S.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB - RAM 6GB",
-                "price": 1906,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c017_v001",
-                "color": "Negro",
-                "colorId": "c017",
-                "hex": "#404145",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_plKXQsWNif5GCyvtuD8S.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_plKXQsWNif5GCyvtuD8S.png",
-                "sku": "SM-A175FZKGBVO",
-                "price": 1906,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB - RAM 6GB",
-                "type": "combination",
-                "title": "Negro - Almacenamiento: 128 GB - RAM 6GB"
-            }
-        ],
-        "price": 1906,
-        "basePrice": 1906,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a17-black-128gb-sm-a175fzkgbvo",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_plKXQsWNif5GCyvtuD8S.png"
-    },
-    {
         "id": 19,
         "name": "Galaxy-A16",
         "description": "Pantalla 6.7 FHD+ sAMOLED, 6 actualizaciones de seguridad y diseño ultra delgado.",
@@ -1032,6 +959,14 @@ var products = [
                 "variableId": "v001",
                 "variableText": "Almacenamiento: 256 GB",
                 "price": 2056,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a16-black-128gb-sm-a165mzkgbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 1813,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a16-black-128gb-sm-a165mzkgbvo",
                 "active": true
@@ -1065,62 +1000,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_XdSCZYtRWLMcFa3QbyPH.png"
     },
     {
-        "id": 20,
-        "name": "Galaxy-A16",
-        "description": "Pantalla 6.7 FHD+ sAMOLED, 6 actualizaciones de seguridad y diseño ultra delgado.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c033",
-                "colorId": "c033",
-                "name": "Light Green",
-                "hex": "#c0cdc4",
-                "sku": "SM-A165MLGIBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_XdSCZYtRWLMcFa3QbyPH.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_XdSCZYtRWLMcFa3QbyPH.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB",
-                "price": 1813,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a16-black-128gb-sm-a165mzkgbvo",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c033_v001",
-                "color": "Light Green",
-                "colorId": "c033",
-                "hex": "#c0cdc4",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_XdSCZYtRWLMcFa3QbyPH.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_XdSCZYtRWLMcFa3QbyPH.png",
-                "sku": "SM-A165MLGIBVO",
-                "price": 1813,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a16-black-128gb-sm-a165mzkgbvo",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB",
-                "type": "combination",
-                "title": "Light Green - Almacenamiento: 128 GB"
-            }
-        ],
-        "price": 1813,
-        "basePrice": 1813,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a16-black-128gb-sm-a165mzkgbvo",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_XdSCZYtRWLMcFa3QbyPH.png"
-    },
-    {
         "id": 21,
         "name": "Galaxy-A06",
         "description": "Pantalla 6.7, Cámara 50MP, Carga rápida 25W y lector de huella lateral.",
@@ -1142,8 +1021,32 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128 GB - RAM 6GB",
+                "variableText": "Almacenamiento: 128 GB",
                 "price": 1259,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 6 GB",
+                "price": 1259,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 64 GB",
+                "price": 1155,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 4 GB",
+                "price": 1155,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
                 "active": true
@@ -1177,62 +1080,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_q2igFyLm8vBEX07xUAGu.png"
     },
     {
-        "id": 22,
-        "name": "Galaxy-A06",
-        "description": "Pantalla 6.7, Cámara 50MP, Carga rápida 25W y lector de huella lateral.",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c017",
-                "colorId": "c017",
-                "name": "Negro",
-                "hex": "#484d57",
-                "sku": "SM-A065MZKDBVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_q2igFyLm8vBEX07xUAGu.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_q2igFyLm8vBEX07xUAGu.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 64 GB - RAM 4GB",
-                "price": 1155,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c017_v001",
-                "color": "Negro",
-                "colorId": "c017",
-                "hex": "#484d57",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_q2igFyLm8vBEX07xUAGu.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_q2igFyLm8vBEX07xUAGu.png",
-                "sku": "SM-A065MZKDBVO",
-                "price": 1155,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 64 GB - RAM 4GB",
-                "type": "combination",
-                "title": "Negro - Almacenamiento: 64 GB - RAM 4GB"
-            }
-        ],
-        "price": 1155,
-        "basePrice": 1155,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a06",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_q2igFyLm8vBEX07xUAGu.png"
-    },
-    {
         "id": 23,
         "name": "Galaxy-A05s",
         "description": "El Galaxy A05s: potencia Snapdragon, cámara 50MP y batería 5000 mAh. ¡Estilo y rendimiento accesibles!",
@@ -1254,7 +1101,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128GB - RAM 4GB",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 1398,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a05s-light-violet-128gb-sm-a057mlvgltl",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 4 GB",
                 "price": 1398,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a05s-light-violet-128gb-sm-a057mlvgltl",
@@ -1310,10 +1165,34 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128GB - RAM 4GB",
+                "variableText": "Almacenamiento: 128 GB",
                 "price": 1097,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a05-silver-64gb-sm-a055mzsaltm",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 4 GB",
+                "price": 1097,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a05-silver-64gb-sm-a055mzsaltm",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 64 GB",
+                "price": 959,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/seriegalaxya",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 4 GB",
+                "price": 959,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/seriegalaxya",
                 "active": true
             }
         ],
@@ -1345,62 +1224,6 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_H4yrzjgaoxPnts8SOGup.png"
     },
     {
-        "id": 25,
-        "name": "Galaxy-A05",
-        "description": "Pantalla HD+ inmersiva, cámara 50MP y batería 5000 mAh. ¡Esencial, potente y accesible!",
-        "category": "Smartphones",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c020",
-                "colorId": "c020",
-                "name": "Plata",
-                "hex": "#cbc6c4",
-                "sku": "SM-A055MZSABVO",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_H4yrzjgaoxPnts8SOGup.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_H4yrzjgaoxPnts8SOGup.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 64GB - RAM 4GB",
-                "price": 959,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/seriegalaxya",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c020_v001",
-                "color": "Plata",
-                "colorId": "c020",
-                "hex": "#cbc6c4",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_H4yrzjgaoxPnts8SOGup.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_H4yrzjgaoxPnts8SOGup.png",
-                "sku": "SM-A055MZSABVO",
-                "price": 959,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/seriegalaxya",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 64GB - RAM 4GB",
-                "type": "combination",
-                "title": "Plata - Almacenamiento: 64GB - RAM 4GB"
-            }
-        ],
-        "price": 959,
-        "basePrice": 959,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/seriegalaxya",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_H4yrzjgaoxPnts8SOGup.png"
-    },
-    {
         "id": 26,
         "name": "Galaxy Tab S10 Ultra Wi-Fi + Keyboard Cover + S Pen",
         "description": "Pantalla 14.6 Dynamic AMOLED 2x, cuerpo de 718g y resistencia IP68.",
@@ -1422,7 +1245,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 13283,
+                "promoPrice": 0,
+                "link": "https://www.samsung.com/pe/tablets/galaxy-tab-s/galaxy-tab-s10-ultra-silver-512gb-sm-x920nzshpeo/?srsltid=AfmBOoooPXFWney1ViK4vM1ml7kjGDRAGoAhpGYK84rrTAxdRx04Rz5P",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 13283,
                 "promoPrice": 0,
                 "link": "https://www.samsung.com/pe/tablets/galaxy-tab-s/galaxy-tab-s10-ultra-silver-512gb-sm-x920nzshpeo/?srsltid=AfmBOoooPXFWney1ViK4vM1ml7kjGDRAGoAhpGYK84rrTAxdRx04Rz5P",
@@ -1478,7 +1309,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 11319,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s9-graphite-256gb-sm-x716bzaebvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 11319,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s9-graphite-256gb-sm-x716bzaebvo",
@@ -1534,7 +1373,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 9702,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-s8-ultra",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 9702,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-s8-ultra",
@@ -1590,7 +1437,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 12GB",
+                "variableText": "Almacenamiento: 256 GB",
+                "price": 10857,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s8-ultra-5g-graphite-256gb-sm-x906bzadbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 12 GB",
                 "price": 10857,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s8-ultra-5g-graphite-256gb-sm-x906bzadbvo",
@@ -1646,7 +1501,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128GB - RAM 8GB",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 7854,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s10-ultra-gray-256gb-sm-x920nzadbvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
                 "price": 7854,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s10-ultra-gray-256gb-sm-x920nzadbvo",
@@ -1724,7 +1587,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128GB - RAM 6GB",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 4851,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s10-lite-gray-128gb-sm-x406bzadbvo/",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 6 GB",
                 "price": 4851,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s10-lite-gray-128gb-sm-x406bzadbvo/",
@@ -1862,7 +1733,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 64GB - RAM 4GB",
+                "variableText": "Almacenamiento: 64 GB",
+                "price": 3869,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s6-lite-10-4-inch-gray-64gb-wi-fi-sm-p625nzaabvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 4 GB",
                 "price": 3869,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-s/galaxy-tab-s6-lite-10-4-inch-gray-64gb-wi-fi-sm-p625nzaabvo",
@@ -1994,7 +1873,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 64GB - RAM 4GB",
+                "variableText": "Almacenamiento: 64 GB",
+                "price": 2714,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-a/galaxy-tab-a9-plus-5g-gray-64gb-sm-x216bzaabvo",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 4 GB",
                 "price": 2714,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-a/galaxy-tab-a9-plus-5g-gray-64gb-sm-x216bzaabvo",
@@ -2050,7 +1937,15 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 128GB - RAM 8GB",
+                "variableText": "Almacenamiento: 128 GB",
+                "price": 1386,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tablets/galaxy-tab-a/galaxy-tab-a9-wifi-mystic-navy-128gb-sm-x115nzael12",
+                "active": true
+            },
+            {
+                "variableId": "v001",
+                "variableText": "RAM: 8 GB",
                 "price": 1386,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tablets/galaxy-tab-a/galaxy-tab-a9-wifi-mystic-navy-128gb-sm-x115nzael12",
@@ -2092,10 +1987,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c7c8ca",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-L330NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Cni83qS4IomVYGdFb7P6.png"
@@ -2103,10 +1998,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Cni83qS4IomVYGdFb7P6.png"
             },
             {
-                "id": "c035",
-                "colorId": "c035",
-                "name": "Graphite",
-                "hex": "#5b6166",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-L330NDAALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_s9BzxhCL0tVck1wQNfuA.png"
@@ -2114,13 +2009,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_s9BzxhCL0tVck1wQNfuA.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3696,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/galaxy-watch/galaxy-watch8-44mm-silver-bluetooth-sm-l330nzsalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c7c8ca",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Cni83qS4IomVYGdFb7P6.png"
                 ],
@@ -2130,14 +2035,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/galaxy-watch/galaxy-watch8-44mm-silver-bluetooth-sm-l330nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             },
             {
-                "id": "c035_def",
-                "color": "Graphite",
-                "colorId": "c035",
-                "hex": "#5b6166",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_s9BzxhCL0tVck1wQNfuA.png"
                 ],
@@ -2147,8 +2055,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/galaxy-watch/galaxy-watch8-44mm-silver-bluetooth-sm-l330nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Graphite"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 3696,
@@ -2165,10 +2076,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c7c8ca",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-L320NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_9uv4ihWUsJkdFA3zZeg2.png"
@@ -2176,10 +2087,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_9uv4ihWUsJkdFA3zZeg2.png"
             },
             {
-                "id": "c035",
-                "colorId": "c035",
-                "name": "Graphite",
-                "hex": "#5b6166",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-L320NDAALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ViOTFAIkqd72KnfMWsUX.png"
@@ -2187,13 +2098,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ViOTFAIkqd72KnfMWsUX.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3407,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/galaxy-watch/galaxy-watch8-40mm-graphite-bluetooth-sm-l320ndaalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c7c8ca",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_9uv4ihWUsJkdFA3zZeg2.png"
                 ],
@@ -2203,14 +2124,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/galaxy-watch/galaxy-watch8-40mm-graphite-bluetooth-sm-l320ndaalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             },
             {
-                "id": "c035_def",
-                "color": "Graphite",
-                "colorId": "c035",
-                "hex": "#5b6166",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ViOTFAIkqd72KnfMWsUX.png"
                 ],
@@ -2220,8 +2144,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/galaxy-watch/galaxy-watch8-40mm-graphite-bluetooth-sm-l320ndaalta",
                 "active": true,
-                "type": "direct",
-                "title": "Graphite"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 3407,
@@ -2238,10 +2165,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c041",
-                "colorId": "c041",
-                "name": "Green",
-                "hex": "#6e6d63",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-L310NZGALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_I42cMghpFfwX8o0Qb1JV.png"
@@ -2249,10 +2176,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_I42cMghpFfwX8o0Qb1JV.png"
             },
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#bdc0bf",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-L310NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_E9v5fsMolA6hnDUaTxF4.png"
@@ -2260,13 +2187,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_E9v5fsMolA6hnDUaTxF4.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3234,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch7-44mm-green-bluetooth-sm-l310nzgalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c041_def",
-                "color": "Green",
-                "colorId": "c041",
-                "hex": "#6e6d63",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_I42cMghpFfwX8o0Qb1JV.png"
                 ],
@@ -2276,14 +2213,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch7-44mm-green-bluetooth-sm-l310nzgalta",
                 "active": true,
-                "type": "direct",
-                "title": "Green"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             },
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#bdc0bf",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_E9v5fsMolA6hnDUaTxF4.png"
                 ],
@@ -2293,8 +2233,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch7-44mm-green-bluetooth-sm-l310nzgalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 3234,
@@ -2314,32 +2257,31 @@ var products = [
                 "id": "c027",
                 "colorId": "c027",
                 "name": "Verde",
-                "hex": "#6e6d63",
+                "hex": "#304e53",
                 "sku": "SM-L300NZGALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PHQG26DIV3dK5LlOoj1u.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PHQG26DIV3dK5LlOoj1u.png"
-            },
-            {
-                "id": "c042",
-                "colorId": "c042",
-                "name": "Cream",
-                "hex": "#f0eae0",
-                "sku": "SM-L300NZEALTA",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_olUm3QxXMKcYH9IVsb8D.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_olUm3QxXMKcYH9IVsb8D.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3003,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch7-40mm-green-bluetooth-sm-l300nzgalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c027_def",
+                "id": "c027_",
                 "color": "Verde",
                 "colorId": "c027",
-                "hex": "#6e6d63",
+                "hex": "#304e53",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PHQG26DIV3dK5LlOoj1u.png"
                 ],
@@ -2349,25 +2291,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch7-40mm-green-bluetooth-sm-l300nzgalta",
                 "active": true,
-                "type": "direct",
-                "title": "Verde"
-            },
-            {
-                "id": "c042_def",
-                "color": "Cream",
-                "colorId": "c042",
-                "hex": "#f0eae0",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_olUm3QxXMKcYH9IVsb8D.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_olUm3QxXMKcYH9IVsb8D.png",
-                "sku": "SM-L300NZEALTA",
-                "price": 3003,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch7-40mm-green-bluetooth-sm-l300nzgalta",
-                "active": true,
-                "type": "direct",
-                "title": "Cream"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Verde - Sin Especificación"
             }
         ],
         "price": 3003,
@@ -2384,10 +2312,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c7c8ca",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-R960NZSALTA",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/py/2307/gallery/py-galaxy-watch6-classic-r965-sm-r960nzsalta-537413468?$Q90_1920_1280_F_PNG$"
@@ -2395,10 +2323,10 @@ var products = [
                 "image": "https://images.samsung.com/is/image/samsung/p6pim/py/2307/gallery/py-galaxy-watch6-classic-r965-sm-r960nzsalta-537413468?$Q90_1920_1280_F_PNG$"
             },
             {
-                "id": "c043",
-                "colorId": "c043",
-                "name": "Black",
-                "hex": "#404145",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-R960NZKALTA",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/py/2307/gallery/py-galaxy-watch6-classic-r965-sm-r960nzkalta-537413441?$Q90_1920_1280_F_PNG$"
@@ -2406,13 +2334,23 @@ var products = [
                 "image": "https://images.samsung.com/is/image/samsung/p6pim/py/2307/gallery/py-galaxy-watch6-classic-r965-sm-r960nzkalta-537413441?$Q90_1920_1280_F_PNG$"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4216,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c7c8ca",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/py/2307/gallery/py-galaxy-watch6-classic-r965-sm-r960nzsalta-537413468?$Q90_1920_1280_F_PNG$"
                 ],
@@ -2422,14 +2360,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             },
             {
-                "id": "c043_def",
-                "color": "Black",
-                "colorId": "c043",
-                "hex": "#404145",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/py/2307/gallery/py-galaxy-watch6-classic-r965-sm-r960nzkalta-537413441?$Q90_1920_1280_F_PNG$"
                 ],
@@ -2439,8 +2380,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Black"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 4216,
@@ -2457,10 +2401,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c7c8ca",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-R950NZKAPHE",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/es/2307/gallery/es-galaxy-watch6-classic-r955-sm-r950nzsaphe-537448677?$Q90_684_547_JPG$"
@@ -2468,10 +2412,10 @@ var products = [
                 "image": "https://images.samsung.com/is/image/samsung/p6pim/es/2307/gallery/es-galaxy-watch6-classic-r955-sm-r950nzsaphe-537448677?$Q90_684_547_JPG$"
             },
             {
-                "id": "c043",
-                "colorId": "c043",
-                "name": "Black",
-                "hex": "#404145",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-R950NZKAPHE",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/es/2307/gallery/es-galaxy-watch6-classic-r955-sm-r950nzkaphe-537448661?$Q90_684_547_JPG$"
@@ -2479,13 +2423,23 @@ var products = [
                 "image": "https://images.samsung.com/is/image/samsung/p6pim/es/2307/gallery/es-galaxy-watch6-classic-r955-sm-r950nzkaphe-537448661?$Q90_684_547_JPG$"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3869,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c7c8ca",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/es/2307/gallery/es-galaxy-watch6-classic-r955-sm-r950nzsaphe-537448677?$Q90_684_547_JPG$"
                 ],
@@ -2495,14 +2449,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             },
             {
-                "id": "c043_def",
-                "color": "Black",
-                "colorId": "c043",
-                "hex": "#404145",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/es/2307/gallery/es-galaxy-watch6-classic-r955-sm-r950nzkaphe-537448661?$Q90_684_547_JPG$"
                 ],
@@ -2512,8 +2469,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Black"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 3869,
@@ -2530,10 +2490,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c7c8ca",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-R940NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_U5bBtS1grukPQy8FDwqH.png"
@@ -2541,10 +2501,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_U5bBtS1grukPQy8FDwqH.png"
             },
             {
-                "id": "c035",
-                "colorId": "c035",
-                "name": "Graphite",
-                "hex": "#4a4a4d",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-R940NZKALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CjiDx81kAzR7o0YJq5ga.png"
@@ -2552,13 +2512,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CjiDx81kAzR7o0YJq5ga.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3061,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c7c8ca",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_U5bBtS1grukPQy8FDwqH.png"
                 ],
@@ -2568,14 +2538,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             },
             {
-                "id": "c035_def",
-                "color": "Graphite",
-                "colorId": "c035",
-                "hex": "#4a4a4d",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CjiDx81kAzR7o0YJq5ga.png"
                 ],
@@ -2585,8 +2558,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Graphite"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 3061,
@@ -2603,10 +2579,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c044",
-                "colorId": "c044",
-                "name": "Gold",
-                "hex": "#f0eae0",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-R930NZEALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3eaB1ZH8XMfgArRizST6.png"
@@ -2614,10 +2590,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3eaB1ZH8XMfgArRizST6.png"
             },
             {
-                "id": "c035",
-                "colorId": "c035",
-                "name": "Graphite",
-                "hex": "#4a4a4d",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "SM-R930NZKALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_jD4crMfKyoOWJ0ZAHLQi.png"
@@ -2625,13 +2601,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_jD4crMfKyoOWJ0ZAHLQi.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 2657,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c044_def",
-                "color": "Gold",
-                "colorId": "c044",
-                "hex": "#f0eae0",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3eaB1ZH8XMfgArRizST6.png"
                 ],
@@ -2641,14 +2627,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Gold"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             },
             {
-                "id": "c035_def",
-                "color": "Graphite",
-                "colorId": "c035",
-                "hex": "#4a4a4d",
+                "id": "c017_",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_jD4crMfKyoOWJ0ZAHLQi.png"
                 ],
@@ -2658,8 +2647,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch6-40mm-graphite-bluetooth-sm-r930nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Graphite"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 2657,
@@ -2679,7 +2671,7 @@ var products = [
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#404145",
+                "hex": "#494a4d",
                 "sku": "SM-R920NZKALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_OQZW4xiHv7MwbqRgefo1.png"
@@ -2687,10 +2679,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_OQZW4xiHv7MwbqRgefo1.png"
             },
             {
-                "id": "c045",
-                "colorId": "c045",
-                "name": "Gris Titanio",
-                "hex": "#867e74",
+                "id": "c013",
+                "colorId": "c013",
+                "name": "Gris Oscuro",
+                "hex": "#312e31",
                 "sku": "SM-R920NZTALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_fNuvOGDnM90ysK8aUxI1.png"
@@ -2698,13 +2690,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_fNuvOGDnM90ysK8aUxI1.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 2657,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-pro-black-titanium-bluetooth-sm-r920nzkalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#404145",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_OQZW4xiHv7MwbqRgefo1.png"
                 ],
@@ -2714,14 +2716,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-pro-black-titanium-bluetooth-sm-r920nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             },
             {
-                "id": "c045_def",
-                "color": "Gris Titanio",
-                "colorId": "c045",
-                "hex": "#867e74",
+                "id": "c013_",
+                "color": "Gris Oscuro",
+                "colorId": "c013",
+                "hex": "#312e31",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_fNuvOGDnM90ysK8aUxI1.png"
                 ],
@@ -2731,8 +2736,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-pro-black-titanium-bluetooth-sm-r920nzkalta",
                 "active": true,
-                "type": "direct",
-                "title": "Gris Titanio"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris Oscuro - Sin Especificación"
             }
         ],
         "price": 2657,
@@ -2749,10 +2757,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c035",
-                "colorId": "c035",
-                "name": "Graphite",
-                "hex": "#4a4a4d",
+                "id": "c010",
+                "colorId": "c010",
+                "name": "Grafito",
+                "hex": "#494d53",
                 "sku": "SM-R910NZAALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_U439qx2GkFwOBPhb8IQo.png"
@@ -2760,10 +2768,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_U439qx2GkFwOBPhb8IQo.png"
             },
             {
-                "id": "c046",
-                "colorId": "c046",
-                "name": "Zafiro",
-                "hex": "#6b7d98",
+                "id": "c008",
+                "colorId": "c008",
+                "name": "Celeste",
+                "hex": "#bdc6d5",
                 "sku": "SM-R910NZBALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_h2XS48ecWFGrwTOCpdxu.png"
@@ -2774,7 +2782,7 @@ var products = [
                 "id": "c021",
                 "colorId": "c021",
                 "name": "Plateado",
-                "hex": "#c7c8c9",
+                "hex": "#dbdbdb",
                 "sku": "SM-R910NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_BKk9s30tfQOqjuD52bda.png"
@@ -2782,13 +2790,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_BKk9s30tfQOqjuD52bda.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 2426,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-44mm-graphite-bluetooth-sm-r910nzaalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c035_def",
-                "color": "Graphite",
-                "colorId": "c035",
-                "hex": "#4a4a4d",
+                "id": "c010_",
+                "color": "Grafito",
+                "colorId": "c010",
+                "hex": "#494d53",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_U439qx2GkFwOBPhb8IQo.png"
                 ],
@@ -2798,14 +2816,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-44mm-graphite-bluetooth-sm-r910nzaalta",
                 "active": true,
-                "type": "direct",
-                "title": "Graphite"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Grafito - Sin Especificación"
             },
             {
-                "id": "c046_def",
-                "color": "Zafiro",
-                "colorId": "c046",
-                "hex": "#6b7d98",
+                "id": "c008_",
+                "color": "Celeste",
+                "colorId": "c008",
+                "hex": "#bdc6d5",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_h2XS48ecWFGrwTOCpdxu.png"
                 ],
@@ -2815,14 +2836,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-44mm-graphite-bluetooth-sm-r910nzaalta",
                 "active": true,
-                "type": "direct",
-                "title": "Zafiro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Celeste - Sin Especificación"
             },
             {
-                "id": "c021_def",
+                "id": "c021_",
                 "color": "Plateado",
                 "colorId": "c021",
-                "hex": "#c7c8c9",
+                "hex": "#dbdbdb",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_BKk9s30tfQOqjuD52bda.png"
                 ],
@@ -2832,8 +2856,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-44mm-graphite-bluetooth-sm-r910nzaalta",
                 "active": true,
-                "type": "direct",
-                "title": "Plateado"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Plateado - Sin Especificación"
             }
         ],
         "price": 2426,
@@ -2853,7 +2880,7 @@ var products = [
                 "id": "c021",
                 "colorId": "c021",
                 "name": "Plateado",
-                "hex": "#c7c8c9",
+                "hex": "#dbdbdb",
                 "sku": "SM-R900NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_P1oG408CDeJMg92NFqIu.png"
@@ -2861,10 +2888,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_P1oG408CDeJMg92NFqIu.png"
             },
             {
-                "id": "c035",
-                "colorId": "c035",
-                "name": "Graphite",
-                "hex": "#4a4a4d",
+                "id": "c010",
+                "colorId": "c010",
+                "name": "Grafito",
+                "hex": "#494d53",
                 "sku": "SM-R900NZAALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_h1wVDunQcH8iAbIXPL5x.png"
@@ -2872,10 +2899,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_h1wVDunQcH8iAbIXPL5x.png"
             },
             {
-                "id": "c047",
-                "colorId": "c047",
-                "name": "Oro rosado",
-                "hex": "#f0cfc3",
+                "id": "c019",
+                "colorId": "c019",
+                "name": "Oro Rosa",
+                "hex": "#d6b6a8",
                 "sku": "SM-R900NZDALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_KSOu2VYNnRZi4zTxD7ty.png"
@@ -2883,13 +2910,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_KSOu2VYNnRZi4zTxD7ty.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 1964,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-40mm-silver-bluetooth-sm-r900nzsalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c021_def",
+                "id": "c021_",
                 "color": "Plateado",
                 "colorId": "c021",
-                "hex": "#c7c8c9",
+                "hex": "#dbdbdb",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_P1oG408CDeJMg92NFqIu.png"
                 ],
@@ -2899,14 +2936,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-40mm-silver-bluetooth-sm-r900nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Plateado"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Plateado - Sin Especificación"
             },
             {
-                "id": "c035_def",
-                "color": "Graphite",
-                "colorId": "c035",
-                "hex": "#4a4a4d",
+                "id": "c010_",
+                "color": "Grafito",
+                "colorId": "c010",
+                "hex": "#494d53",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_h1wVDunQcH8iAbIXPL5x.png"
                 ],
@@ -2916,14 +2956,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-40mm-silver-bluetooth-sm-r900nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Graphite"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Grafito - Sin Especificación"
             },
             {
-                "id": "c047_def",
-                "color": "Oro rosado",
-                "colorId": "c047",
-                "hex": "#f0cfc3",
+                "id": "c019_",
+                "color": "Oro Rosa",
+                "colorId": "c019",
+                "hex": "#d6b6a8",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_KSOu2VYNnRZi4zTxD7ty.png"
                 ],
@@ -2933,8 +2976,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch5-40mm-silver-bluetooth-sm-r900nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Oro rosado"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Oro Rosa - Sin Especificación"
             }
         ],
         "price": 1964,
@@ -2951,10 +2997,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c048",
-                "colorId": "c048",
-                "name": "Oro Rosado",
-                "hex": "#ffc0cb",
+                "id": "c019",
+                "colorId": "c019",
+                "name": "Oro Rosa",
+                "hex": "#d6b6a8",
                 "sku": "SM-R860NZDALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Fw8gsRPMqfK3Tj0SzeB5.png"
@@ -2965,7 +3011,7 @@ var products = [
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#404145",
+                "hex": "#494a4d",
                 "sku": "SM-R860NZKALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_8mPH6O5dZCQphMAgTUti.png"
@@ -2973,10 +3019,10 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_8mPH6O5dZCQphMAgTUti.png"
             },
             {
-                "id": "c020",
-                "colorId": "c020",
-                "name": "Plata",
-                "hex": "#c0c0c0",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "SM-R860NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_YwaS6XJdr0htseAugZfB.png"
@@ -2984,13 +3030,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_YwaS6XJdr0htseAugZfB.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 1733,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch4-pink-gold-bluetooth-sm-r860nzdalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c048_def",
-                "color": "Oro Rosado",
-                "colorId": "c048",
-                "hex": "#ffc0cb",
+                "id": "c019_",
+                "color": "Oro Rosa",
+                "colorId": "c019",
+                "hex": "#d6b6a8",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Fw8gsRPMqfK3Tj0SzeB5.png"
                 ],
@@ -3000,14 +3056,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch4-pink-gold-bluetooth-sm-r860nzdalta",
                 "active": true,
-                "type": "direct",
-                "title": "Oro Rosado"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Oro Rosa - Sin Especificación"
             },
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#404145",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_8mPH6O5dZCQphMAgTUti.png"
                 ],
@@ -3017,14 +3076,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch4-pink-gold-bluetooth-sm-r860nzdalta",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             },
             {
-                "id": "c020_def",
-                "color": "Plata",
-                "colorId": "c020",
-                "hex": "#c0c0c0",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_YwaS6XJdr0htseAugZfB.png"
                 ],
@@ -3034,8 +3096,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch4-pink-gold-bluetooth-sm-r860nzdalta",
                 "active": true,
-                "type": "direct",
-                "title": "Plata"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 1733,
@@ -3052,10 +3117,10 @@ var products = [
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c0c0c0",
+                "id": "c008",
+                "colorId": "c008",
+                "name": "Celeste",
+                "hex": "#bdc6d5",
                 "sku": "SM-R861NZSALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_no1kELFZ2z4lgwKMY7pe.png"
@@ -3066,7 +3131,7 @@ var products = [
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#404145",
+                "hex": "#494a4d",
                 "sku": "SM-R861NZKALTA",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_k35e6sFmuNqVXoQdl9w0.png"
@@ -3074,9 +3139,9 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_k35e6sFmuNqVXoQdl9w0.png"
             },
             {
-                "id": "c049",
-                "colorId": "c049",
-                "name": "Pink Gold",
+                "id": "c019",
+                "colorId": "c019",
+                "name": "Oro Rosa",
                 "hex": "#d6b6a8",
                 "sku": "SM-R861NIDALTA",
                 "images": [
@@ -3085,13 +3150,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EtFy7GqbN06ZUeKmX1rM.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 2137,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch-fe-40mm-silver-bluetooth-sm-r861nzsalta",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c0c0c0",
+                "id": "c008_",
+                "color": "Celeste",
+                "colorId": "c008",
+                "hex": "#bdc6d5",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_no1kELFZ2z4lgwKMY7pe.png"
                 ],
@@ -3101,14 +3176,17 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch-fe-40mm-silver-bluetooth-sm-r861nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Celeste - Sin Especificación"
             },
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#404145",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_k35e6sFmuNqVXoQdl9w0.png"
                 ],
@@ -3118,13 +3196,16 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch-fe-40mm-silver-bluetooth-sm-r861nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             },
             {
-                "id": "c049_def",
-                "color": "Pink Gold",
-                "colorId": "c049",
+                "id": "c019_",
+                "color": "Oro Rosa",
+                "colorId": "c019",
                 "hex": "#d6b6a8",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EtFy7GqbN06ZUeKmX1rM.png"
@@ -3135,8 +3216,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/watches/galaxy-watch/galaxy-watch-fe-40mm-silver-bluetooth-sm-r861nzsalta",
                 "active": true,
-                "type": "direct",
-                "title": "Pink Gold"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Oro Rosa - Sin Especificación"
             }
         ],
         "price": 2137,
@@ -3148,15 +3232,15 @@ var products = [
     {
         "id": 48,
         "name": "50\" Crystal UHD 4K DU8000 Smart TV (2024)",
-        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle\r",
-        "category": "Televisions",
+        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "UN50DU8000GXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_KDOShpEvQ4lBfnFIo5xq.png"
@@ -3164,13 +3248,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_KDOShpEvQ4lBfnFIo5xq.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3629,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/uhd-4k-tv/du8000-50-inch-crystal-uhd-4k-tizen-os-smart-tv-un50du8000gxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_KDOShpEvQ4lBfnFIo5xq.png"
                 ],
@@ -3180,8 +3274,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/uhd-4k-tv/du8000-50-inch-crystal-uhd-4k-tizen-os-smart-tv-un50du8000gxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 3629,
@@ -3193,15 +3290,15 @@ var products = [
     {
         "id": 49,
         "name": "55\" Crystal UHD 4K DU8000 Smart TV (2024)",
-        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle\r",
-        "category": "Televisions",
+        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "UN55DU8000GXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ImkfcVMrtUGxSCTOywjK.png"
@@ -3209,13 +3306,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ImkfcVMrtUGxSCTOywjK.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4366,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/uhd-4k-tv/du8000-55-inch-crystal-uhd-4k-tizen-os-smart-tv-un55du8000gxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ImkfcVMrtUGxSCTOywjK.png"
                 ],
@@ -3225,8 +3332,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/uhd-4k-tv/du8000-55-inch-crystal-uhd-4k-tizen-os-smart-tv-un55du8000gxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 4366,
@@ -3238,15 +3348,15 @@ var products = [
     {
         "id": 50,
         "name": "65\" Crystal UHD 4K U8000F Smart TV",
-        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle\r",
-        "category": "Televisions",
+        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "UN65U8000FGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_QpGz43vgsMNwIVbXqoLF.png"
@@ -3254,13 +3364,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_QpGz43vgsMNwIVbXqoLF.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 7040,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/uhd-4k-tv/u8000f-65-inch-crystal-uhd-4k-smart-tv-un65u800fgxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_QpGz43vgsMNwIVbXqoLF.png"
                 ],
@@ -3270,8 +3390,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/uhd-4k-tv/u8000f-65-inch-crystal-uhd-4k-smart-tv-un65u800fgxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 7040,
@@ -3284,14 +3407,14 @@ var products = [
         "id": 51,
         "name": "65 The Frame QLED 4K Smart TV (2024)",
         "description": "Televisor o cuadro de arte tu eliges; disfruta de tu pantalla anti-reflejo con matte display",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN65LS03DAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_m8TwsQ7c1RFViLxje3vO.png"
@@ -3299,13 +3422,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_m8TwsQ7c1RFViLxje3vO.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 11000,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/lifestyle-tvs/the-frame/ls03d-65-inch-black-qn65ls03dagxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_m8TwsQ7c1RFViLxje3vO.png"
                 ],
@@ -3315,8 +3448,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/lifestyle-tvs/the-frame/ls03d-65-inch-black-qn65ls03dagxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 11000,
@@ -3328,15 +3464,15 @@ var products = [
     {
         "id": 52,
         "name": "98 Crystal UHD 4K DU9000 Smart TV (2024)",
-        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle\r",
-        "category": "Televisions",
+        "description": "Sumergete en mil millones de tonos de color para una imagen clara y llena de detalle",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "UN98DU9000GXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uh2PdWwkltZ9JBaoFK1u.png"
@@ -3344,13 +3480,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uh2PdWwkltZ9JBaoFK1u.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 39078,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/uhd-4k-tv/du9000-98-inch-crystal-uhd-4k-tizen-os-smart-tv-un98du9000gxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uh2PdWwkltZ9JBaoFK1u.png"
                 ],
@@ -3360,8 +3506,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/uhd-4k-tv/du9000-98-inch-crystal-uhd-4k-tizen-os-smart-tv-un98du9000gxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 39078,
@@ -3374,14 +3523,14 @@ var products = [
         "id": 53,
         "name": "85 QLED 4K Q70A Smart TV (2021)",
         "description": "Hasta 100% de volumen de color con brillo que resalta incluso de dia",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN85Q70AAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Je9G8vLxcWoRBu6Qj3CO.png"
@@ -3389,13 +3538,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Je9G8vLxcWoRBu6Qj3CO.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 16499,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/qled",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Je9G8vLxcWoRBu6Qj3CO.png"
                 ],
@@ -3405,8 +3564,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/qled",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 16499,
@@ -3419,14 +3581,14 @@ var products = [
         "id": 54,
         "name": "50 QLED Q7FA 4K Vision Al Smart TV (2025)",
         "description": "Hasta 100% de volumen de color con brillo que resalta incluso de dia",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN50Q7FAAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_5GWkeRcMV4v2oZByOLHb.png"
@@ -3434,13 +3596,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_5GWkeRcMV4v2oZByOLHb.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4488,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/qled-tv/q7f-50-inch-qled-4k-smart-tv-qn50q7faagxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_5GWkeRcMV4v2oZByOLHb.png"
                 ],
@@ -3450,8 +3622,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/qled-tv/q7f-50-inch-qled-4k-smart-tv-qn50q7faagxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 4488,
@@ -3464,14 +3639,14 @@ var products = [
         "id": 55,
         "name": "55 QLED Q7FA 4K Vision Al Smart TV (2025)",
         "description": "Hasta 100% de volumen de color con brillo que resalta incluso de dia",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN55Q6FAAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_J19o5VW0lxjv8ZAPXb3q.png"
@@ -3479,13 +3654,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_J19o5VW0lxjv8ZAPXb3q.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 5676,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/qled-tv/q7f-55-inch-qled-4k-smart-tv-qn55q7faagxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_J19o5VW0lxjv8ZAPXb3q.png"
                 ],
@@ -3495,8 +3680,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/qled-tv/q7f-55-inch-qled-4k-smart-tv-qn55q7faagxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 5676,
@@ -3509,14 +3697,14 @@ var products = [
         "id": 56,
         "name": "65 QLED Q7FA 4K Vision Al Smart TV (2025)",
         "description": "Hasta 100% de volumen de color con brillo que resalta incluso de dia",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN65Q6FAAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y3SazKNiqZL2GgWMDAB1.png"
@@ -3524,13 +3712,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y3SazKNiqZL2GgWMDAB1.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 7920,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/qled-tv/q7f-65-inch-qled-4k-smart-tv-qn65q7faagxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y3SazKNiqZL2GgWMDAB1.png"
                 ],
@@ -3540,8 +3738,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/qled-tv/q7f-65-inch-qled-4k-smart-tv-qn65q7faagxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 7920,
@@ -3554,14 +3755,14 @@ var products = [
         "id": 57,
         "name": "75 QLED Q7FA 4K Vision Al Smart TV (2025)",
         "description": "Hasta 100% de volumen de color con brillo que resalta incluso de dia",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN75Q6FAAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Fh0QtAWP2TrMlOyfKH3i.png"
@@ -3569,13 +3770,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Fh0QtAWP2TrMlOyfKH3i.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 12540,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/qled-tv/q7f-75-inch-qled-4k-smart-tv-qn75q7faagxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Fh0QtAWP2TrMlOyfKH3i.png"
                 ],
@@ -3585,8 +3796,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/qled-tv/q7f-75-inch-qled-4k-smart-tv-qn75q7faagxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 12540,
@@ -3599,14 +3813,14 @@ var products = [
         "id": 58,
         "name": "Televisor Smart 85 QLED 4K Q7F (2025)",
         "description": "Hasta 100% de volumen de color con brillo que resalta incluso de dia",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN85Q7FAAGXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y3SazKNiqZL2GgWMDAB1.png"
@@ -3614,13 +3828,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y3SazKNiqZL2GgWMDAB1.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 18480,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/qled-tv/q7f-85-inch-qled-4k-smart-tv-qn85q7faagxzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y3SazKNiqZL2GgWMDAB1.png"
                 ],
@@ -3630,8 +3854,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/qled-tv/q7f-85-inch-qled-4k-smart-tv-qn85q7faagxzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 18480,
@@ -3644,14 +3871,14 @@ var products = [
         "id": 59,
         "name": "65 OLED 4K S85F Smart TV (2025)",
         "description": "Tecnología OLED con negros profundos, Pantone Validated y diseño LaserSlim.",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN65S90FAEXZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_aBiCzY5V7jtclEme09N6.png"
@@ -3659,13 +3886,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_aBiCzY5V7jtclEme09N6.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 18480,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/tvs/oled-tv/s90f-65-inch-oled-4k-smart-tv-qn65s90faexzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_aBiCzY5V7jtclEme09N6.png"
                 ],
@@ -3675,8 +3912,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/tvs/oled-tv/s90f-65-inch-oled-4k-smart-tv-qn65s90faexzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 18480,
@@ -3689,14 +3929,14 @@ var products = [
         "id": 60,
         "name": "77\" OLED S85F 4K Vision AI Smart TV (2025)",
         "description": "Tecnología OLED con negros profundos, Pantone Validated y diseño LaserSlim.",
-        "category": "Televisions",
+        "category": "Televisores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "QN77S85FAEXZS",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/cl/qn77s85faexzs/gallery/cl-oled-s85f-qn77s85faexzs-545961780?$Q90_1368_1094_F_JPG$"
@@ -3704,13 +3944,23 @@ var products = [
                 "image": "https://images.samsung.com/is/image/samsung/p6pim/cl/qn77s85faexzs/gallery/cl-oled-s85f-qn77s85faexzs-545961780?$Q90_1368_1094_F_JPG$"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 29040,
+                "promoPrice": 0,
+                "link": "https://shop.samsung.com.bo/tvs/oled-tv/s90f-77-inch-oled-4k-smart-tv-qn77s90faexzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://images.samsung.com/is/image/samsung/p6pim/cl/qn77s85faexzs/gallery/cl-oled-s85f-qn77s85faexzs-545961780?$Q90_1368_1094_F_JPG$"
                 ],
@@ -3720,8 +3970,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://shop.samsung.com.bo/tvs/oled-tv/s90f-77-inch-oled-4k-smart-tv-qn77s90faexzs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 29040,
@@ -3734,14 +3987,14 @@ var products = [
         "id": 61,
         "name": "Q-Series Soundbar HW-Q800F 5.1.2 Subwoofer (2025)",
         "description": "Altavoces laterales para una inmersión acústica total.",
-        "category": "Soundbar",
+        "category": "Sound Bar",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "HW-Q800F/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zLvAhkBV4oGt1xSOlbHY.png"
@@ -3749,13 +4002,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zLvAhkBV4oGt1xSOlbHY.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4488,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/audio-devices/soundbar/q800f-black-hw-q800f-zs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zLvAhkBV4oGt1xSOlbHY.png"
                 ],
@@ -3765,8 +4028,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/audio-devices/soundbar/q800f-black-hw-q800f-zs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 4488,
@@ -3779,14 +4045,14 @@ var products = [
         "id": 62,
         "name": "Q-Series Soundbar HW-QS700F 3.1.2 Subwoofer",
         "description": "Excelente calidad de sonido en cualquier configuración. El diseño inteligente se ve bien tanto en su posición vertical como horizontal.",
-        "category": "Soundbar",
+        "category": "Sound Bar",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "HW-QS700F/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_UC9FgdPpQ1ntN5zfOkho.png"
@@ -3794,13 +4060,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_UC9FgdPpQ1ntN5zfOkho.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 5280,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/audio-devices/soundbar/qs700f-black-hw-qs700f-zs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_UC9FgdPpQ1ntN5zfOkho.png"
                 ],
@@ -3810,8 +4086,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/audio-devices/soundbar/qs700f-black-hw-qs700f-zs",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 5280,
@@ -3824,59 +4103,25 @@ var products = [
         "id": 63,
         "name": "Lavadora de carga superior con dosificador Magic Dispenser",
         "description": "Tecnología Wobble anti-enredos, Motor DIT y diseño moderno.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c007",
                 "colorId": "c007",
                 "name": "Blanco",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "sku": "WA13T5260BW/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png"
-            }
-        ],
-        "priceVariants": [],
-        "variants": [
-            {
-                "id": "c007_def",
-                "color": "Blanco",
-                "colorId": "c007",
-                "hex": "#ffffff",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png",
-                "sku": "WA13T5260BW/ZS",
-                "price": 4043,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-13kg-white-wa13t5260bw-zs",
-                "active": true,
-                "type": "direct",
-                "title": "Blanco"
-            }
-        ],
-        "price": 4043,
-        "basePrice": 4043,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-13kg-white-wa13t5260bw-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png"
-    },
-    {
-        "id": 64,
-        "name": "Lavadora de carga superior con dosificador Magic Dispenser",
-        "description": "Tecnología Wobble anti-enredos, Motor DIT y diseño moderno.",
-        "category": "Washing_machines",
-        "badge": "",
-        "colors": [
+            },
             {
                 "id": "c011",
                 "colorId": "c011",
                 "name": "Gris",
-                "hex": "#777777",
+                "hex": "#938e8a",
                 "sku": "WA13T5260BY/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EkvnsOYoGfTQXcBILRhS.png"
@@ -3884,13 +4129,43 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EkvnsOYoGfTQXcBILRhS.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4274,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c011_def",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png",
+                "sku": "WA13T5260BW/ZS",
+                "price": 4274,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
+            },
+            {
+                "id": "c011_",
                 "color": "Gris",
                 "colorId": "c011",
-                "hex": "#777777",
+                "hex": "#938e8a",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EkvnsOYoGfTQXcBILRhS.png"
                 ],
@@ -3898,30 +4173,33 @@ var products = [
                 "sku": "WA13T5260BY/ZS",
                 "price": 4274,
                 "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-13kg-gray-wa13t5260by-zs",
+                "link": "",
                 "active": true,
-                "type": "direct",
-                "title": "Gris"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris - Sin Especificación"
             }
         ],
         "price": 4274,
         "basePrice": 4274,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-13kg-gray-wa13t5260by-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EkvnsOYoGfTQXcBILRhS.png"
+        "baseLink": "",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_JT9UujprqxAOCeYIymol.png"
     },
     {
         "id": 65,
         "name": "Lavadora Carga Superior 13Kg c/ Wobble",
         "description": "Tecnología Wobble, Lavado Intenso y ahorro de energía.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
-                "id": "c050",
-                "colorId": "c050",
-                "name": "White",
-                "hex": "#ffffff",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "WA13CG5441BWZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_su85rYTHDQ31oNcFkqKC.png"
@@ -3929,89 +4207,57 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_su85rYTHDQ31oNcFkqKC.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4274,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c050_def",
-                "color": "White",
-                "colorId": "c050",
-                "hex": "#ffffff",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_su85rYTHDQ31oNcFkqKC.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_su85rYTHDQ31oNcFkqKC.png",
                 "sku": "WA13CG5441BWZS",
-                "price": 4043,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa5000c-top-load-ecobubble-digital-inverter-technology-super-speed-13kg-white-wa13cg5441bwzs",
-                "active": true,
-                "type": "direct",
-                "title": "White"
-            }
-        ],
-        "price": 4043,
-        "basePrice": 4043,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa5000c-top-load-ecobubble-digital-inverter-technology-super-speed-13kg-white-wa13cg5441bwzs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_su85rYTHDQ31oNcFkqKC.png"
-    },
-    {
-        "id": 66,
-        "name": "Lavadora Carga Superior 13Kg c/ Wobble",
-        "description": "Tecnología Wobble, Lavado Intenso y ahorro de energía.",
-        "category": "Washing_machines",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c034",
-                "colorId": "c034",
-                "name": "Gray",
-                "hex": "#808080",
-                "sku": "WA13CG5441BDZS",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uo1X7Wfh25ta9TM0Oszx.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uo1X7Wfh25ta9TM0Oszx.png"
-            }
-        ],
-        "priceVariants": [],
-        "variants": [
-            {
-                "id": "c034_def",
-                "color": "Gray",
-                "colorId": "c034",
-                "hex": "#808080",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uo1X7Wfh25ta9TM0Oszx.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uo1X7Wfh25ta9TM0Oszx.png",
-                "sku": "WA13CG5441BDZS",
                 "price": 4274,
                 "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa5000c-top-load-ecobubble-digital-inverter-technology-super-speed-13kg-white-wa13cg5441bwzs",
+                "link": "",
                 "active": true,
-                "type": "direct",
-                "title": "Gray"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 4274,
         "basePrice": 4274,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa5000c-top-load-ecobubble-digital-inverter-technology-super-speed-13kg-white-wa13cg5441bwzs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Uo1X7Wfh25ta9TM0Oszx.png"
+        "baseLink": "",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_su85rYTHDQ31oNcFkqKC.png"
     },
     {
         "id": 67,
         "name": "Lavadora Carga Superior 15Kg c/ Wobble",
         "description": "Capacidad 15Kg, Pulsador Wobble y 20 años de garantía en motor.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c011",
                 "colorId": "c011",
                 "name": "Gris",
-                "hex": "#777777",
+                "hex": "#938e8a",
                 "sku": "WA15T5260BY/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_TMWkD26xISQhd3vbeO7F.png"
@@ -4019,134 +4265,68 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_TMWkD26xISQhd3vbeO7F.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4505,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c011_def",
+                "id": "c011_",
                 "color": "Gris",
                 "colorId": "c011",
-                "hex": "#777777",
+                "hex": "#938e8a",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_TMWkD26xISQhd3vbeO7F.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_TMWkD26xISQhd3vbeO7F.png",
                 "sku": "WA15T5260BY/ZS",
-                "price": 4736,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-15kg-white-wa15t5260bw-zs",
-                "active": true,
-                "type": "direct",
-                "title": "Gris"
-            }
-        ],
-        "price": 4736,
-        "basePrice": 4736,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-15kg-white-wa15t5260bw-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_TMWkD26xISQhd3vbeO7F.png"
-    },
-    {
-        "id": 68,
-        "name": "Lavadora Carga Superior 15Kg c/ Wobble",
-        "description": "Capacidad 15Kg, Pulsador Wobble y 20 años de garantía en motor.",
-        "category": "Washing_machines",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c050",
-                "colorId": "c050",
-                "name": "White",
-                "hex": "#ffffff",
-                "sku": "WA15T5260BW/ZS",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zn79NiAjgpXSa02KERrW.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zn79NiAjgpXSa02KERrW.png"
-            }
-        ],
-        "priceVariants": [],
-        "variants": [
-            {
-                "id": "c050_def",
-                "color": "White",
-                "colorId": "c050",
-                "hex": "#ffffff",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zn79NiAjgpXSa02KERrW.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zn79NiAjgpXSa02KERrW.png",
-                "sku": "WA15T5260BW/ZS",
                 "price": 4505,
                 "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-15kg-white-wa15t5260bw-zs",
+                "link": "",
                 "active": true,
-                "type": "direct",
-                "title": "White"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris - Sin Especificación"
             }
         ],
         "price": 4505,
         "basePrice": 4505,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-15kg-white-wa15t5260bw-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zn79NiAjgpXSa02KERrW.png"
+        "baseLink": "",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_TMWkD26xISQhd3vbeO7F.png"
     },
     {
         "id": 69,
         "name": "Lavadora Carga Superior 19Kg c/ Eco Bubble ",
         "description": "EcoBubble con Dual Storm, Speed Spray (Lavado 31min) y SmartThings.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c011",
                 "colorId": "c011",
                 "name": "Gris",
-                "hex": "#808080",
+                "hex": "#938e8a",
                 "sku": "WA19CG6441BDZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png"
-            }
-        ],
-        "priceVariants": [],
-        "variants": [
-            {
-                "id": "c011_def",
-                "color": "Gris",
-                "colorId": "c011",
-                "hex": "#808080",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png",
-                "sku": "WA19CG6441BDZS",
-                "price": 6468,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa6000c-top-load-ecobubble-digital-inverter-technology-super-speed-19kg-gray-wa19cg6441bdzs",
-                "active": true,
-                "type": "direct",
-                "title": "Gris"
-            }
-        ],
-        "price": 6468,
-        "basePrice": 6468,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa6000c-top-load-ecobubble-digital-inverter-technology-super-speed-19kg-gray-wa19cg6441bdzs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png"
-    },
-    {
-        "id": 70,
-        "name": "Lavadora Carga Superior 19Kg c/ Eco Bubble ",
-        "description": "EcoBubble con Dual Storm, Speed Spray (Lavado 31min) y SmartThings.",
-        "category": "Washing_machines",
-        "badge": "",
-        "colors": [
+            },
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "WA19CG6745BVZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4ALNrH3PaGJvw50B6Ykz.png"
@@ -4154,13 +4334,43 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4ALNrH3PaGJvw50B6Ykz.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 6699,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c011_",
+                "color": "Gris",
+                "colorId": "c011",
+                "hex": "#938e8a",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png",
+                "sku": "WA19CG6441BDZS",
+                "price": 6699,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris - Sin Especificación"
+            },
+            {
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4ALNrH3PaGJvw50B6Ykz.png"
                 ],
@@ -4168,30 +4378,33 @@ var products = [
                 "sku": "WA19CG6745BVZS",
                 "price": 6699,
                 "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa6000c-top-load-ecobubble-digital-inverter-technology-super-speed-19kg-gray-wa19cg6441bdzs",
+                "link": "",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 6699,
         "basePrice": 6699,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa6000c-top-load-ecobubble-digital-inverter-technology-super-speed-19kg-gray-wa19cg6441bdzs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4ALNrH3PaGJvw50B6Ykz.png"
+        "baseLink": "",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gkcsF4KAm19xdWathDey.png"
     },
     {
         "id": 71,
         "name": "Lavadora Carga Superior 19Kg c/ Wobble",
         "description": "Lavadora de carga superior con dosificador Magic Dispenser, lavado intenso y suavizante potente",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c011",
                 "colorId": "c011",
                 "name": "Gris",
-                "hex": "#808080",
+                "hex": "#938e8a",
                 "sku": "WA19T6260BY/BO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_2EcOMLa84g03ws7PhJld.png"
@@ -4199,13 +4412,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_2EcOMLa84g03ws7PhJld.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 6353,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-19kg-black-caviar-wa19t6260bv-bo",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c011_def",
+                "id": "c011_",
                 "color": "Gris",
                 "colorId": "c011",
-                "hex": "#808080",
+                "hex": "#938e8a",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_2EcOMLa84g03ws7PhJld.png"
                 ],
@@ -4215,8 +4438,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/top-load-19kg-black-caviar-wa19t6260bv-bo",
                 "active": true,
-                "type": "direct",
-                "title": "Gris"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris - Sin Especificación"
             }
         ],
         "price": 6353,
@@ -4229,14 +4455,14 @@ var products = [
         "id": 72,
         "name": "Lavadora Carga Superior 22Kg c/ Bubble Storm",
         "description": "Heavy Duty+, BubbleStorm para lavado rápido y gran capacidad 22kg.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "WA22A8370GV/BO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Efvjbaz4T2p1qsVgYC8N.png"
@@ -4244,13 +4470,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Efvjbaz4T2p1qsVgYC8N.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 9818,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/ww8800a-22kg-black-wa22a8370gv-bo",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_Efvjbaz4T2p1qsVgYC8N.png"
                 ],
@@ -4260,8 +4496,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/ww8800a-22kg-black-wa22a8370gv-bo",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 9818,
@@ -4274,59 +4513,25 @@ var products = [
         "id": 73,
         "name": "Lavadora Carga Frontal 10.5Kg c/ Eco Bubble",
         "description": "Lavado con IA (AI Control), EcoBubble y Dispensador Automático.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c011",
                 "colorId": "c011",
                 "name": "Gris",
-                "hex": "#808080",
+                "hex": "#938e8a",
                 "sku": "WW10TA040CX/BO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png"
-            }
-        ],
-        "priceVariants": [],
-        "variants": [
-            {
-                "id": "c011_def",
-                "color": "Gris",
-                "colorId": "c011",
-                "hex": "#808080",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png",
-                "sku": "WW10TA040CX/BO",
-                "price": 6468,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/ww5000t-front-loading-hygiene-steam-dit-10-5kg-white-ww10ta040ce-bo",
-                "active": true,
-                "type": "direct",
-                "title": "Gris"
-            }
-        ],
-        "price": 6468,
-        "basePrice": 6468,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/ww5000t-front-loading-hygiene-steam-dit-10-5kg-white-ww10ta040ce-bo",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png"
-    },
-    {
-        "id": 74,
-        "name": "Lavadora Carga Frontal 10.5Kg c/ Eco Bubble",
-        "description": "Lavado con IA (AI Control), EcoBubble y Dispensador Automático.",
-        "category": "Washing_machines",
-        "badge": "",
-        "colors": [
+            },
             {
                 "id": "c007",
                 "colorId": "c007",
                 "name": "Blanco",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "sku": "WW10TA040CE/BO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3uKoTkXGRYyDQgqJ6Sbz.png"
@@ -4334,13 +4539,43 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3uKoTkXGRYyDQgqJ6Sbz.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 6122,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c007_def",
+                "id": "c011_",
+                "color": "Gris",
+                "colorId": "c011",
+                "hex": "#938e8a",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png",
+                "sku": "WW10TA040CX/BO",
+                "price": 6122,
+                "promoPrice": 0,
+                "link": "",
+                "active": true,
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris - Sin Especificación"
+            },
+            {
+                "id": "c007_",
                 "color": "Blanco",
                 "colorId": "c007",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3uKoTkXGRYyDQgqJ6Sbz.png"
                 ],
@@ -4348,30 +4583,33 @@ var products = [
                 "sku": "WW10TA040CE/BO",
                 "price": 6122,
                 "promoPrice": 0,
-                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/ww5000t-front-loading-hygiene-steam-dit-10-5kg-white-ww10ta040ce-bo",
+                "link": "",
                 "active": true,
-                "type": "direct",
-                "title": "Blanco"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 6122,
         "basePrice": 6122,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/washers-and-dryers/washing-machines/ww5000t-front-loading-hygiene-steam-dit-10-5kg-white-ww10ta040ce-bo",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_3uKoTkXGRYyDQgqJ6Sbz.png"
+        "baseLink": "",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_krILGRP5XyFmbe0hjVWJ.png"
     },
     {
         "id": 75,
         "name": "Lavadora Carga Superior 9Kg c/ Wobble",
         "description": "Modelo compacto, Wobble Technology y secado de aire turbo.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c007",
                 "colorId": "c007",
                 "name": "Blanco",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "sku": "WA90H4400SW",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_dxZmHuRywXpgqTN0LfMe.png"
@@ -4379,13 +4617,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_dxZmHuRywXpgqTN0LfMe.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3119,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers/wa90h4400sw",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c007_def",
+                "id": "c007_",
                 "color": "Blanco",
                 "colorId": "c007",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_dxZmHuRywXpgqTN0LfMe.png"
                 ],
@@ -4395,8 +4643,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers/wa90h4400sw",
                 "active": true,
-                "type": "direct",
-                "title": "Blanco"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 3119,
@@ -4409,14 +4660,14 @@ var products = [
         "id": 76,
         "name": "Lavadora de carga superior 9Kg con tecnología Digital Inverter",
         "description": "Disfruta de un rendimiento duradero con la Tecnología Digital Inverter",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
-                "id": "c034",
-                "colorId": "c034",
-                "name": "Gray",
-                "hex": "#808080",
+                "id": "c012",
+                "colorId": "c012",
+                "name": "Gris Claro",
+                "hex": "#c7c8ca",
                 "sku": "WA90CG4240BYZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_te30L7Zgu4Da1fjSKrw6.png"
@@ -4424,13 +4675,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_te30L7Zgu4Da1fjSKrw6.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3119,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa4000c-top-load-ecobubble-digital-inverter-technology-super-speed-9kg-light-gray-wa90cg4240byzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c034_def",
-                "color": "Gray",
-                "colorId": "c034",
-                "hex": "#808080",
+                "id": "c012_",
+                "color": "Gris Claro",
+                "colorId": "c012",
+                "hex": "#c7c8ca",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_te30L7Zgu4Da1fjSKrw6.png"
                 ],
@@ -4440,8 +4701,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa4000c-top-load-ecobubble-digital-inverter-technology-super-speed-9kg-light-gray-wa90cg4240byzs",
                 "active": true,
-                "type": "direct",
-                "title": "Gray"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Gris Claro - Sin Especificación"
             }
         ],
         "price": 3119,
@@ -4454,14 +4718,14 @@ var products = [
         "id": 77,
         "name": "Lavadora Carga Frontal 8.5Kg c/ Lavado Rápido",
         "description": "Motor Digital Inverter, Lavado Rápido 18min y Limpieza de Tambor.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c007",
                 "colorId": "c007",
                 "name": "Blanco",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "sku": "WW85T3040BW/BO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_DOBy17IHf4CUA8VwtipF.png"
@@ -4469,13 +4733,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_DOBy17IHf4CUA8VwtipF.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 4736,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/front-load-8-5kg-white-ww85t3040bw-bo",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c007_def",
+                "id": "c007_",
                 "color": "Blanco",
                 "colorId": "c007",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_DOBy17IHf4CUA8VwtipF.png"
                 ],
@@ -4485,8 +4759,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/front-load-8-5kg-white-ww85t3040bw-bo",
                 "active": true,
-                "type": "direct",
-                "title": "Blanco"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 4736,
@@ -4499,14 +4776,14 @@ var products = [
         "id": 78,
         "name": "Lavadora de carga superior 8Kg con tecnología Digital Inverter",
         "description": "Disfruta de un rendimiento duradero con la Tecnología Digital Inverter",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c007",
                 "colorId": "c007",
                 "name": "Blanco",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "sku": "WA80CG4240BWZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xiIa67VGcX5KmtYyA8fJ.png"
@@ -4514,13 +4791,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xiIa67VGcX5KmtYyA8fJ.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 2888,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa4000c-top-load-ecobubble-digital-inverter-technology-super-speed-8kg-white-wa80cg4240bwzs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c007_def",
+                "id": "c007_",
                 "color": "Blanco",
                 "colorId": "c007",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xiIa67VGcX5KmtYyA8fJ.png"
                 ],
@@ -4530,8 +4817,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers-and-dryers/washing-machines/wa4000c-top-load-ecobubble-digital-inverter-technology-super-speed-8kg-white-wa80cg4240bwzs",
                 "active": true,
-                "type": "direct",
-                "title": "Blanco"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 2888,
@@ -4544,14 +4834,14 @@ var products = [
         "id": 79,
         "name": "Lavadora Carga Superior 8Kg c/ Wobble",
         "description": "Diseño duradero, tina de diamantes y panel de control trasero.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
                 "id": "c007",
                 "colorId": "c007",
                 "name": "Blanco",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "sku": "WA80H4200SW",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CFsI3gma41uDhQrA7LS8.png"
@@ -4559,13 +4849,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CFsI3gma41uDhQrA7LS8.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 2888,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/lavadoras/WA80H4200SW",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c007_def",
+                "id": "c007_",
                 "color": "Blanco",
                 "colorId": "c007",
-                "hex": "#ffffff",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_CFsI3gma41uDhQrA7LS8.png"
                 ],
@@ -4575,8 +4875,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/lavadoras/WA80H4200SW",
                 "active": true,
-                "type": "direct",
-                "title": "Blanco"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 2888,
@@ -4589,14 +4892,14 @@ var products = [
         "id": 80,
         "name": "Lavadora Secadora 12.5Kg/7Kg con IA",
         "description": "Lavaseca 2 en 1, EcoBubble, Air Wash (Desodorizar) y AI Control.",
-        "category": "Washing_machines",
+        "category": "Lavadoras",
         "badge": "",
         "colors": [
             {
-                "id": "c034",
-                "colorId": "c034",
-                "name": "Gray",
-                "hex": "#808080",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "WD12T704DBX/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_LMZcfWrj4VIyn51mxdGR.png"
@@ -4604,13 +4907,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_LMZcfWrj4VIyn51mxdGR.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 6930,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/washers-and-dryers/washer-dryer-combo/wd7500t-front-loading-eco-bubble-quickdrive-ai-control-12-5kg-gray-wd12t754dbn-bo",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c034_def",
-                "color": "Gray",
-                "colorId": "c034",
-                "hex": "#808080",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_LMZcfWrj4VIyn51mxdGR.png"
                 ],
@@ -4620,8 +4933,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/washers-and-dryers/washer-dryer-combo/wd7500t-front-loading-eco-bubble-quickdrive-ai-control-12-5kg-gray-wd12t754dbn-bo",
                 "active": true,
-                "type": "direct",
-                "title": "Gray"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 6930,
@@ -4634,7 +4950,7 @@ var products = [
         "id": 81,
         "name": "Refrigerador Top Freezer 234L c/ All Around Cooling",
         "description": "Sistema All-Around Cooling, Digital Inverter y compresor duradero (234L útil).",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
@@ -4652,11 +4968,12 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 234L",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 4736,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/refrigerator-234l-silver-rt22farads8-zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
@@ -4674,10 +4991,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/refrigerator-234l-silver-rt22farads8-zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 234L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Plateado - Almacenamiento: 234L"
+                "title": "Plateado - Almacenamiento: 128GB"
             }
         ],
         "price": 4736,
@@ -4690,14 +5008,14 @@ var products = [
         "id": 82,
         "name": "Refrigerador Top Mount Freezer 301L c/ Space Max",
         "description": "Tecnología SpaceMax (paredes finas), All-Around Cooling y 301L efectivos.",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#c0c0c0",
+                "id": "c011",
+                "colorId": "c011",
+                "name": "Gris",
+                "hex": "#938e8a",
                 "sku": "RT31CG5420S9ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_sljpqH4KTY7JcAitRfzn.png"
@@ -4708,19 +5026,20 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 301L",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 6237,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt5300c-top-mount-freezer-spacemax-301l-silver-rt31cg5420s9zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
             {
-                "id": "c036_v001",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#c0c0c0",
+                "id": "c011_v001",
+                "color": "Gris",
+                "colorId": "c011",
+                "hex": "#938e8a",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_sljpqH4KTY7JcAitRfzn.png"
                 ],
@@ -4730,10 +5049,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt5300c-top-mount-freezer-spacemax-301l-silver-rt31cg5420s9zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 301L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Silver - Almacenamiento: 301L"
+                "title": "Gris - Almacenamiento: 128GB"
             }
         ],
         "price": 6237,
@@ -4746,65 +5066,20 @@ var products = [
         "id": 83,
         "name": "Refrigerador Top Mount Freezer 407 L con Space Max",
         "description": "El doble de frescura con mayor capacidad",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "RT42CG6720B1ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 407L",
-                "price": 9298,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c017_v001",
-                "color": "Negro",
-                "colorId": "c017",
-                "hex": "#000000",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png",
-                "sku": "RT42CG6720B1ZS",
-                "price": 9298,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 407L",
-                "type": "combination",
-                "title": "Negro - Almacenamiento: 407L"
-            }
-        ],
-        "price": 9298,
-        "basePrice": 9298,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
-    },
-    {
-        "id": 84,
-        "name": "Refrigerador Top Mount Freezer 407 L con Space Max",
-        "description": "El doble de frescura con mayor capacidad",
-        "category": "Refrigerators",
-        "badge": "",
-        "colors": [
+            },
             {
                 "id": "c021",
                 "colorId": "c021",
@@ -4820,14 +5095,84 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 407L",
+                "variableText": "Almacenamiento: 128GB",
+                "price": 9298,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
+                "active": true,
+                "isInformative": false
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 9009,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-silver-rt38cg6720s9zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png",
+                "sku": "RT42CG6720B1ZS",
+                "price": 9298,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png",
+                "sku": "RT42CG6720B1ZS",
+                "price": 9009,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-silver-rt38cg6720s9zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c021_v001",
+                "color": "Plateado",
+                "colorId": "c021",
+                "hex": "#dbdbdb",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_vohCPp2fGgDBs64nty19.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_vohCPp2fGgDBs64nty19.png",
+                "sku": "RT38CG6720S9ZS",
+                "price": 9298,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Plateado - Almacenamiento: 128GB"
+            },
             {
                 "id": "c021_v001",
                 "color": "Plateado",
@@ -4842,86 +5187,42 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-silver-rt38cg6720s9zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 407L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Plateado - Almacenamiento: 407L"
+                "title": "Plateado - Almacenamiento: 128GB"
             }
         ],
-        "price": 9009,
-        "basePrice": 9009,
+        "price": 9298,
+        "basePrice": 9298,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-silver-rt38cg6720s9zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_vohCPp2fGgDBs64nty19.png"
+        "baseLink": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-407l-black-rt42cg6720b1zs",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_PXyHfSYxJigNBdR6UCtT.png"
     },
     {
         "id": 85,
         "name": "Refrigerador Side by Side 490 L con Twist Ice Maker",
         "description": "Diseño minimalista Side by Side, All-Around Cooling y compresor silencioso.",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
-                "id": "c043",
-                "colorId": "c043",
-                "name": "Black",
-                "hex": "#000000",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
                 "sku": "RS52B3000B4/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
-            }
-        ],
-        "priceVariants": [
+            },
             {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 490L",
-                "price": 12058,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c043_v001",
-                "color": "Black",
-                "colorId": "c043",
-                "hex": "#000000",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png",
-                "sku": "RS52B3000B4/ZS",
-                "price": 12058,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 490L",
-                "type": "combination",
-                "title": "Black - Almacenamiento: 490L"
-            }
-        ],
-        "price": 12058,
-        "basePrice": 12058,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
-    },
-    {
-        "id": 86,
-        "name": "Refrigerador Side by Side 490 L con Twist Ice Maker",
-        "description": "Diseño minimalista Side by Side, All-Around Cooling y compresor silencioso.",
-        "category": "Refrigerators",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#d3d3d3",
+                "id": "c011",
+                "colorId": "c011",
+                "name": "Gris",
+                "hex": "#938e8a",
                 "sku": "RS52B3000M9/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_C81GHQufw5rAhnMT7XUt.png"
@@ -4932,19 +5233,89 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 490L",
+                "variableText": "Almacenamiento: 128GB",
+                "price": 12058,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
+                "active": true,
+                "isInformative": false
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 11365,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
             {
-                "id": "c036_v001",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#d3d3d3",
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png",
+                "sku": "RS52B3000B4/ZS",
+                "price": 12058,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png",
+                "sku": "RS52B3000B4/ZS",
+                "price": 11365,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c011_v001",
+                "color": "Gris",
+                "colorId": "c011",
+                "hex": "#938e8a",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_C81GHQufw5rAhnMT7XUt.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_C81GHQufw5rAhnMT7XUt.png",
+                "sku": "RS52B3000M9/ZS",
+                "price": 12058,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Gris - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c011_v001",
+                "color": "Gris",
+                "colorId": "c011",
+                "hex": "#938e8a",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_C81GHQufw5rAhnMT7XUt.png"
                 ],
@@ -4954,30 +5325,31 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 490L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Silver - Almacenamiento: 490L"
+                "title": "Gris - Almacenamiento: 128GB"
             }
         ],
-        "price": 11365,
-        "basePrice": 11365,
+        "price": 12058,
+        "basePrice": 12058,
         "basePromo": 0,
         "baseLink": "https://samsung.com.bo/refrigerators/side-by-side/rs3000bm-side-by-side-modern-and-sleek-design-490l-black-rs52b3000b4-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_C81GHQufw5rAhnMT7XUt.png"
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_6d7ECzRqcX2IgZFSH1Vt.png"
     },
     {
         "id": 87,
         "name": "Refrigerador Top Mount Freezer 298 L con Space Max",
         "description": "Almacena más alimentos en un interior espacioso con 20 litros más de capacidad",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#d3d3d3",
+                "id": "c011",
+                "colorId": "c011",
+                "name": "Gris",
+                "hex": "#938e8a",
                 "sku": "RT31CG5540S9ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qdOpYe8xzfGi6bklj9RJ.png"
@@ -4988,19 +5360,20 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 298L",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 6699,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt5300c-top-mount-freezer-spacemax-298l-silver-rt31cg5540s9zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
             {
-                "id": "c036_v001",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#d3d3d3",
+                "id": "c011_v001",
+                "color": "Gris",
+                "colorId": "c011",
+                "hex": "#938e8a",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_qdOpYe8xzfGi6bklj9RJ.png"
                 ],
@@ -5010,10 +5383,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt5300c-top-mount-freezer-spacemax-298l-silver-rt31cg5540s9zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 298L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Silver - Almacenamiento: 298L"
+                "title": "Gris - Almacenamiento: 128GB"
             }
         ],
         "price": 6699,
@@ -5026,14 +5400,14 @@ var products = [
         "id": 88,
         "name": "French Door de 425 L con Twin Cooling Plus",
         "description": "Puerta Francesa (Twin Cooling), dispensador de agua externo y caja de vegetales.",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "RF44A5202B1/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xgmOh0RCkMKVTP5WieGE.png"
@@ -5044,11 +5418,12 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 425L",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 15246,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/french-door/rf5000a-425l-black-rf44a5202b1-zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
@@ -5056,7 +5431,7 @@ var products = [
                 "id": "c017_v001",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xgmOh0RCkMKVTP5WieGE.png"
                 ],
@@ -5066,10 +5441,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/french-door/rf5000a-425l-black-rf44a5202b1-zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 425L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Negro - Almacenamiento: 425L"
+                "title": "Negro - Almacenamiento: 128GB"
             }
         ],
         "price": 15246,
@@ -5082,63 +5458,94 @@ var products = [
         "id": 89,
         "name": "Refrigerador Twin Cooling Plus de 526 L / 19 Pies cúbicos",
         "description": "Mantén la frescura de tus alimentos por el doble de tiempo",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#d3d3d3",
-                "sku": "RT53K6541SL/ZS",
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
+                "sku": "RT53K6541BS/ZS",
                 "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ZeLXNjyAPOFGD8znriCB.png"
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
                 ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ZeLXNjyAPOFGD8znriCB.png"
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
             }
         ],
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 526L",
-                "price": 10973,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigeradores/RT53K6541SL",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c036_v001",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#d3d3d3",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ZeLXNjyAPOFGD8znriCB.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ZeLXNjyAPOFGD8znriCB.png",
-                "sku": "RT53K6541SL/ZS",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 10973,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigeradores/RT53K6541SL",
                 "active": true,
+                "isInformative": false
+            },
+            {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 526L",
+                "variableText": "Almacenamiento: 128GB",
+                "price": 11296,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigeradores/RT53K6541BS",
+                "active": true,
+                "isInformative": false
+            }
+        ],
+        "variants": [
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png",
+                "sku": "RT53K6541BS/ZS",
+                "price": 10973,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigeradores/RT53K6541SL",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Silver - Almacenamiento: 526L"
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png",
+                "sku": "RT53K6541BS/ZS",
+                "price": 11296,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigeradores/RT53K6541BS",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
             }
         ],
         "price": 10973,
         "basePrice": 10973,
         "basePromo": 0,
         "baseLink": "https://samsung.com.bo/refrigeradores/RT53K6541SL",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_ZeLXNjyAPOFGD8znriCB.png"
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
     },
     {
         "id": 90,
         "name": "Top Mount de 385L con No Frost",
         "description": "All-around Cooling",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
@@ -5156,11 +5563,12 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 385L",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 7762,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/385l-elegant-inox-rt38k50ajs8-zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
@@ -5178,10 +5586,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/385l-elegant-inox-rt38k50ajs8-zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 385L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Plateado - Almacenamiento: 385L"
+                "title": "Plateado - Almacenamiento: 128GB"
             }
         ],
         "price": 7762,
@@ -5191,124 +5600,23 @@ var products = [
         "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_y1Ew2vYxhRkjQXpbmz6T.png"
     },
     {
-        "id": 91,
-        "name": "Refrigerador Twin Cooling Plus de 526 L / 19 Pies cúbicos",
-        "description": "Edición Black Inox, Twin Cooling, Smart Conversion y Power Cool/Freeze.",
-        "category": "Refrigerators",
-        "badge": "",
-        "colors": [
-            {
-                "id": "c017",
-                "colorId": "c017",
-                "name": "Negro",
-                "hex": "#000000",
-                "sku": "RT53K6541BS/ZS",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 526L",
-                "price": 11296,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigeradores/RT53K6541BS",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c017_v001",
-                "color": "Negro",
-                "colorId": "c017",
-                "hex": "#000000",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png",
-                "sku": "RT53K6541BS/ZS",
-                "price": 11296,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/refrigeradores/RT53K6541BS",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 526L",
-                "type": "combination",
-                "title": "Negro - Almacenamiento: 526L"
-            }
-        ],
-        "price": 11296,
-        "basePrice": 11296,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/refrigeradores/RT53K6541BS",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_EZwrpQvh7dGJfLz8O4SD.png"
-    },
-    {
         "id": 92,
         "name": "Refrigerador Top Mount Freezer 384 L c/ Space Max y WiFi",
         "description": "Bespoke Design (Panel personalizable), WiFi SmartThings y SpaceMax.",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "RT38CG6720B1ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 384L",
-                "price": 9240,
-                "promoPrice": 0,
-                "link": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
-                "active": true
-            }
-        ],
-        "variants": [
-            {
-                "id": "c017_v001",
-                "color": "Negro",
-                "colorId": "c017",
-                "hex": "#000000",
-                "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
-                ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png",
-                "sku": "RT38CG6720B1ZS",
-                "price": 9240,
-                "promoPrice": 0,
-                "link": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
-                "active": true,
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 384L",
-                "type": "combination",
-                "title": "Negro - Almacenamiento: 384L"
-            }
-        ],
-        "price": 9240,
-        "basePrice": 9240,
-        "basePromo": 0,
-        "baseLink": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
-    },
-    {
-        "id": 93,
-        "name": "Refrigerador Top Mount Freezer 384 L c/ Space Max y WiFi",
-        "description": "Bespoke Design (Panel personalizable), WiFi SmartThings y SpaceMax.",
-        "category": "Refrigerators",
-        "badge": "",
-        "colors": [
+            },
             {
                 "id": "c021",
                 "colorId": "c021",
@@ -5324,14 +5632,84 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 384L",
+                "variableText": "Almacenamiento: 128GB",
+                "price": 9240,
+                "promoPrice": 0,
+                "link": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
+                "active": true,
+                "isInformative": false
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 9009,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png",
+                "sku": "RT38CG6720B1ZS",
+                "price": 9240,
+                "promoPrice": 0,
+                "link": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png",
+                "sku": "RT38CG6720B1ZS",
+                "price": 9009,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c021_v001",
+                "color": "Plateado",
+                "colorId": "c021",
+                "hex": "#dbdbdb",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_vohCPp2fGgDBs64nty19.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_vohCPp2fGgDBs64nty19.png",
+                "sku": "RT38CG6720S9ZS",
+                "price": 9240,
+                "promoPrice": 0,
+                "link": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Plateado - Almacenamiento: 128GB"
+            },
             {
                 "id": "c021_v001",
                 "color": "Plateado",
@@ -5346,23 +5724,24 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 384L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Plateado - Almacenamiento: 384L"
+                "title": "Plateado - Almacenamiento: 128GB"
             }
         ],
-        "price": 9009,
-        "basePrice": 9009,
+        "price": 9240,
+        "basePrice": 9240,
         "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_vohCPp2fGgDBs64nty19.png"
+        "baseLink": "https://shop.samsung.com.bo/refrigerators/top-mount-freezer/rt6300c-top-mount-freezer-optimal-fresh-and-space-max-384l-black-rt38cg6720b1zs",
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_zJbv7fYwk1ruh9PVIHaE.png"
     },
     {
         "id": 94,
         "name": "Refrigerador Side by Side 602L c/ 3-Door Flex",
         "description": "Tecnología SpaceMax (602L), 3 puertas con FlexZone y Metal Cooling.",
-        "category": "Refrigerators",
+        "category": "Refrigeradores",
         "badge": "",
         "colors": [
             {
@@ -5375,16 +5754,37 @@ var products = [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xDYXudpNP4qvCsWoOZaQ.png"
                 ],
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xDYXudpNP4qvCsWoOZaQ.png"
+            },
+            {
+                "id": "c017",
+                "colorId": "c017",
+                "name": "Negro",
+                "hex": "#494a4d",
+                "sku": "RS65R5691B4/ZS",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
             }
         ],
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 602L",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 17903,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
-                "active": true
+                "active": true,
+                "isInformative": false
+            },
+            {
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "price": 19173,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
@@ -5402,53 +5802,57 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 602L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Plateado - Almacenamiento: 602L"
-            }
-        ],
-        "price": 17903,
-        "basePrice": 17903,
-        "basePromo": 0,
-        "baseLink": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xDYXudpNP4qvCsWoOZaQ.png"
-    },
-    {
-        "id": 95,
-        "name": "Refrigerador Side by Side 602L c/ 3-Door Flex",
-        "description": "Tecnología SpaceMax (602L), 3 puertas con FlexZone y Metal Cooling.",
-        "category": "Refrigerators",
-        "badge": "",
-        "colors": [
+                "title": "Plateado - Almacenamiento: 128GB"
+            },
             {
-                "id": "c017",
-                "colorId": "c017",
-                "name": "Negro",
-                "hex": "#000000",
-                "sku": "RS65R5691B4/ZS",
+                "id": "c021_v001",
+                "color": "Plateado",
+                "colorId": "c021",
+                "hex": "#dbdbdb",
                 "images": [
-                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xDYXudpNP4qvCsWoOZaQ.png"
                 ],
-                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
-            }
-        ],
-        "priceVariants": [
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 602L",
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xDYXudpNP4qvCsWoOZaQ.png",
+                "sku": "RS65R5691M9/ZS",
                 "price": 19173,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
-                "active": true
-            }
-        ],
-        "variants": [
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Plateado - Almacenamiento: 128GB"
+            },
             {
                 "id": "c017_v001",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png",
+                "sku": "RS65R5691B4/ZS",
+                "price": 17903,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v001",
+                "variableText": "Almacenamiento: 128GB",
+                "type": "combination",
+                "title": "Negro - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c017_v001",
+                "color": "Negro",
+                "colorId": "c017",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
                 ],
@@ -5458,23 +5862,24 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 602L",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Negro - Almacenamiento: 602L"
+                "title": "Negro - Almacenamiento: 128GB"
             }
         ],
-        "price": 19173,
-        "basePrice": 19173,
+        "price": 17903,
+        "basePrice": 17903,
         "basePromo": 0,
         "baseLink": "https://samsung.com.bo/refrigerators/side-by-side/rs5000rc-spacemax-602l-black-rs65r5691b4-zs",
-        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_4JuPHt1WvOwDnmYhZ6rA.png"
+        "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xDYXudpNP4qvCsWoOZaQ.png"
     },
     {
         "id": 96,
         "name": "Aspiradora sin Bolsa 1800W c/ Turbina Anti Enredos",
         "description": "Turbina Anti-Tangle (No se atasca con pelos), depósito Easy Dustbin y 1800W.",
-        "category": "Kitchen_cleaning",
+        "category": "Cocina y limpieza",
         "badge": "",
         "colors": [
             {
@@ -5489,10 +5894,20 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_xjtC0g9Z2bEXqADP3HNy.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 1247,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/vacuum-cleaners/canister/canister-vc3100m",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c003_def",
+                "id": "c003_",
                 "color": "Azul Cosmo",
                 "colorId": "c003",
                 "hex": "#1c0d82",
@@ -5505,8 +5920,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/vacuum-cleaners/canister/canister-vc3100m",
                 "active": true,
-                "type": "direct",
-                "title": "Azul Cosmo"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Azul Cosmo - Sin Especificación"
             }
         ],
         "price": 1247,
@@ -5519,7 +5937,7 @@ var products = [
         "id": 97,
         "name": "Aspiradora con Bolsa 2000W c/ Función Soplador",
         "description": "Potente 2000W, función de soplado de polvo y filtro de alérgenos.",
-        "category": "Kitchen_cleaning",
+        "category": "Cocina y limpieza",
         "badge": "",
         "colors": [
             {
@@ -5534,10 +5952,19 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_hx8bfBduoXV1MyCcHAlZ.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Seleccionar Especificación...",
+                "price": 901,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/vacuum-cleaners/canister/vcc4190v3exbo",
+                "active": true
+            }
+        ],
         "variants": [
             {
-                "id": "c029_def",
+                "id": "c029_",
                 "color": "Vino Rubí",
                 "colorId": "c029",
                 "hex": "#653038",
@@ -5550,8 +5977,10 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/vacuum-cleaners/canister/vcc4190v3exbo",
                 "active": true,
-                "type": "direct",
-                "title": "Vino Rubí"
+                "variableId": "",
+                "variableText": "Seleccionar Especificación...",
+                "type": "combination",
+                "title": "Vino Rubí - Seleccionar Especificación..."
             }
         ],
         "price": 901,
@@ -5564,14 +5993,14 @@ var products = [
         "id": 98,
         "name": "Aspiradora Stick Jet 60 con 150 W de Poder de Succión",
         "description": "Rendimiento de limpieza más avanzado",
-        "category": "Kitchen_cleaning",
+        "category": "Cocina y limpieza",
         "badge": "",
         "colors": [
             {
-                "id": "c036",
-                "colorId": "c036",
-                "name": "Silver",
-                "hex": "#d3d3d3",
+                "id": "c007",
+                "colorId": "c007",
+                "name": "Blanco",
+                "hex": "#f5f7f6",
                 "sku": "VS15A60A1R5/ZS",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_a3s8g25FhCHW6MLPTDRy.png"
@@ -5579,13 +6008,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_a3s8g25FhCHW6MLPTDRy.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 3049,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/vacuum-cleaners/stick/vs9000rl-stick-more-advance-cleaning-performance-digital-inverter-motor-jet-cyclone-silver-vs15a60a1r5-zs",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c036_def",
-                "color": "Silver",
-                "colorId": "c036",
-                "hex": "#d3d3d3",
+                "id": "c007_",
+                "color": "Blanco",
+                "colorId": "c007",
+                "hex": "#f5f7f6",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_a3s8g25FhCHW6MLPTDRy.png"
                 ],
@@ -5595,8 +6034,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/vacuum-cleaners/stick/vs9000rl-stick-more-advance-cleaning-performance-digital-inverter-motor-jet-cyclone-silver-vs15a60a1r5-zs",
                 "active": true,
-                "type": "direct",
-                "title": "Silver"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Blanco - Sin Especificación"
             }
         ],
         "price": 3049,
@@ -5609,14 +6051,14 @@ var products = [
         "id": 99,
         "name": "Aspiradora con Contenedor , 2000 W",
         "description": "Twin Chamber System™",
-        "category": "Kitchen_cleaning",
+        "category": "Cocina y limpieza",
         "badge": "",
         "colors": [
             {
                 "id": "c017",
                 "colorId": "c017",
                 "name": "Negro",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "sku": "VCC4580V3K/XBO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_0wEIO2gtvuZmicUy9WNT.png"
@@ -5624,13 +6066,23 @@ var products = [
                 "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_0wEIO2gtvuZmicUy9WNT.png"
             }
         ],
-        "priceVariants": [],
+        "priceVariants": [
+            {
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "price": 1040,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/vacuum-cleaners/canister/canister-vcc4580v3k",
+                "active": true,
+                "isInformative": false
+            }
+        ],
         "variants": [
             {
-                "id": "c017_def",
+                "id": "c017_",
                 "color": "Negro",
                 "colorId": "c017",
-                "hex": "#000000",
+                "hex": "#494a4d",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_0wEIO2gtvuZmicUy9WNT.png"
                 ],
@@ -5640,8 +6092,11 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/vacuum-cleaners/canister/canister-vcc4580v3k",
                 "active": true,
-                "type": "direct",
-                "title": "Negro"
+                "isInformative": false,
+                "variableId": "",
+                "variableText": "Sin Especificación",
+                "type": "combination",
+                "title": "Negro - Sin Especificación"
             }
         ],
         "price": 1040,

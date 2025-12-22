@@ -721,7 +721,12 @@ const server = http.createServer((req, res) => {
                     };
                 });
 
-                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.writeHead(200, {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                });
                 res.end(JSON.stringify({ success: true, products: products, metadata: metadata }));
             }
             // EXPORT CATALOG (Detailed Excel)
@@ -949,9 +954,17 @@ const server = http.createServer((req, res) => {
 
                             // Update Fields
                             if (imported.Nombre) product.name = imported.Nombre;
+
+                            let priceUpdated = false;
                             if (imported.Precio !== undefined) {
                                 product.basePrice = imported.Precio;
                                 product.price = imported.Precio;
+                                priceUpdated = true;
+                            }
+                            if (imported['Precio Base'] !== undefined) {
+                                product.basePrice = imported['Precio Base'];
+                                product.price = imported['Precio Base'];
+                                priceUpdated = true;
                             }
                             if (imported['Precio Promo'] !== undefined) {
                                 product.basePromo = imported['Precio Promo'];
@@ -959,13 +972,21 @@ const server = http.createServer((req, res) => {
                             }
                             if (imported.Badge !== undefined) product.badge = imported.Badge;
 
+                            // CRITICAL: Update all variant prices to match base price
+                            if (priceUpdated && product.priceVariants && Array.isArray(product.priceVariants)) {
+                                product.priceVariants.forEach(variant => {
+                                    variant.price = product.basePrice;
+                                    if (product.basePromo) {
+                                        variant.promoPrice = product.basePromo;
+                                    }
+                                });
+                            }
+
                             // Update row columns
                             existingRow.Nombre = product.name;
                             existingRow['Precio Base'] = product.basePrice;
                             existingRow['Precio Promo'] = product.basePromo;
                             existingRow.Badge = product.badge;
-
-                            // TODO: Handle Variants Update if needed (complex)
 
                             // Save back JSON
                             existingRow['Datos Completos'] = JSON.stringify(product);

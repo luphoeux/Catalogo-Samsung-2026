@@ -96,17 +96,45 @@
         }
 
         .catalog-container {
-            max-width: 1440px;
+            max-width: 1900px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
             padding-bottom: 4rem;
+            display: grid;
+            grid-template-columns: 0.8fr 4fr 0.8fr;
+            align-items: flex-start;
+            gap: 2.5rem;
+        }
+
+        /* Sidebar Styles */
+        .catalog-sidebar {
+            width: 100%;
+            flex-shrink: 0;
+            position: sticky;
+            top: 2rem;
+            padding: 24px;
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+        .sidebar-header h3 {
+            font-family: 'SamsungSharpSans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0 0 1.5rem 0.5rem;
+            color: #000;
+        }
+
+        .catalog-main {
+            flex: 1;
+            width: 100%;
         }
 
         /* Products Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
+            gap: 1rem;
         }
 
         @media (max-width: 1440px) {
@@ -130,19 +158,25 @@
         /* Complex Card Styles */
         .complex-card {
             background: white;
-            border-radius: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            /* Softer shadow */
+            border: 1px solid rgba(0, 0, 0, 0.03);
             overflow: hidden;
             position: relative;
             padding: 0;
-            /* Remove padding to allow edge-to-edge image */
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .complex-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         .card-content {
-            padding: 24px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -280,6 +314,22 @@
             background: white;
         }
 
+        .variant-btn.variant-informative {
+            cursor: default;
+            background: #f8f9fa;
+            border-color: #eee;
+        }
+
+        .variant-btn.variant-informative:hover {
+            border-color: #eee;
+        }
+
+        .variant-btn.variant-informative.active {
+            /* Informative variants shouldn't look 'active' in the selector sense, or maybe just highlighted */
+            border-color: #ddd;
+            background: #f8f9fa;
+        }
+
         .variant-label {
             font-size: 0.7rem;
             color: #888;
@@ -292,6 +342,24 @@
             font-weight: bold;
             color: black;
         }
+
+        .variant-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .variant-badge:last-child {
+            margin-bottom: 0;
+        }
+
+        .variant-btn .variant-badge+.variant-badge {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #f0f0f0;
+        }
+
 
         .price-box {
             margin-bottom: 1.5rem;
@@ -344,36 +412,102 @@
             color: var(--text-gray);
         }
 
-        /* Filters */
+        /* Catalog Filters (Sidebar Items) */
         .catalog-filters {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.25rem;
         }
 
         .filter-chip {
-            padding: 8px 20px;
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 50px;
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            color: #555;
+            font-size: 0.95rem;
+            font-weight: normal;
+            transition: all 0.2s ease;
+            color: #444;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            font-family: 'SamsungOne', sans-serif;
         }
 
         .filter-chip:hover {
-            border-color: #999;
-            background: #f9f9f9;
+            background-color: #f0f0f0;
+            color: #000;
         }
 
         .filter-chip.active {
-            background: black;
-            color: white;
-            border-color: black;
+            background-color: #e8f0fe;
+            /* Light blue tint often used in modern clean UIs, or just gray */
+            color: #1428a0;
+            /* Samsung Blue for active text */
+            font-weight: bold;
+        }
+
+        /* Reserved Space for Combos/Promotions */
+        .catalog-reserved {
+            width: 100%;
+            position: sticky;
+            top: 2rem;
+            background: transparent;
+            /* Placeholder for future content */
+        }
+
+        /* Adjustments for Responsive Sidebar to Top-bar */
+        @media (max-width: 1024px) {
+            .catalog-container {
+                display: block;
+                /* Stack them */
+            }
+
+            .catalog-sidebar {
+                width: 80%;
+                position: static;
+                margin-bottom: 2rem;
+            }
+
+            .catalog-reserved {
+                display: none;
+                /* Hide reserved space on mobile */
+            }
+
+            .sidebar-header {
+                display: none;
+                /* Hide 'Filtros' title on mobile to save space */
+            }
+
+            .catalog-filters {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                gap: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .catalog-filters::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-chip {
+                width: auto;
+                white-space: nowrap;
+                background: white;
+                border: 1px solid #e0e0e0;
+                border-radius: 50px;
+                padding: 8px 20px;
+            }
+
+            .filter-chip.active {
+                background: #000;
+                color: white;
+                border-color: #000;
+            }
         }
 
         @media (max-width: 768px) {
@@ -401,14 +535,14 @@
         /* Search Container */
         .search-container {
             background: transparent;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
+            padding: 0;
+            margin-bottom: 1.5rem;
         }
 
         .search-wrapper {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            width: 100%;
+            margin: 0;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -417,7 +551,7 @@
 
         .search-box {
             flex: 1;
-            max-width: 80vh;
+            max-width: 100%;
             position: relative;
         }
 
@@ -462,40 +596,7 @@
             }
         }
 
-        /* Catalog Filters */
-        .catalog-filters {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-            padding: 0 1rem;
-        }
 
-        .filter-chip {
-            padding: 12px 24px;
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            color: #555;
-            white-space: nowrap;
-            font-family: 'SamsungOne', sans-serif;
-        }
-
-        .filter-chip:hover {
-            border-color: #999;
-            background: #f9f9f9;
-        }
-
-        .filter-chip.active {
-            background: black;
-            color: white;
-            border-color: black;
-        }
 
         /* Responsive Improvements */
         @media (max-width: 768px) {
@@ -526,28 +627,7 @@
                 padding: 0.75rem 2.5rem 0.75rem 1rem;
             }
 
-            /* Filters - Horizontal Scroll */
-            .catalog-filters {
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                overflow-y: hidden;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-                margin-bottom: 2rem;
-                padding: 0 1rem 0.5rem 1rem;
-            }
 
-            .catalog-filters::-webkit-scrollbar {
-                display: none;
-            }
-
-            .filter-chip {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                flex-shrink: 0;
-            }
 
             /* Products Grid */
             .products-grid {
@@ -705,28 +785,41 @@
         <h1 id="heroTitle">Catálogo Samsung</h1>
     </section>
 
-    <div class="search-container">
-        <div class="search-wrapper">
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Buscar productos...">
-                <div class="search-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="catalog-container">
-        <div class="catalog-filters" id="catalogFilters">
-            <!-- Dynamic Category Filters -->
-        </div>
-        <div class="products-grid" id="productsGrid">
-            <div class="loader">Cargando productos...</div>
-        </div>
+        <aside class="catalog-sidebar">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Buscar productos...">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m21 21-3.5-3.5m2.5-6a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0Z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-header">
+                <h3>Filtros</h3>
+            </div>
+            <div class="catalog-filters" id="catalogFilters">
+                <!-- Dynamic Category Filters -->
+            </div>
+        </aside>
+
+        <main class="catalog-main">
+            <div class="products-grid" id="productsGrid">
+                <div class="loader">Cargando productos...</div>
+            </div>
+        </main>
+
+        <!-- Reserved space for combos/promotions -->
+        <aside class="catalog-reserved">
+            <!-- Future: Combos y Promociones -->
+        </aside>
     </div>
 
     <section class="features-section">
@@ -736,8 +829,9 @@
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            <path
+                                d="M16 7c0-.93 0-1.395-.102-1.776a3 3 0 0 0-2.121-2.122C13.395 3 12.93 3 12 3c-.93 0-1.395 0-1.777.102a3 3 0 0 0-2.12 2.122C8 5.605 8 6.07 8 7M5.2 21h13.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874C22 19.48 22 18.92 22 17.8v-7.6c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C20.48 7 19.92 7 18.8 7H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 8.52 2 9.08 2 10.2v7.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C3.52 21 4.08 21 5.2 21Z">
+                            </path>
                         </svg>
                     </div>
                     <p class="feature-label">Comodidad</p>
@@ -747,10 +841,9 @@
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="1" y="3" width="15" height="13"></rect>
-                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            <path
+                                d="M14 7h2.337c.245 0 .367 0 .482.028a1 1 0 0 1 .29.12c.1.061.187.148.36.32l4.062 4.063c.173.173.26.26.322.36.054.09.095.188.12.29.027.115.027.237.027.482V15.5c0 .466 0 .699-.076.883a1 1 0 0 1-.541.54c-.184.077-.417.077-.883.077m-5 0H14m0 0V7.2c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C12.48 4 11.92 4 10.8 4H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 5.52 2 6.08 2 7.2V15a2 2 0 0 0 2 2m10 0h-4m0 0a3 3 0 1 1-6 0m6 0a3 3 0 1 0-6 0m16.5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
+                            </path>
                         </svg>
                     </div>
                     <p class="feature-label">Delivery gratis</p>
@@ -760,10 +853,8 @@
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
                             <path
-                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10m0-20a15.3 15.3 0 0 0-4 10 15.3 15.3 0 0 0 4 10m0-20C6.477 2 2 6.477 2 12s4.477 10 10 10m0-20c5.523 0 10 4.477 10 10s-4.477 10-10 10M2.5 9h19m-19 6h19">
                             </path>
                         </svg>
                     </div>
@@ -774,7 +865,9 @@
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path
+                                d="m9 11.5 2 2L15.5 9m4.5 3c0 4.908-5.354 8.478-7.302 9.615-.221.129-.332.194-.488.227a1.137 1.137 0 0 1-.42 0c-.156-.034-.267-.098-.488-.227C9.354 20.478 4 16.908 4 12V7.217c0-.799 0-1.199.13-1.542a2 2 0 0 1 .548-.79c.276-.243.65-.383 1.398-.664l5.362-2.01c.208-.078.312-.117.419-.133a1 1 0 0 1 .286 0c.107.016.21.055.419.133l5.362 2.01c.748.28 1.123.421 1.398.664a2 2 0 0 1 .547.79c.131.343.131.743.131 1.542V12Z">
+                            </path>
                         </svg>
                     </div>
                     <p class="feature-label">Compra segura</p>
@@ -784,9 +877,9 @@
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="19" y1="5" x2="5" y2="19"></line>
-                            <circle cx="6.5" cy="6.5" r="2.5"></circle>
-                            <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                            <path
+                                d="M8 8h.01M2 5.2v4.475c0 .489 0 .733.055.963.05.204.13.4.24.579.123.201.296.374.642.72l7.669 7.669c1.188 1.188 1.782 1.782 2.467 2.004a3 3 0 0 0 1.854 0c.685-.222 1.28-.816 2.467-2.004l2.212-2.212c1.188-1.188 1.782-1.782 2.004-2.467a3 3 0 0 0 0-1.854c-.222-.685-.816-1.28-2.004-2.467l-7.669-7.669c-.346-.346-.519-.519-.72-.642a2.001 2.001 0 0 0-.579-.24C10.409 2 10.165 2 9.676 2H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 3.52 2 4.08 2 5.2ZM8.5 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z">
+                            </path>
                         </svg>
                     </div>
                     <p class="feature-label">Descuento especial</p>
@@ -825,19 +918,31 @@
                     const colors = product.colors || [];
                     const variants = product.priceVariants || [];
 
+                    // Filter out variants without specification
+                    const validVariants = variants.filter(v => {
+                        if (!v) return false;
+                        const text = v.variableText || '';
+                        return text &&
+                            text !== 'Precio Base' &&
+                            text !== 'Sin Especificación' &&
+                            text.trim() !== '';
+                    });
+
                     // Fallback image logic
                     const mainImage = product.image || (colors[0] ? colors[0].image : '');
                     const defaultColor = colors.length > 0 ? colors[0] : { image: mainImage, name: 'Default', id: 'def', hex: '#000' };
                     const displayColors = colors.length > 0 ? colors : [];
 
+
                     let currentPrice = product.basePrice || product.price || 0;
                     let oldPrice = 0;
-                    let hasVariants = variants.length > 0;
+                    let hasVariants = validVariants.length > 0;
 
                     if (hasVariants) {
-                        const v0 = variants[0];
+                        const v0 = validVariants[0];
                         if (v0) {
                             currentPrice = v0.price;
+                            console.log(`[DEBUG] ${product.name} - Variant Price:`, v0.price, 'Text:', v0.variableText);
                             if (v0.promoPrice && v0.promoPrice > 0 && v0.promoPrice < v0.price) {
                                 oldPrice = v0.price;
                                 currentPrice = v0.promoPrice;
@@ -847,6 +952,7 @@
                         oldPrice = product.basePrice;
                         currentPrice = product.basePromo;
                     }
+                    console.log(`[DEBUG] ${product.name} - Final Price:`, currentPrice, 'Show:', currentPrice > 0);
 
                     const swatchesHtml = displayColors.map((c, idx) => `
                         <div class="swatch ${idx === 0 ? 'active' : ''}" 
@@ -856,15 +962,27 @@
                         </div>
                     `).join('');
 
-                    const variantsHtml = variants.map((v, idx) => {
+                    const variantsHtml = validVariants.map((v, idx) => {
                         if (!v) return '';
                         const parts = (v.variableText || '').split(':');
                         const label = parts.length > 1 ? parts[0] : 'Opción';
                         const val = parts.length > 1 ? parts[1].trim() : parts[0];
+
+                        const isInfo = !!v.isInformative;
+                        const clickAttr = isInfo ? '' : `onclick="selectVariant('${displayId}', ${idx})"`;
+                        // Only add active class if it's NOT informative, OR if we want to default select. 
+                        // But if it's informative, user said "no le puedo dar click". 
+                        // So we remove 'active' visual cue for selection, or keep it strictly for the first one if needed?
+                        // Let's keep it simple: if informative, NO active class logic based on selection index 0.
+
+                        // User Request: "así no le puedo dar clic" -> implied it's just a badge.
+                        // So we remove 'active' class for informative ones unless specifically desired.
+                        const activeClass = (!isInfo && idx === 0) ? 'active' : '';
+
                         return `
-                            <div class="variant-btn ${idx === 0 ? 'active' : ''}" 
+                            <div class="variant-btn ${activeClass} ${isInfo ? 'variant-informative' : ''}" 
                                  data-idx="${idx}"
-                                 onclick="selectVariant('${displayId}', ${idx})">
+                                 ${clickAttr}>
                                 <span class="variant-label">${label}</span>
                                 <span class="variant-value">${val}</span>
                             </div>
@@ -873,7 +991,8 @@
 
                     const oldPriceDisplay = oldPrice > 0 ? formatPrice(oldPrice) : '';
                     const oldPriceStyle = oldPrice > 0 ? '' : 'display:none;';
-                    const currentPriceDisplay = formatPrice(currentPrice);
+                    const currentPriceDisplay = currentPrice > 0 ? formatPrice(currentPrice) : '';
+                    const showPriceBox = currentPrice > 0; // Only show price box if price > 0
 
                     const productLink = (hasVariants && variants[0] ? variants[0].link : (product.baseLink || product.link)) || '#';
 
@@ -881,7 +1000,7 @@
                         <div class="complex-card" id="card-${displayId}" data-category="${product.category || ''}">
                             ${badge ? `<div class="card-badge">${badge}</div>` : ''}
                             <div class="card-image-container">
-                                <img src="${defaultColor.image || mainImage}" class="card-image" alt="${product.name || 'Producto'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22%3E%3Crect fill=%22%23ddd%22 width=%2250%22 height=%2250%22/%3E%3C/svg%3E'">
+                                <img src="${defaultColor.image || mainImage}" class="card-image" alt="${product.name || 'Producto'}" onerror="this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23888\' stroke-width=\'1.5\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'m4.272 20.728 6.597-6.597c.396-.396.594-.594.822-.668a1 1 0 0 1 .618 0c.228.074.426.272.822.668l6.553 6.553M14 15l2.869-2.869c.396-.396.594-.594.822-.668a1 1 0 0 1 .618 0c.228.074.426.272.822.668L22 15M10 9a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM6.8 21h10.4c1.68 0 2.52 0 3.162-.327a3 3 0 0 0 1.311-1.311C22 18.72 22 17.88 22 16.2V7.8c0-1.68 0-2.52-.327-3.162a3 3 0 0 0-1.311-1.311C19.72 3 18.88 3 17.2 3H6.8c-1.68 0-2.52 0-3.162.327a3 3 0 0 0-1.311 1.311C2 5.28 2 6.12 2 7.8v8.4c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C4.28 21 5.12 21 6.8 21Z\'/%3E%3C/svg%3E'">
                             </div>
                             <div class="card-content">
                                 <div class="card-sku">${product.sku || (colors[0] ? colors[0].sku : '') || ''}</div>
@@ -898,10 +1017,12 @@
                                         ${variantsHtml}
                                     </div>
                                 ` : ''}
-                                <div class="price-box">
-                                    <span class="old-price" style="${oldPriceStyle}">${oldPriceDisplay}</span>
-                                    <span class="current-price">${currentPriceDisplay}</span>
-                                </div>
+                                ${showPriceBox ? `
+                                    <div class="price-box">
+                                        <span class="old-price" style="${oldPriceStyle}">${oldPriceDisplay}</span>
+                                        <span class="current-price">${currentPriceDisplay}</span>
+                                    </div>
+                                ` : ''}
                                 <a href="${productLink}" class="card-action-btn" target="_blank">MÁS INFORMACIÓN</a>
                             </div>
                         </div>
@@ -1026,6 +1147,8 @@
                         </button>
                     `).join('');
                 } else {
+                    const sidebar = document.querySelector('.catalog-sidebar');
+                    if (sidebar) sidebar.style.display = 'none';
                     filtersContainer.style.display = 'none';
                 }
 
