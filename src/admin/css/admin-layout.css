@@ -451,9 +451,9 @@ input[type="checkbox"] {
 
 .search-admin,
 .select-filter {
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 1rem;
     border: none;
-    border-radius: 50px;
+    border-radius: var(--radius-sm);
     font-family: inherit;
     font-size: 0.875rem;
     transition: box-shadow 0.2s;
