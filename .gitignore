@@ -15,6 +15,7 @@ yarn-error.log*
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
 .idea
 .DS_Store
 *.suo
@@ -43,6 +44,7 @@ merge_*.js
 sync_*.js
 inspect-*.js
 load-*.js
+!load-js-data.js
 
 # Backups directory
 backups/

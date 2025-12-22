@@ -20,7 +20,7 @@ const MIME_TYPES = {
 };
 
 const xlsx = require('xlsx');
-const { loadJSData } = require('./load-js-data');
+const { loadJSData } = require('./scripts/load-js-data');
 
 const server = http.createServer((req, res) => {
     // Enable CORS

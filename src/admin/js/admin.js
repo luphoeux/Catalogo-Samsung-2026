@@ -1137,20 +1137,33 @@
             let colorsSection = '';
             if (colors.length > 0) {
                 const colorRows = colors.map(c => {
-                    const colorHex = (window.colorVariables && window.colorVariables[c.color] && window.colorVariables[c.color].hex) ? window.colorVariables[c.color].hex : (c.hex || '#ccc');
+                    // Get color name and hex from colorVariables
+                    // c.name contains the actual color name (e.g., "Negro", "Azul Metálico")
+                    const colorName = c.name || c.color || '-';
+                    const colorData = window.colorVariables && window.colorVariables[colorName];
+                    const colorHex = colorData?.hex || c.hex || '#cccccc';
+
                     const images = c.images || [];
                     const imagePreview = images.length > 0
-                        ? `<img src="${images[0]}" style="width:30px;height:30px;object-fit:contain;border:1px solid #ddd;border-radius:4px;">`
-                        : '-';
+                        ? `<img src="${images[0]}" style="width:40px;height:40px;object-fit:contain;border:1px solid #e0e0e0;border-radius:6px;background:white;">`
+                        : `<div style="width:40px;height:40px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+                             <svg style="width:20px;height:20px;opacity:0.3;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                               <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                               <polyline points="21 15 16 10 5 21"></polyline>
+                             </svg>
+                           </div>`;
 
                     return `
-                        <tr style="border-bottom:1px solid #eee;">
-                            <td style="padding:8px; text-align:center;">${imagePreview}</td>
-                            <td style="padding:8px; font-family:monospace; font-size:0.85rem;">${c.sku || '-'}</td>
-                            <td style="padding:8px;">
-                                <div style="display:flex; align-items:center; gap:6px;">
-                                    <div style="width:16px;height:16px;background:${colorHex};border:1px solid #ccc;border-radius:50%;"></div>
-                                    <span style="font-size:0.85rem;">${c.color || '-'}</span>
+                        <tr style="border-bottom:1px solid #f0f0f0; transition: background 0.15s;">
+                            <td style="padding:12px; text-align:center;">${imagePreview}</td>
+                            <td style="padding:12px;">
+                                <span style="font-family:monospace; font-size:0.875rem; color:#424242; font-weight:500;">${c.sku || '-'}</span>
+                            </td>
+                            <td style="padding:12px;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <div style="width:24px;height:24px;background:${colorHex};border:2px solid #e0e0e0;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,0.1);flex-shrink:0;"></div>
+                                    <span style="font-size:0.875rem; color:#424242; font-weight:500;">${colorName}</span>
                                 </div>
                             </td>
                         </tr>
@@ -1158,17 +1171,20 @@
                 }).join('');
 
                 colorsSection = `
-                    <div style="margin-bottom:20px;">
-                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid #1976d2;">
-                            <svg class="icon-svg" style="width:18px;height:18px;color:#1976d2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c0 5.523 4.477 10 10 10a3 3 0 0 0 3-3v-.5c0-.464 0-.697.026-.892a3 3 0 0 1 2.582-2.582c.195-.026.428-.026.892-.026h.5a3 3 0 0 0 3-3c0-5.523-4.477-10-10-10S2 6.477 2 12Z"></path><path d="M7 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM16 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM10 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path></svg>
-                            <h4 style="margin:0; font-size:0.95rem; color:#1976d2; font-weight:600;">Colores Disponibles</h4>
+                    <div style="margin-bottom:24px;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding:10px 0; border-bottom:2px solid #1976d2;">
+                            <svg style="width:20px;height:20px;color:#1976d2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                            </svg>
+                            <h4 style="margin:0; font-size:1rem; color:#1976d2; font-weight:600; letter-spacing:0.3px;">Colores Disponibles</h4>
+                            <span style="background:#e3f2fd; color:#1565c0; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:600; margin-left:auto;">${colors.length}</span>
                         </div>
-                        <table style="width:100%; background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.05); overflow:hidden;">
-                            <thead style="background:#e3f2fd; font-size:0.75rem; text-transform:uppercase; color:#1565c0; font-weight:600;">
+                        <table style="width:100%; background:white; border-radius:10px; overflow:hidden; border:1px solid #e0e0e0;">
+                            <thead style="background:linear-gradient(to bottom, #f8f9fa, #f1f3f5); font-size:0.75rem; text-transform:uppercase; color:#5f6368; font-weight:600; letter-spacing:0.5px;">
                                 <tr>
-                                    <th style="padding:10px; text-align:center; width:80px;">IMAGEN</th>
-                                    <th style="padding:10px; text-align:left;">SKU DEL COLOR</th>
-                                    <th style="padding:10px; text-align:left;">NOMBRE DEL COLOR</th>
+                                    <th style="padding:12px; text-align:center; width:80px; border-bottom:2px solid #e0e0e0;">IMAGEN</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">SKU DEL COLOR</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">NOMBRE DEL COLOR</th>
                                 </tr>
                             </thead>
                             <tbody>${colorRows}</tbody>
@@ -1211,34 +1227,58 @@
                         varText = pv.name;
                     }
 
-                    const badge = pv.isInformative ? '<span style="background:#e3f2fd; color:#0d47a1; padding:2px 6px; border-radius:4px; font-size:0.7rem; margin-left:4px;">Info</span>' : '';
+                    const badge = pv.isInformative
+                        ? '<span style="background:#e3f2fd; color:#0d47a1; padding:4px 8px; border-radius:6px; font-size:0.7rem; margin-left:6px; font-weight:600;">Solo Info</span>'
+                        : '';
+
                     const activeBadge = pv.active !== false
-                        ? '<span style="color:#2e7d32; font-size:0.75rem; font-weight:600;">✓ Activo</span>'
-                        : '<span style="color:#c62828; font-size:0.75rem;">✗ Inactivo</span>';
+                        ? '<span style="background:#e8f5e9; color:#2e7d32; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:600;">✓ Activo</span>'
+                        : '<span style="background:#ffebee; color:#c62828; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:600;">✗ Inactivo</span>';
+
+                    const priceDisplay = pv.isInformative
+                        ? '<span style="color:#9e9e9e; font-style:italic;">-</span>'
+                        : `<span style="font-weight:600; color:#2e7d32; font-size:0.9rem;">Bs ${(pv.price || 0).toLocaleString()}</span>`;
+
+                    const linkDisplay = pv.link
+                        ? `<a href="${pv.link}" target="_blank" style="color:#1976d2; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:500;">
+                             <svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                               <polyline points="15 3 21 3 21 9"></polyline>
+                               <line x1="10" y1="14" x2="21" y2="3"></line>
+                             </svg>
+                             Ver
+                           </a>`
+                        : '<span style="color:#9e9e9e;">-</span>';
 
                     return `
-                        <tr style="border-bottom:1px solid #eee;">
-                            <td style="padding:8px; font-size:0.85rem;">${varText}${badge}</td>
-                            <td style="padding:8px; font-weight:600; color:#2e7d32;">${pv.isInformative ? '-' : 'Bs ' + (pv.price || 0)}</td>
-                            <td style="padding:8px; font-size:0.85rem;">${pv.link ? `<a href="${pv.link}" target="_blank" style="color:#1976d2; text-decoration:none;">🔗 Ver</a>` : '-'}</td>
-                            <td style="padding:8px;">${activeBadge}</td>
+                        <tr style="border-bottom:1px solid #f0f0f0; transition: background 0.15s;">
+                            <td style="padding:12px;">
+                                <span style="font-size:0.875rem; color:#424242; font-weight:500;">${varText}</span>${badge}
+                            </td>
+                            <td style="padding:12px;">${priceDisplay}</td>
+                            <td style="padding:12px; font-size:0.875rem;">${linkDisplay}</td>
+                            <td style="padding:12px; text-align:center;">${activeBadge}</td>
                         </tr>
                     `;
                 }).join('');
 
                 priceSection = `
                     <div>
-                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid #ff9800;">
-                            <svg class="icon-svg" style="width:18px;height:18px;color:#ff9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                            <h4 style="margin:0; font-size:0.95rem; color:#ff9800; font-weight:600;">Variantes de Precio</h4>
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding:10px 0; border-bottom:2px solid #ff9800;">
+                            <svg style="width:20px;height:20px;color:#ff9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="12" y1="1" x2="12" y2="23"></line>
+                              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                            <h4 style="margin:0; font-size:1rem; color:#ff9800; font-weight:600; letter-spacing:0.3px;">Variantes de Precio</h4>
+                            <span style="background:#fff3e0; color:#e65100; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:600; margin-left:auto;">${priceVariants.length}</span>
                         </div>
-                        <table style="width:100%; background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.05); overflow:hidden;">
-                            <thead style="background:#fff3e0; font-size:0.75rem; text-transform:uppercase; color:#e65100; font-weight:600;">
+                        <table style="width:100%; background:white; border-radius:10px; overflow:hidden; border:1px solid #e0e0e0;">
+                            <thead style="background:linear-gradient(to bottom, #fffbf5, #fff8ed); font-size:0.75rem; text-transform:uppercase; color:#5f6368; font-weight:600; letter-spacing:0.5px;">
                                 <tr>
-                                    <th style="padding:10px; text-align:left;">ESPECIFICACIÓN</th>
-                                    <th style="padding:10px; text-align:left;">PRECIO</th>
-                                    <th style="padding:10px; text-align:left;">LINK</th>
-                                    <th style="padding:10px; text-align:left;">ESTADO</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">ESPECIFICACIÓN</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">PRECIO</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">LINK</th>
+                                    <th style="padding:12px; text-align:center; border-bottom:2px solid #e0e0e0;">ESTADO</th>
                                 </tr>
                             </thead>
                             <tbody>${priceRows}</tbody>
