@@ -14,6 +14,9 @@ const MIME_TYPES = {
     '.gif': 'image/gif',
     '.svg': 'image/svg+xml',
     '.ico': 'image/x-icon',
+    '.ttf': 'font/ttf',
+    '.otf': 'font/otf',
+    '.woff': 'font/woff',
 };
 
 const xlsx = require('xlsx');
@@ -302,7 +305,7 @@ const server = http.createServer((req, res) => {
         });
         req.on('end', () => {
             try {
-                const { catalogName, productIds, customTitle, customText, bannerImage } = JSON.parse(body);
+                const { catalogName, productIds, customTitle, customText, bannerImage, textColor, textOpacity, titleColor } = JSON.parse(body);
 
                 // Handle Banner Image
                 let bannerPath = '';
@@ -359,7 +362,10 @@ const server = http.createServer((req, res) => {
                 // Create Info sheet
                 const infoData = [
                     { Key: 'Title', Value: customTitle || catalogName },
+                    { Key: 'TitleColor', Value: titleColor || 'black' },
                     { Key: 'Text', Value: customText || '' },
+                    { Key: 'TextColor', Value: textColor || 'black' },
+                    { Key: 'TextOpacity', Value: textOpacity || '50' },
                     { Key: 'Banner', Value: bannerPath || '' }
                 ];
                 const wsInfo = xlsx.utils.json_to_sheet(infoData);
@@ -377,6 +383,179 @@ const server = http.createServer((req, res) => {
                 }));
             } catch (err) {
                 console.error('Error creating catalog:', err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: err.message }));
+            }
+        });
+        return;
+    }
+
+    // API Endpoint: Update Catalog
+    if (req.method === 'POST' && req.url === '/api/catalogs/update') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', () => {
+            try {
+                const { oldId, catalogName, customTitle, customText, bannerImage, textColor, textOpacity, titleColor, productIds } = JSON.parse(body);
+                if (!oldId || !catalogName) throw new Error('Old ID and New Name required');
+
+                const oldFileName = `Catalogo_${oldId}.xlsx`;
+                const oldPath = path.join(__dirname, 'database', 'catalogs', oldFileName);
+
+                if (!fs.existsSync(oldPath)) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Catálogo original no encontrado' }));
+                    return;
+                }
+
+                // Handle Banner Image
+                let bannerPath = '';
+                if (bannerImage && bannerImage.startsWith('data:image')) {
+                    try {
+                        const matches = bannerImage.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
+                        if (matches && matches.length === 3) {
+                            const extension = matches[1] === 'jpeg' ? 'jpg' : matches[1];
+                            const imageBuffer = Buffer.from(matches[2], 'base64');
+                            const imageName = `banner_${catalogName.replace(/[^a-zA-Z0-9]/g, '_')}_${Date.now()}.${extension}`;
+                            const uploadDir = path.join(__dirname, 'src', 'assets', 'catalogs');
+                            if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+                            fs.writeFileSync(path.join(uploadDir, imageName), imageBuffer);
+                            bannerPath = `/src/assets/catalogs/${imageName}`;
+                        }
+                    } catch (e) {
+                        console.error('Error saving banner image:', e);
+                    }
+                }
+
+                const newId = catalogName.replace(/\s+/g, '_');
+                const newFileName = `Catalogo_${newId}.xlsx`;
+                const newPath = path.join(__dirname, 'database', 'catalogs', newFileName);
+
+                // Read original workbook
+                const workbook = xlsx.readFile(oldPath);
+
+                // Update Products if provided
+                if (productIds && Array.isArray(productIds)) {
+                    const productsPath = path.join(__dirname, 'src', 'data', 'products.js');
+                    const allProducts = loadJSData(productsPath) || [];
+                    const selectedProducts = allProducts.filter(p => productIds.includes(String(p.id)));
+
+                    const productsData = selectedProducts.map(p => ({
+                        'ID': p.id,
+                        'Nombre': p.name,
+                        'Categoría': p.category,
+                        'Badge': p.badge || '',
+                        'Precio Base': p.basePrice || 0,
+                        'Precio Promo': p.basePromo || 0,
+                        'Link': p.baseLink || '',
+                        'Datos Completos': JSON.stringify(p)
+                    }));
+
+                    const ws = xlsx.utils.json_to_sheet(productsData);
+                    if (!workbook.SheetNames.includes('Productos')) {
+                        xlsx.utils.book_append_sheet(workbook, ws, 'Productos');
+                    } else {
+                        workbook.Sheets['Productos'] = ws;
+                    }
+                }
+
+                // Update Info sheet
+                const infoSheet = workbook.Sheets['Info'];
+                let infoData = [];
+                if (infoSheet) {
+                    infoData = xlsx.utils.sheet_to_json(infoSheet);
+                }
+
+                // Helper to update or add info
+                const updateInfo = (key, value) => {
+                    const item = infoData.find(i => i.Key === key);
+                    if (item) item.Value = value;
+                    else infoData.push({ Key: key, Value: value });
+                };
+
+                updateInfo('Title', customTitle || catalogName);
+                updateInfo('TitleColor', titleColor || 'black');
+                updateInfo('Text', customText || '');
+                updateInfo('TextColor', textColor || 'black');
+                updateInfo('TextOpacity', textOpacity || '50');
+                if (bannerPath) updateInfo('Banner', bannerPath);
+
+                const wsInfo = xlsx.utils.json_to_sheet(infoData);
+                if (!workbook.SheetNames.includes('Info')) {
+                    xlsx.utils.book_append_sheet(workbook, wsInfo, 'Info');
+                } else {
+                    workbook.Sheets['Info'] = wsInfo;
+                }
+
+                // Save to new path (if name changed) or overwrite
+                xlsx.writeFile(workbook, newPath);
+
+                // If name changed, delete old file
+                if (newId !== oldId && fs.existsSync(oldPath)) {
+                    fs.unlinkSync(oldPath);
+                }
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({
+                    success: true,
+                    message: 'Catálogo actualizado correctamente',
+                    newId: newId
+                }));
+            } catch (err) {
+                console.error('Error updating catalog:', err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, message: err.message }));
+            }
+        });
+        return;
+    }
+
+    // API Endpoint: Duplicate Catalog
+    if (req.method === 'POST' && req.url === '/api/catalogs/duplicate') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', () => {
+            try {
+                const { catalogId } = JSON.parse(body);
+                if (!catalogId) throw new Error('Catalog ID required');
+
+                const sourceFileName = `Catalogo_${catalogId}.xlsx`;
+                const sourcePath = path.join(__dirname, 'database', 'catalogs', sourceFileName);
+
+                if (!fs.existsSync(sourcePath)) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, message: 'Catálogo original no encontrado' }));
+                    return;
+                }
+
+                const newCatalogName = catalogId.replace(/_/g, ' ') + ' (copia)';
+                const newId = newCatalogName.replace(/\s+/g, '_');
+                const newFileName = `Catalogo_${newId}.xlsx`;
+                const newPath = path.join(__dirname, 'database', 'catalogs', newFileName);
+
+                // Copy file
+                fs.copyFileSync(sourcePath, newPath);
+
+                // Update Title in new file
+                const workbook = xlsx.readFile(newPath);
+                const infoSheet = workbook.Sheets['Info'];
+                if (infoSheet) {
+                    let infoData = xlsx.utils.sheet_to_json(infoSheet);
+                    const titleItem = infoData.find(i => i.Key === 'Title');
+                    if (titleItem) {
+                        titleItem.Value = newCatalogName;
+                    } else {
+                        infoData.push({ Key: 'Title', Value: newCatalogName });
+                    }
+                    const wsInfo = xlsx.utils.json_to_sheet(infoData);
+                    workbook.Sheets['Info'] = wsInfo;
+                    xlsx.writeFile(workbook, newPath);
+                }
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true, message: 'Catálogo duplicado correctamente' }));
+            } catch (err) {
+                console.error('Error duplicating catalog:', err);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ success: false, message: err.message }));
             }
@@ -471,7 +650,7 @@ const server = http.createServer((req, res) => {
     // API Endpoint: Get Catalog Products
     if (req.method === 'GET' && req.url.startsWith('/api/catalogs/')) {
         try {
-            const urlParts = req.url.split('/');
+            const urlParts = req.url.split('?')[0].split('/');
             const catalogName = decodeURIComponent(urlParts[3]);
 
             if (urlParts[4] === 'products') {
@@ -491,15 +670,27 @@ const server = http.createServer((req, res) => {
                 let metadata = { title: catalogName.replace(/_/g, ' '), text: '2026', banner: '' };
                 if (workbook.Sheets['Info']) {
                     const info = xlsx.utils.sheet_to_json(workbook.Sheets['Info']);
-                    const t = info.find(i => i.Key === 'Title');
-                    const txt = info.find(i => i.Key === 'Text');
-                    const yr = info.find(i => i.Key === 'Year');
-                    const ban = info.find(i => i.Key === 'Banner');
 
-                    if (t) metadata.title = t.Value;
-                    if (txt) metadata.text = txt.Value;
-                    else if (yr) metadata.text = yr.Value;
-                    if (ban) metadata.banner = ban.Value;
+                    const findVal = (key) => {
+                        const item = info.find(i => i.Key && i.Key.toLowerCase() === key.toLowerCase());
+                        return item ? item.Value : undefined;
+                    };
+
+                    const t = findVal('Title');
+                    const tCol = findVal('TitleColor');
+                    const txt = findVal('Text');
+                    const yr = findVal('Year');
+                    const ban = findVal('Banner');
+                    const tColor = findVal('TextColor');
+                    const tOpacity = findVal('TextOpacity');
+
+                    if (t !== undefined) metadata.title = t;
+                    if (tCol !== undefined) metadata.titleColor = tCol;
+                    if (txt !== undefined) metadata.text = txt;
+                    else if (yr !== undefined) metadata.text = yr;
+                    if (ban !== undefined) metadata.banner = ban;
+                    if (tColor !== undefined) metadata.textColor = tColor;
+                    if (tOpacity !== undefined) metadata.textOpacity = tOpacity;
                 }
 
                 const sheet = workbook.Sheets['Productos'];
@@ -508,19 +699,26 @@ const server = http.createServer((req, res) => {
                 // Parse products from "Datos Completos" column
                 const products = data.map(row => {
                     try {
-                        return JSON.parse(row['Datos Completos']);
+                        if (row['Datos Completos']) {
+                            return JSON.parse(row['Datos Completos']);
+                        }
                     } catch (e) {
-                        // Fallback to basic data if JSON parse fails
-                        return {
-                            id: row.ID,
-                            name: row.Nombre,
-                            category: row['Categoría'],
-                            badge: row.Badge,
-                            basePrice: row['Precio Base'],
-                            basePromo: row['Precio Promo'],
-                            baseLink: row.Link
-                        };
+                        console.error('Error parsing product JSON for ID:', row.ID, e.message);
                     }
+
+                    // Fallback to basic data if JSON parse fails or column is missing
+                    return {
+                        id: row.ID || row.id,
+                        name: row.Nombre || row.name || 'Sin nombre',
+                        category: row['Categoría'] || row.category || '',
+                        badge: row.Badge || row.badge || '',
+                        basePrice: row['Precio Base'] || row.price || 0,
+                        basePromo: row['Precio Promo'] || row.promoPrice || 0,
+                        baseLink: row.Link || row.link || '',
+                        image: row.Image || row.image || '',
+                        colors: [],
+                        priceVariants: []
+                    };
                 });
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });

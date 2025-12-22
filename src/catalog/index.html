@@ -8,14 +8,32 @@
     <style>
         @font-face {
             font-family: 'SamsungSharpSans';
-            src: url('/assets/fonts/SamsungSharpSans-Bold.ttf') format('truetype');
+            src: url('/fonts/samsungsharpsans.otf') format('opentype');
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: 'SamsungSharpSans';
+            src: url('/fonts/samsungsharpsans-medium.otf') format('opentype');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'SamsungSharpSans';
+            src: url('/fonts/SamsungSharpSans-Bold.ttf') format('truetype');
             font-weight: bold;
         }
 
         @font-face {
             font-family: 'SamsungOne';
-            src: url('/assets/fonts/SamsungOne-400.ttf') format('truetype');
+            src: url('/fonts/SamsungOne-400.ttf') format('truetype');
             font-weight: normal;
+        }
+
+        @font-face {
+            font-family: 'SamsungOne';
+            src: url('/fonts/SamsungOne-700.ttf') format('truetype');
+            font-weight: bold;
         }
 
         :root {
@@ -63,6 +81,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             line-height: 1;
+            text-align: center;
         }
 
         .hero h1 {
@@ -73,6 +92,7 @@
             color: #000;
             margin: 0;
             text-align: center;
+            width: 100%;
         }
 
         .catalog-container {
@@ -114,12 +134,20 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             position: relative;
+            padding: 0;
+            /* Remove padding to allow edge-to-edge image */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .card-content {
             padding: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: transform 0.3s ease;
+            flex-grow: 1;
         }
 
         .complex-card:hover {
@@ -143,22 +171,28 @@
 
         .card-image-container {
             background: #ffffff;
-            border-radius: 20px;
+            /* Match the light blue background from the reference image */
             width: 100%;
             aspect-ratio: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
             position: relative;
+            overflow: hidden;
+            padding: 0;
+            border-radius: 0;
         }
 
         .card-image {
-            max-width: 90%;
-            max-height: 90%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            transition: opacity 0.3s ease;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Internal padding for the product product image to look balanced */
+        }
+
+        .complex-card:hover .card-image {
+            transform: scale(1.1);
         }
 
         .card-sku {
@@ -169,10 +203,13 @@
 
         .card-title {
             font-family: 'SamsungSharpSans', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.7rem;
+            font-weight: 300;
+            margin: 0;
+            padding: 8px 0;
             color: black;
             line-height: 1.2;
+            text-align: center;
         }
 
         .card-color-label {
@@ -271,8 +308,8 @@
         }
 
         .current-price {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.4rem;
+            font-weight: normal;
             font-family: 'SamsungSharpSans', sans-serif;
             color: black;
         }
@@ -307,6 +344,38 @@
             color: var(--text-gray);
         }
 
+        /* Filters */
+        .catalog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 8px 20px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #555;
+        }
+
+        .filter-chip:hover {
+            border-color: #999;
+            background: #f9f9f9;
+        }
+
+        .filter-chip.active {
+            background: black;
+            color: white;
+            border-color: black;
+        }
+
         @media (max-width: 768px) {
             .hero {
                 height: 200px;
@@ -328,6 +397,304 @@
                 font-size: 1.75rem;
             }
         }
+
+        /* Search Container */
+        .search-container {
+            background: transparent;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .search-wrapper {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 80vh;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 3rem 0.875rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'SamsungOne', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #1428a0;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+        }
+
+        .search-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        @media (max-width: 768px) {
+            .search-wrapper {
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+        }
+
+        /* Catalog Filters */
+        .catalog-filters {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .filter-chip {
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #555;
+            white-space: nowrap;
+            font-family: 'SamsungOne', sans-serif;
+        }
+
+        .filter-chip:hover {
+            border-color: #999;
+            background: #f9f9f9;
+        }
+
+        .filter-chip.active {
+            background: black;
+            color: white;
+            border-color: black;
+        }
+
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+
+            /* Hero */
+            .hero {
+                height: 200px;
+                margin-bottom: 0;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+                padding: 0 1rem;
+            }
+
+            .hero-year {
+                font-size: 20vw;
+            }
+
+            /* Search */
+            .search-container {
+                padding: 1.5rem 0;
+                margin-bottom: 0;
+            }
+
+            .search-input {
+                font-size: 0.95rem;
+                padding: 0.75rem 2.5rem 0.75rem 1rem;
+            }
+
+            /* Filters - Horizontal Scroll */
+            .catalog-filters {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                margin-bottom: 2rem;
+                padding: 0 1rem 0.5rem 1rem;
+            }
+
+            .catalog-filters::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-chip {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            /* Products Grid */
+            .products-grid {
+                gap: 1.5rem;
+            }
+
+            /* Cards */
+            .complex-card {
+                border-radius: 16px;
+            }
+
+            .card-content {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+
+            .card-description {
+                font-size: 0.85rem;
+            }
+
+            .current-price {
+                font-size: 1.5rem;
+            }
+
+            .variant-btn {
+                min-width: 70px;
+                padding: 8px 12px;
+            }
+
+            .catalog-container {
+                padding: 0 0.75rem 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .filter-chip {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+        }
+
+
+        /* Features Section */
+        .features-section {
+            background: transparent;
+            padding: 3rem 0 4rem;
+            margin-top: 3rem;
+        }
+
+        .features-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            outline: none !important;
+        }
+
+        .feature-item:focus,
+        .feature-item:focus-visible {
+            outline: none !important;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            outline: none !important;
+        }
+
+        .feature-icon:focus,
+        .feature-icon:focus-visible {
+            outline: none !important;
+        }
+
+        .feature-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: #1428a0;
+            fill: none;
+            stroke-width: 1.5;
+            outline: none !important;
+        }
+
+        .feature-icon svg:focus,
+        .feature-icon svg:focus-visible {
+            outline: none !important;
+        }
+
+        .feature-icon svg * {
+            outline: none !important;
+        }
+
+        .feature-icon svg *:focus,
+        .feature-icon svg *:focus-visible {
+            outline: none !important;
+        }
+
+        .feature-label {
+            font-family: 'SamsungOne', sans-serif;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-description {
+            font-family: 'SamsungOne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: normal;
+            color: #666;
+            line-height: 1.4;
+            max-width: 220px;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -338,150 +705,159 @@
         <h1 id="heroTitle">Catálogo Samsung</h1>
     </section>
 
+    <div class="search-container">
+        <div class="search-wrapper">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar productos...">
+                <div class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="catalog-container">
+        <div class="catalog-filters" id="catalogFilters">
+            <!-- Dynamic Category Filters -->
+        </div>
         <div class="products-grid" id="productsGrid">
             <div class="loader">Cargando productos...</div>
         </div>
     </div>
 
+    <section class="features-section">
+        <div class="features-container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <p class="feature-label">Comodidad</p>
+                    <p class="feature-description">Venta directa al funcionario y entrega en su fuente de trabajo</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <p class="feature-label">Delivery gratis</p>
+                    <p class="feature-description">Envío sin costo a todo el país</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </div>
+                    <p class="feature-label">Cobertura</p>
+                    <p class="feature-description">A nivel nacional</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <p class="feature-label">Compra segura</p>
+                    <p class="feature-description">Dispositivos homologados con garantía real en Bolivia</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="5" x2="5" y2="19"></line>
+                            <circle cx="6.5" cy="6.5" r="2.5"></circle>
+                            <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <p class="feature-label">Descuento especial</p>
+                    <p class="feature-description">Acceso a promociones vigentes en el mercado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <script>
         window.catalogProducts = {};
+        window.allProducts = [];
 
-        // Helper to format price
-        const formatPrice = (price) => `Bs ${price}`;
+        const formatPrice = (price) => `Bs ${price || 0}`;
 
-        // Helper to select color
-        window.selectColor = function (displayId, colorId) {
-            const product = window.catalogProducts[displayId];
-            if (!product) return;
+        window.renderProducts = function (filteredProducts) {
+            const grid = document.getElementById('productsGrid');
+            console.log('Rendering products:', filteredProducts ? filteredProducts.length : 0);
 
-            // Update Active State
-            document.querySelectorAll(`#card-${displayId} .swatch`).forEach(el => el.classList.remove('active'));
-            document.querySelector(`#card-${displayId} .swatch[data-color="${colorId}"]`).classList.add('active');
-
-            // Find Color Data
-            const colorData = product.colors.find(c => c.id === colorId || c.colorId === colorId);
-            if (colorData) {
-                // Update Image
-                const img = document.querySelector(`#card-${displayId} .card-image`);
-                img.src = colorData.image;
-
-                // Update Label
-                const label = document.querySelector(`#card-${displayId} .card-color-names`);
-                if (label) label.textContent = colorData.name;
-            }
-        };
-
-        // Helper to select variant
-        window.selectVariant = function (displayId, variantIndex) {
-            const product = window.catalogProducts[displayId];
-            if (!product) return;
-
-            // Update Active State
-            document.querySelectorAll(`#card-${displayId} .variant-btn`).forEach(el => el.classList.remove('active'));
-            document.querySelector(`#card-${displayId} .variant-btn[data-idx="${variantIndex}"]`).classList.add('active');
-
-            // Find Variant Data
-            const variantData = product.priceVariants && product.priceVariants[variantIndex];
-            if (variantData) {
-                // Update Price
-                const priceEl = document.querySelector(`#card-${displayId} .current-price`);
-                const oldPriceEl = document.querySelector(`#card-${displayId} .old-price`);
-
-                priceEl.textContent = formatPrice(variantData.price);
-                if (variantData.promoPrice && variantData.promoPrice > 0 && variantData.promoPrice < variantData.price) {
-                    priceEl.textContent = formatPrice(variantData.promoPrice);
-                    oldPriceEl.textContent = formatPrice(variantData.price);
-                    oldPriceEl.style.display = 'inline';
-                } else {
-                    oldPriceEl.style.display = 'none';
-                }
-
-                // Update Link
-                const linkBtn = document.querySelector(`#card-${displayId} .card-action-btn`);
-                if (linkBtn) {
-                    linkBtn.href = variantData.link || '#';
-                }
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            const pathParts = window.location.pathname.replace(/\/$/, '').split('/');
-            const catalogId = pathParts[pathParts.length - 1];
-
-            if (!catalogId) {
-                document.getElementById('productsGrid').innerHTML = '<div class="loader">Catálogo no especificado</div>';
+            if (!filteredProducts || filteredProducts.length === 0) {
+                grid.innerHTML = '<div class="loader">No hay productos disponibles para mostrar en esta categoría.</div>';
                 return;
             }
 
             try {
-                const response = await fetch(`/api/catalogs/${catalogId}/products`);
-                const data = await response.json();
-
-                if (!data.success) {
-                    throw new Error(data.message);
-                }
-
-                // Update Hero
-                const metadata = data.metadata || {};
-                const humanName = decodeURIComponent(catalogId).replace(/_/g, ' ');
-                document.getElementById('heroTitle').textContent = metadata.title || humanName;
-                document.getElementById('heroYear').textContent = metadata.text || metadata.year || '2026';
-                document.title = (metadata.title || humanName) + ' - Samsung';
-
-                if (metadata.banner) {
-                    const hero = document.querySelector('.hero');
-                    hero.style.backgroundImage = `url('${metadata.banner}')`;
-                    hero.style.backgroundSize = 'cover';
-                    hero.style.backgroundPosition = 'center';
-                }
-
-                const grid = document.getElementById('productsGrid');
-                if (data.products.length === 0) {
-                    grid.innerHTML = '<div class="loader">Este catálogo está vacío.</div>';
-                    return;
-                }
-
-                grid.innerHTML = data.products.map(product => {
+                grid.innerHTML = filteredProducts.map(product => {
                     if (!product) return '';
-                    // Store in global
-                    const displayId = product.id;
+
+                    const displayId = product.id || product.ID;
+                    if (!displayId) return '';
+
                     window.catalogProducts[displayId] = product;
 
-                    // Parse Data
                     const badge = product.badge || '';
                     const colors = product.colors || [];
                     const variants = product.priceVariants || [];
 
-                    // Defaults
-                    const defaultColor = colors.length > 0 ? colors[0] : { image: product.image, name: 'Default', id: 'def', hex: '#000' };
+                    // Fallback image logic
+                    const mainImage = product.image || (colors[0] ? colors[0].image : '');
+                    const defaultColor = colors.length > 0 ? colors[0] : { image: mainImage, name: 'Default', id: 'def', hex: '#000' };
                     const displayColors = colors.length > 0 ? colors : [];
 
-                    // Display Price Logic
-                    let currentPrice = product.basePrice || 0;
+                    let currentPrice = product.basePrice || product.price || 0;
                     let oldPrice = 0;
                     let hasVariants = variants.length > 0;
 
                     if (hasVariants) {
                         const v0 = variants[0];
-                        currentPrice = v0.price;
-                        if (v0.promoPrice && v0.promoPrice > 0 && v0.promoPrice < v0.price) {
-                            oldPrice = v0.price;
-                            currentPrice = v0.promoPrice;
+                        if (v0) {
+                            currentPrice = v0.price;
+                            if (v0.promoPrice && v0.promoPrice > 0 && v0.promoPrice < v0.price) {
+                                oldPrice = v0.price;
+                                currentPrice = v0.promoPrice;
+                            }
                         }
+                    } else if (product.basePromo && product.basePromo > 0) {
+                        oldPrice = product.basePrice;
+                        currentPrice = product.basePromo;
                     }
 
-                    // Render Swatches
                     const swatchesHtml = displayColors.map((c, idx) => `
                         <div class="swatch ${idx === 0 ? 'active' : ''}" 
-                             style="background-color: ${c.hex};" 
-                             data-color="${c.id || c.colorId}"
-                             onclick="selectColor('${displayId}', '${c.id || c.colorId}')">
+                             style="background-color: ${c.hex || '#ccc'};" 
+                             data-color="${c.id || c.colorId || idx}"
+                             onclick="selectColor('${displayId}', '${c.id || c.colorId || idx}')">
                         </div>
                     `).join('');
 
-                    // Render Variants Buttons
                     const variantsHtml = variants.map((v, idx) => {
+                        if (!v) return '';
                         const parts = (v.variableText || '').split(':');
                         const label = parts.length > 1 ? parts[0] : 'Opción';
                         const val = parts.length > 1 ? parts[1].trim() : parts[0];
@@ -499,45 +875,198 @@
                     const oldPriceStyle = oldPrice > 0 ? '' : 'display:none;';
                     const currentPriceDisplay = formatPrice(currentPrice);
 
+                    const productLink = (hasVariants && variants[0] ? variants[0].link : (product.baseLink || product.link)) || '#';
+
                     return `
-                        <div class="complex-card" id="card-${displayId}">
+                        <div class="complex-card" id="card-${displayId}" data-category="${product.category || ''}">
                             ${badge ? `<div class="card-badge">${badge}</div>` : ''}
-                            
                             <div class="card-image-container">
-                                <img src="${defaultColor.image}" class="card-image" alt="${product.name}">
+                                <img src="${defaultColor.image || mainImage}" class="card-image" alt="${product.name || 'Producto'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22%3E%3Crect fill=%22%23ddd%22 width=%2250%22 height=%2250%22/%3E%3C/svg%3E'">
                             </div>
-
-                            <div class="card-sku">${product.sku || (colors[0] ? colors[0].sku : '') || '123123'}</div>
-                            
-                            <h3 class="card-title">${product.name}</h3>
-
-                            ${displayColors.length > 0 ? `
-                                <div class="card-color-label">Color: <span class="card-color-names">${defaultColor.name}</span></div>
-                                <div class="swatch-container">
-                                    ${swatchesHtml}
+                            <div class="card-content">
+                                <div class="card-sku">${product.sku || (colors[0] ? colors[0].sku : '') || ''}</div>
+                                <h3 class="card-title">${product.name || 'Sin nombre'}</h3>
+                                ${product.description ? `<p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">${product.description}</p>` : ''}
+                                ${displayColors.length > 0 ? `
+                                    <div class="card-color-label">Color: <span class="card-color-names">${defaultColor.name || 'Seleccionado'}</span></div>
+                                    <div class="swatch-container">
+                                        ${swatchesHtml}
+                                    </div>
+                                ` : ''}
+                                ${hasVariants ? `
+                                    <div class="variant-selector">
+                                        ${variantsHtml}
+                                    </div>
+                                ` : ''}
+                                <div class="price-box">
+                                    <span class="old-price" style="${oldPriceStyle}">${oldPriceDisplay}</span>
+                                    <span class="current-price">${currentPriceDisplay}</span>
                                 </div>
-                            ` : ''}
-
-                            ${hasVariants ? `
-                                <div class="variant-selector">
-                                    ${variantsHtml}
-                                </div>
-                            ` : ''}
-
-                            <div class="price-box">
-                                <span class="old-price" style="${oldPriceStyle}">${oldPriceDisplay}</span>
-                                <span class="current-price">${currentPriceDisplay}</span>
+                                <a href="${productLink}" class="card-action-btn" target="_blank">MÁS INFORMACIÓN</a>
                             </div>
-
-                            <a href="${(hasVariants ? variants[0].link : (product.baseLink || product.link)) || '#'}" class="card-action-btn" target="_blank">MÁS INFORMACIÓN</a>
                         </div>
                     `;
                 }).join('');
+            } catch (e) {
+                console.error('Error in renderProducts:', e);
+                grid.innerHTML = `<div class="loader">Error renderizando productos: ${e.message}</div>`;
+            }
+        };
+
+        window.filterByCategory = function (category, btn) {
+            document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            if (category === 'all') {
+                window.renderProducts(window.allProducts);
+            } else {
+                const filtered = window.allProducts.filter(p => p && p.category === category);
+                window.renderProducts(filtered);
+            }
+        };
+
+        window.selectColor = function (displayId, colorId) {
+            const product = window.catalogProducts[displayId];
+            if (!product) return;
+            document.querySelectorAll(`#card-${displayId} .swatch`).forEach(el => el.classList.remove('active'));
+            const swatch = document.querySelector(`#card-${displayId} .swatch[data-color="${colorId}"]`);
+            if (swatch) swatch.classList.add('active');
+
+            const colorData = product.colors.find(c => (c.id === colorId || c.colorId === colorId));
+            if (colorData) {
+                const img = document.querySelector(`#card-${displayId} .card-image`);
+                if (img) img.src = colorData.image;
+                const label = document.querySelector(`#card-${displayId} .card-color-names`);
+                if (label) label.textContent = colorData.name;
+            }
+        };
+
+        window.selectVariant = function (displayId, variantIndex) {
+            const product = window.catalogProducts[displayId];
+            if (!product) return;
+            document.querySelectorAll(`#card-${displayId} .variant-btn`).forEach(el => el.classList.remove('active'));
+            const btn = document.querySelector(`#card-${displayId} .variant-btn[data-idx="${variantIndex}"]`);
+            if (btn) btn.classList.add('active');
+
+            const variantData = product.priceVariants && product.priceVariants[variantIndex];
+            if (variantData) {
+                const priceEl = document.querySelector(`#card-${displayId} .current-price`);
+                const oldPriceEl = document.querySelector(`#card-${displayId} .old-price`);
+                if (priceEl) priceEl.textContent = formatPrice(variantData.price);
+                if (oldPriceEl) {
+                    if (variantData.promoPrice && variantData.promoPrice > 0 && variantData.promoPrice < variantData.price) {
+                        priceEl.textContent = formatPrice(variantData.promoPrice);
+                        oldPriceEl.textContent = formatPrice(variantData.price);
+                        oldPriceEl.style.display = 'inline';
+                    } else {
+                        oldPriceEl.style.display = 'none';
+                    }
+                }
+                const linkBtn = document.querySelector(`#card-${displayId} .card-action-btn`);
+                if (linkBtn) linkBtn.href = variantData.link || '#';
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const pathParts = window.location.pathname.replace(/\/$/, '').split('/');
+            const catalogId = pathParts[pathParts.length - 1];
+
+            if (!catalogId || catalogId === 'catalog') {
+                document.getElementById('productsGrid').innerHTML = '<div class="loader">Catálogo no encontrado.</div>';
+                return;
+            }
+
+            try {
+                console.log('Loading catalog:', catalogId);
+                const response = await fetch(`/api/catalogs/${catalogId}/products?t=${Date.now()}`);
+                const data = await response.json();
+
+                if (!data.success) throw new Error(data.message);
+
+                const metadata = data.metadata || {};
+                console.log('Metadata loaded:', metadata);
+
+                const titleEl = document.getElementById('heroTitle');
+                const yearEl = document.getElementById('heroYear');
+
+                const humanName = decodeURIComponent(catalogId).replace(/_/g, ' ');
+                titleEl.textContent = metadata.title || humanName;
+                yearEl.textContent = metadata.text || metadata.year || '2026';
+                document.title = (metadata.title || humanName) + ' - Samsung';
+
+                if (metadata.banner) {
+                    const hero = document.querySelector('.hero');
+                    hero.style.backgroundImage = `url('${metadata.banner}')`;
+                    hero.style.backgroundSize = 'cover';
+                    hero.style.backgroundPosition = 'center';
+                }
+
+                if (metadata.titleColor) titleEl.style.color = metadata.titleColor;
+                if (metadata.textColor) yearEl.style.color = metadata.textColor;
+                if (metadata.textOpacity !== undefined && metadata.textOpacity !== '') {
+                    yearEl.style.opacity = parseFloat(metadata.textOpacity) / 100;
+                }
+
+                window.allProducts = data.products || [];
+                console.log('Products data loaded:', window.allProducts);
+
+                if (window.allProducts.length === 0) {
+                    document.getElementById('productsGrid').innerHTML = '<div class="loader">Este catálogo no tiene productos seleccionados o el archivo está vacío.</div>';
+                    return;
+                }
+
+                const categories = ['all', ...new Set(window.allProducts.map(p => p && p.category).filter(Boolean))];
+                const filtersContainer = document.getElementById('catalogFilters');
+
+                if (categories.length >= 2) {
+                    filtersContainer.innerHTML = categories.map(cat => `
+                        <button class="filter-chip ${cat === 'all' ? 'active' : ''}" 
+                                onclick="filterByCategory('${cat}', this)">
+                            ${cat === 'all' ? 'Todos' : cat}
+                        </button>
+                    `).join('');
+                } else {
+                    filtersContainer.style.display = 'none';
+                }
+
+                window.renderProducts(window.allProducts);
 
             } catch (error) {
                 console.error('Error loading catalog:', error);
-                document.getElementById('productsGrid').innerHTML = `<div class="loader">Error: ${error.message}</div>`;
+                document.getElementById('productsGrid').innerHTML = `<div class="loader">Error cargando el catálogo: ${error.message}</div>`;
             }
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                // If search is empty, show all products or filtered by category
+                const activeFilter = document.querySelector('.filter-chip.active');
+                if (activeFilter) {
+                    const category = activeFilter.textContent.trim();
+                    filterByCategory(category === 'Todos' ? 'all' : category, activeFilter);
+                } else {
+                    window.renderProducts(window.allProducts);
+                }
+                return;
+            }
+
+            // Filter products by search term
+            const filteredProducts = window.allProducts.filter(product => {
+                const name = (product.name || '').toLowerCase();
+                const description = (product.description || '').toLowerCase();
+                const category = (product.category || '').toLowerCase();
+                const sku = (product.sku || '').toLowerCase();
+
+                return name.includes(searchTerm) ||
+                    description.includes(searchTerm) ||
+                    category.includes(searchTerm) ||
+                    sku.includes(searchTerm);
+            });
+
+            window.renderProducts(filteredProducts);
         });
     </script>
 </body>

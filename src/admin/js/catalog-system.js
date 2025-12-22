@@ -5,6 +5,7 @@
 let catalogs = [];
 let currentCatalogId = null;
 let currentCatalogProducts = [];
+let editModeId = null; // Track if we are editing an existing catalog
 
 // Initialize catalog system
 function initCatalogSystem() {
@@ -89,8 +90,11 @@ function renderCatalogsGrid() {
                     <button class="btn-icon" onclick="previewCatalog('${catalog.id}')" title="Previsualizar" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
                         <span class="material-icons" style="font-size: 18px;">visibility</span>
                     </button>
-                    <button class="btn-icon" onclick="editCatalog('${catalog.id}')" title="Editar" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
+                    <button class="btn-icon" onclick="editCatalog('${catalog.id}')" title="Editar Metadatos" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
                         <span class="material-icons" style="font-size: 18px;">edit</span>
+                    </button>
+                    <button class="btn-icon" onclick="duplicateCatalog('${catalog.id}')" title="Duplicar Catálogo" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #666; cursor: pointer;">
+                        <span class="material-icons" style="font-size: 18px;">content_copy</span>
                     </button>
                     <button class="btn-icon" onclick="exportCatalog('${catalog.id}')" title="Exportar Excel" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #2e7d32; cursor: pointer;">
                         <span class="material-icons" style="font-size: 18px;">download</span>
@@ -133,6 +137,8 @@ window.openCreateCatalogModal = function () {
     const modal = document.getElementById('createCatalogModal');
     if (!modal) return;
 
+    editModeId = null; // Important: Clear edit mode
+
     // Show all fields (In case they were hidden by Add Mode)
     document.querySelectorAll('.catalog-meta-field').forEach(el => el.style.display = 'block');
 
@@ -141,13 +147,16 @@ window.openCreateCatalogModal = function () {
     if (title) title.textContent = 'Crear Nuevo Catálogo';
     if (btn) {
         btn.innerHTML = '<span class="material-icons" style="font-size: 16px;">add</span> Crear Catálogo';
-        btn.onclick = createCatalog; // Reset to Create
+        btn.onclick = null; // Rely on form submit
     }
 
     // Reset inputs
     document.getElementById('catalogName').value = '';
     document.getElementById('catalogCustomTitle').value = '';
+    document.getElementById('catalogTitleColor').value = 'black';
     document.getElementById('catalogCustomText').value = '2026';
+    document.getElementById('catalogTextColor').value = 'black';
+    document.getElementById('catalogTextOpacity').value = '50';
     document.getElementById('catalogBannerImage').value = '';
 
     loadProductsIntoModal();
@@ -282,14 +291,19 @@ function updateSelectedCount() {
     if (countEl) countEl.textContent = `${count} seleccionado(s)`;
 }
 
-// Create catalog (Original)
-async function createCatalog(e) {
+// Save or Update catalog (Unified)
+async function saveCatalog(e) {
     if (e) e.preventDefault();
     const name = document.getElementById('catalogName').value.trim();
     const selectedProducts = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
 
-    if (!name || selectedProducts.length === 0) {
-        window.showToast('Nombre y al menos un producto requeridos', 'info');
+    if (!name) {
+        window.showToast('El nombre es requerido', 'info');
+        return;
+    }
+
+    if (selectedProducts.length === 0 && !editModeId) {
+        window.showToast('Al menos un producto requerido para un catálogo nuevo', 'info');
         return;
     }
 
@@ -306,46 +320,119 @@ async function createCatalog(e) {
         } catch (e) { }
     }
 
+    const payload = {
+        catalogName: name,
+        productIds: selectedProducts,
+        customTitle: document.getElementById('catalogCustomTitle').value.trim(),
+        titleColor: document.getElementById('catalogTitleColor').value,
+        customText: document.getElementById('catalogCustomText').value.trim(),
+        textColor: document.getElementById('catalogTextColor').value,
+        textOpacity: document.getElementById('catalogTextOpacity').value,
+        bannerImage: bannerImage
+    };
+
+    if (editModeId) {
+        payload.oldId = editModeId;
+    }
+
+    const endpoint = editModeId ? '/api/catalogs/update' : '/api/catalogs/create';
+    console.log(`Saving catalog to ${endpoint}`, payload);
+
     try {
-        const response = await fetch('/api/catalogs/create', {
+        const response = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                catalogName: name,
-                productIds: selectedProducts,
-                customTitle: document.getElementById('catalogCustomTitle').value.trim(),
-                customText: document.getElementById('catalogCustomText').value.trim(),
-                bannerImage: bannerImage
-            })
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const result = await response.json();
+        console.log('Save result:', result);
+
+        if (result.success) {
+            window.showToast(editModeId ? 'Catálogo actualizado correctamente' : 'Catálogo creado correctamente', 'success');
+            closeCreateCatalogModal();
+            loadCatalogs();
+        } else {
+            window.showToast(result.message || 'Error desconocido al guardar', 'error');
+        }
+    } catch (e) {
+        console.error('Error guardando catálogo:', e);
+        window.showToast('Error de conexión o de servidor al guardar', 'error');
+    }
+}
+
+// Duplicate Catalog
+window.duplicateCatalog = async function (catalogId) {
+    try {
+        window.showToast('Duplicando...', 'info');
+        const response = await fetch('/api/catalogs/duplicate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ catalogId })
         });
         const result = await response.json();
         if (result.success) {
-            window.showToast('Catálogo creado', 'success');
-            closeCreateCatalogModal();
+            window.showToast('Catálogo duplicado', 'success');
             loadCatalogs();
         } else {
             window.showToast(result.message, 'error');
         }
     } catch (e) {
-        console.error('Error creando catálogo:', e);
-        window.showToast('Error creando catálogo', 'error');
+        window.showToast('Error al duplicar catálogo', 'error');
     }
-}
+};
 
 // Edit Catalog (Meta)
 window.editCatalog = function (catalogId) {
     const catalog = catalogs.find(c => c.id === catalogId);
     if (!catalog) return;
-    openCreateCatalogModal();
-    // Rename to Edit Mode
+
+    editModeId = catalogId;
+
+    // Open modal base
     const modal = document.getElementById('createCatalogModal');
-    modal.querySelector('.modal-title').textContent = 'Editar Catálogo';
+    if (!modal) return;
+
+    // Show all fields (In case they were hidden by Add Mode)
+    document.querySelectorAll('.catalog-meta-field').forEach(el => el.style.display = 'block');
+
+    // UI Setup for Edit Mode
+    const title = modal.querySelector('.modal-title');
+    const btn = modal.querySelector('.modal-footer .btn-primary');
+    if (title) title.textContent = 'Editar Catálogo';
+    if (btn) {
+        btn.innerHTML = '<span class="material-icons" style="font-size: 16px;">save</span> Guardar Cambios';
+        btn.onclick = null; // Rely on form submit event listener
+    }
+
     document.getElementById('catalogName').value = catalog.name;
-    // ... logic for checking products ...
-    const productIds = (catalog.products || []).map(p => String(p.id !== undefined ? p.id : p.ID));
-    document.querySelectorAll('.product-checkbox').forEach(cb => {
-        cb.checked = productIds.includes(cb.value);
-    });
+
+    // Logic for loading catalog-specific metadata and fresh product list
+    fetch(`/api/catalogs/${catalogId}/products?t=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (data.metadata) {
+                    document.getElementById('catalogCustomTitle').value = data.metadata.title || catalog.name;
+                    document.getElementById('catalogTitleColor').value = data.metadata.titleColor || 'black';
+                    document.getElementById('catalogCustomText').value = data.metadata.text || '2026';
+                    document.getElementById('catalogTextColor').value = data.metadata.textColor || 'black';
+                    document.getElementById('catalogTextOpacity').value = data.metadata.textOpacity || '50';
+                }
+
+                // Use the fresh product list from the server to check checkboxes
+                const productIds = (data.products || []).map(p => String(p.id !== undefined ? p.id : p.ID));
+                document.querySelectorAll('.product-checkbox').forEach(cb => {
+                    cb.checked = productIds.includes(cb.value);
+                });
+                updateSelectedCount();
+            }
+        }).catch(err => console.error('Error fetching catalog details:', err));
+
+    loadProductsIntoModal();
+    modal.classList.add('active');
 };
 
 // Manage Catalog
@@ -590,6 +677,15 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.target === modal) closeCreateCatalogModal();
         });
     }
+
+    const form = document.getElementById('createCatalogForm');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            saveCatalog(e);
+        });
+    }
+
     // ensure change listener for checks
     document.addEventListener('change', function (e) {
         if (e.target.classList.contains('product-checkbox')) updateSelectedCount();
