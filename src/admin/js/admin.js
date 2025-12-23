@@ -4063,6 +4063,7 @@
             document.getElementById('editPromotionOldName').value = promoName;
             document.getElementById('promotionName').value = promotions[promoName].name;
             document.getElementById('promotionImage').value = promotions[promoName].image;
+            document.getElementById('promotionLink').value = promotions[promoName].link || '';
         } else {
             // Add mode
             document.getElementById('promotionModalTitle').textContent = 'Nueva promoción';
@@ -4079,6 +4080,7 @@
         const oldName = document.getElementById('editPromotionOldName').value;
         const name = document.getElementById('promotionName').value.trim();
         const image = document.getElementById('promotionImage').value.trim();
+        const link = document.getElementById('promotionLink').value.trim();
 
         if (!name || !image) {
             window.showToast('Por favor completa todos los campos', 'info');
@@ -4111,7 +4113,7 @@
         }
 
         // Update or add promotion with new structure
-        promotions[name] = { id: promoId, name: name, image: image };
+        promotions[name] = { id: promoId, name: name, image: image, link: link };
 
         closePromotionModal();
         renderPromotionsTable();

@@ -162,7 +162,7 @@ var products = [
                 "id": "c009",
                 "colorId": "c009",
                 "name": "Crema",
-                "hex": "#f8f4eb",
+                "hex": "#f0eae0",
                 "sku": "SM-F946BZEKBVO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
@@ -173,35 +173,21 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 16286,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-                "active": true
+                "active": true,
+                "isInformative": false
             },
             {
-                "variableId": "v001",
-                "variableText": "RAM: 12 GB",
-                "price": 16286,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-                "active": true
-            },
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 512 GB",
+                "variableId": "v002",
+                "variableText": "Almacenamiento: 256GB",
                 "price": 16690,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-                "active": true
-            },
-            {
-                "variableId": "v001",
-                "variableText": "RAM: 12 GB",
-                "price": 16690,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
-                "active": true
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
@@ -209,7 +195,7 @@ var products = [
                 "id": "c009_v001",
                 "color": "Crema",
                 "colorId": "c009",
-                "hex": "#f8f4eb",
+                "hex": "#f0eae0",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
                 ],
@@ -219,10 +205,31 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
                 "active": true,
+                "isInformative": false,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB - RAM 12GB",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Crema - Almacenamiento: 256 GB - RAM 12GB"
+                "title": "Crema - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c009_v002",
+                "color": "Crema",
+                "colorId": "c009",
+                "hex": "#f0eae0",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_W9PG0iuCOkq34SbraYcn.png",
+                "sku": "SM-F946BZEKBVO",
+                "price": 16690,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-z-fold5",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v002",
+                "variableText": "Almacenamiento: 256GB",
+                "type": "combination",
+                "title": "Crema - Almacenamiento: 256GB"
             }
         ],
         "price": 16286,
@@ -450,7 +457,7 @@ var products = [
                 "id": "c010",
                 "colorId": "c010",
                 "name": "Grafito",
-                "hex": "#53565a",
+                "hex": "#494d53",
                 "sku": "SM-A566EZKCBVO",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
@@ -461,35 +468,30 @@ var products = [
         "priceVariants": [
             {
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB",
+                "variableText": "Almacenamiento: 128GB",
                 "price": 4216,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-                "active": true
+                "active": true,
+                "isInformative": true
             },
             {
-                "variableId": "v001",
-                "variableText": "RAM: 12 GB",
-                "price": 4216,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-                "active": true
-            },
-            {
-                "variableId": "v001",
-                "variableText": "Almacenamiento: 256 GB",
-                "price": 3962,
-                "promoPrice": 0,
-                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-                "active": true
-            },
-            {
-                "variableId": "v001",
+                "variableId": "v007",
                 "variableText": "RAM: 8 GB",
                 "price": 3962,
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
-                "active": true
+                "active": true,
+                "isInformative": false
+            },
+            {
+                "variableId": "v008",
+                "variableText": "RAM: 12 GB",
+                "price": 4216,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
+                "active": true,
+                "isInformative": false
             }
         ],
         "variants": [
@@ -497,7 +499,7 @@ var products = [
                 "id": "c010_v001",
                 "color": "Grafito",
                 "colorId": "c010",
-                "hex": "#53565a",
+                "hex": "#494d53",
                 "images": [
                     "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
                 ],
@@ -507,10 +509,51 @@ var products = [
                 "promoPrice": 0,
                 "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
                 "active": true,
+                "isInformative": true,
                 "variableId": "v001",
-                "variableText": "Almacenamiento: 256GB - RAM 12GB",
+                "variableText": "Almacenamiento: 128GB",
                 "type": "combination",
-                "title": "Grafito - Almacenamiento: 256GB - RAM 12GB"
+                "title": "Grafito - Almacenamiento: 128GB"
+            },
+            {
+                "id": "c010_v007",
+                "color": "Grafito",
+                "colorId": "c010",
+                "hex": "#494d53",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png",
+                "sku": "SM-A566EZKCBVO",
+                "price": 3962,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v007",
+                "variableText": "RAM: 8 GB",
+                "type": "combination",
+                "title": "Grafito - RAM: 8 GB"
+            },
+            {
+                "id": "c010_v008",
+                "color": "Grafito",
+                "colorId": "c010",
+                "hex": "#494d53",
+                "images": [
+                    "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png"
+                ],
+                "image": "https://samsung-bolivia.s3.amazonaws.com/product-family-item-image-image/square/product-family-item-image-image_gRcO0dDIHaKpQkyrB1Ce.png",
+                "sku": "SM-A566EZKCBVO",
+                "price": 4216,
+                "promoPrice": 0,
+                "link": "https://samsung.com.bo/smartphones/galaxy-a/galaxy-a56-5g-awesome-graphite-256gb-sm-a566ezkcbvo",
+                "active": true,
+                "isInformative": false,
+                "variableId": "v008",
+                "variableText": "RAM: 12 GB",
+                "type": "combination",
+                "title": "Grafito - RAM: 12 GB"
             }
         ],
         "price": 4216,

@@ -199,6 +199,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Promotions Selection (Added) -->
+                    <div style="padding-top: 1rem; border-top: 1px solid #eee; margin-top: 0.5rem;">
+                        <label class="form-label">Promociones Activas</label>
+                        <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                            Selecciona los banners de promoción para este catálogo
+                        </p>
+                        <div id="catalogPromotionsList" class="products-list products-list-scroll"
+                            style="max-height: 150px;">
+                            <!-- Promotions will be loaded here -->
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -231,6 +243,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/layout.js"></script>
     <script src="../data/products.js"></script>
+    <script src="../data/promotions.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
     <!-- We need admin.js for loadProductsIntoModal validation/logic if it uses global functions? 

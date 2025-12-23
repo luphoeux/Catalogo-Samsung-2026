@@ -32,20 +32,6 @@ temp_*
 # Backup files
 *.backup
 *.bak
-*~
-
-# Excel temporary files
-~$*.xlsx
-~$*.xls
-
-# Scripts de utilidad (no necesarios en producción)
-fix_*.js
-merge_*.js
-sync_*.js
-inspect-*.js
-load-*.js
-!load-js-data.js
-
 # Backups directory
 backups/
 

@@ -1,6 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const xlsx = require('xlsx');
+const vm = require('vm');
 
 const PORT = 3000;
 
@@ -19,8 +21,32 @@ const MIME_TYPES = {
     '.woff': 'font/woff',
 };
 
-const xlsx = require('xlsx');
-const { loadJSData } = require('./scripts/load-js-data');
+// Helper for debugging to file
+const logToFile = (msg) => {
+    const logPath = path.join(__dirname, 'server-log.txt');
+    const timestamp = new Date().toISOString();
+    fs.appendFileSync(logPath, `[${timestamp}] ${msg}\n`);
+};
+
+// Robust Data Loader using VM (Executes the JS file in a sandbox)
+function loadJSData(filePath) {
+    try {
+        if (!fs.existsSync(filePath)) return null;
+        const content = fs.readFileSync(filePath, 'utf8');
+        const sandbox = {};
+        vm.createContext(sandbox);
+        vm.runInContext(content, sandbox);
+
+        // Find the variable that was defined
+        const keys = Object.keys(sandbox);
+        if (keys.length > 0) {
+            return sandbox[keys[0]]; // Return the first variable defined (e.g., 'products' or 'promotions')
+        }
+    } catch (err) {
+        console.error(`VM Read Error (${filePath}):`, err.message);
+    }
+    return null;
+}
 
 const server = http.createServer((req, res) => {
     // Enable CORS
@@ -305,7 +331,7 @@ const server = http.createServer((req, res) => {
         });
         req.on('end', () => {
             try {
-                const { catalogName, productIds, customTitle, customText, bannerImage, textColor, textOpacity, titleColor } = JSON.parse(body);
+                const { catalogName, productIds, customTitle, customText, bannerImage, textColor, textOpacity, titleColor, promotions } = JSON.parse(body);
 
                 // Handle Banner Image
                 let bannerPath = '';
@@ -333,9 +359,12 @@ const server = http.createServer((req, res) => {
                 // Load products from main database
                 const productsPath = path.join(__dirname, 'src', 'data', 'products.js');
                 const allProducts = loadJSData(productsPath) || [];
+                logToFile(`[CreateCatalog] Loaded ${allProducts.length} products from disk.`);
+                logToFile(`[CreateCatalog] Request IDs: ${JSON.stringify(productIds)}`);
 
                 // Filter selected products and create copies (Handle String/Number ID mismatch)
                 const selectedProducts = allProducts.filter(p => productIds.includes(String(p.id)));
+                logToFile(`[CreateCatalog] Matched ${selectedProducts.length} products to save.`);
 
                 // Create catalog file
                 const catalogFileName = `Catalogo_${catalogName.replace(/\s+/g, '_')}.xlsx`;
@@ -366,7 +395,8 @@ const server = http.createServer((req, res) => {
                     { Key: 'Text', Value: customText || '' },
                     { Key: 'TextColor', Value: textColor || 'black' },
                     { Key: 'TextOpacity', Value: textOpacity || '50' },
-                    { Key: 'Banner', Value: bannerPath || '' }
+                    { Key: 'Banner', Value: bannerPath || '' },
+                    { Key: 'Promotions', Value: JSON.stringify(promotions || []) }
                 ];
                 const wsInfo = xlsx.utils.json_to_sheet(infoData);
                 xlsx.utils.book_append_sheet(workbook, wsInfo, 'Info');
@@ -396,7 +426,7 @@ const server = http.createServer((req, res) => {
         req.on('data', chunk => { body += chunk.toString(); });
         req.on('end', () => {
             try {
-                const { oldId, catalogName, customTitle, customText, bannerImage, textColor, textOpacity, titleColor, productIds } = JSON.parse(body);
+                const { oldId, catalogName, customTitle, customText, bannerImage, textColor, textOpacity, titleColor, productIds, promotions } = JSON.parse(body);
                 if (!oldId || !catalogName) throw new Error('Old ID and New Name required');
 
                 const oldFileName = `Catalogo_${oldId}.xlsx`;
@@ -438,7 +468,12 @@ const server = http.createServer((req, res) => {
                 if (productIds && Array.isArray(productIds)) {
                     const productsPath = path.join(__dirname, 'src', 'data', 'products.js');
                     const allProducts = loadJSData(productsPath) || [];
+                    logToFile(`[UpdateCatalog] Loaded ${allProducts.length} products from disk.`);
+                    logToFile(`[UpdateCatalog] Request IDs: ${JSON.stringify(productIds)}`);
+
                     const selectedProducts = allProducts.filter(p => productIds.includes(String(p.id)));
+                    logToFile(`[UpdateCatalog] Matched ${selectedProducts.length} products to save.`);
+                    // ...
 
                     const productsData = selectedProducts.map(p => ({
                         'ID': p.id,
@@ -479,6 +514,7 @@ const server = http.createServer((req, res) => {
                 updateInfo('TextColor', textColor || 'black');
                 updateInfo('TextOpacity', textOpacity || '50');
                 if (bannerPath) updateInfo('Banner', bannerPath);
+                if (promotions) updateInfo('Promotions', JSON.stringify(promotions));
 
                 const wsInfo = xlsx.utils.json_to_sheet(infoData);
                 if (!workbook.SheetNames.includes('Info')) {
@@ -683,6 +719,7 @@ const server = http.createServer((req, res) => {
                     const ban = findVal('Banner');
                     const tColor = findVal('TextColor');
                     const tOpacity = findVal('TextOpacity');
+                    const promoIdsJson = findVal('Promotions');
 
                     if (t !== undefined) metadata.title = t;
                     if (tCol !== undefined) metadata.titleColor = tCol;
@@ -691,6 +728,28 @@ const server = http.createServer((req, res) => {
                     if (ban !== undefined) metadata.banner = ban;
                     if (tColor !== undefined) metadata.textColor = tColor;
                     if (tOpacity !== undefined) metadata.textOpacity = tOpacity;
+
+                    // Load Promotions Data
+                    if (promoIdsJson) {
+                        try {
+                            const promoIds = JSON.parse(promoIdsJson);
+                            if (Array.isArray(promoIds) && promoIds.length > 0) {
+                                const promotionsPath = path.join(__dirname, 'src', 'data', 'promotions.js');
+                                const allPromotions = loadJSData(promotionsPath) || {};
+                                // Filter promotions
+                                const activePromotions = Object.values(allPromotions).filter(p => promoIds.includes(p.id || p.ID)); // check id
+                                // Fallback: try direct lookup if IDs are keys (though structure is usually by name key, and id property)
+                                // Structure of promotions.js: { "Name": { id: "pr001", ... } }
+                                // If IDs passed are keys? No, admin.js saves IDs usually, but let's see. 
+                                // admin.js uses IDs: selectedPromotions map to value (which is ID usually).
+
+                                // Actually, let's filter by ID property.
+                                metadata.promotions = activePromotions;
+                            }
+                        } catch (e) {
+                            console.error('Error loading promotions metadata:', e);
+                        }
+                    }
                 }
 
                 const sheet = workbook.Sheets['Productos'];

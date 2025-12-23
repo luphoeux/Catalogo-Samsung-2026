@@ -160,6 +160,7 @@ window.openCreateCatalogModal = function () {
     document.getElementById('catalogBannerImage').value = '';
 
     loadProductsIntoModal();
+    loadPromotionsIntoModal();
     modal.classList.add('active');
 };
 
@@ -291,11 +292,37 @@ function updateSelectedCount() {
     if (countEl) countEl.textContent = `${count} seleccionado(s)`;
 }
 
+// Load Promotions into modal (Added)
+function loadPromotionsIntoModal() {
+    const container = document.getElementById('catalogPromotionsList');
+    if (!container) return;
+
+    // window.promotions comes from promotions.js
+    const promos = window.promotions || {};
+    const promoList = Object.values(promos);
+
+    if (promoList.length === 0) {
+        container.innerHTML = '<div style="padding:1rem; text-align:center; color:#999; font-size:0.85rem;">No hay promociones definidas en el sistema/global. Ve a la sección Promociones para crear una.</div>';
+        return;
+    }
+
+    container.innerHTML = promoList.map(p => `
+        <label class="product-checkbox-item" style="border-bottom:1px solid #eee;">
+            <input type="checkbox" value="${p.id}" class="promotion-checkbox">
+            ${p.image ? `<img src="${p.image}" style="width:50px; height:30px; object-fit:cover; border-radius:4px; margin-right:10px;">` : ''}
+            <div class="product-info">
+                <div class="product-name" style="font-size:0.9rem;">${p.name}</div>
+            </div>
+        </label>
+    `).join('');
+}
+
 // Save or Update catalog (Unified)
 async function saveCatalog(e) {
     if (e) e.preventDefault();
     const name = document.getElementById('catalogName').value.trim();
     const selectedProducts = Array.from(document.querySelectorAll('.product-checkbox:checked')).map(cb => cb.value);
+    const selectedPromotions = Array.from(document.querySelectorAll('.promotion-checkbox:checked')).map(cb => cb.value);
 
     if (!name) {
         window.showToast('El nombre es requerido', 'info');
@@ -323,6 +350,7 @@ async function saveCatalog(e) {
     const payload = {
         catalogName: name,
         productIds: selectedProducts,
+        promotions: selectedPromotions,
         customTitle: document.getElementById('catalogCustomTitle').value.trim(),
         titleColor: document.getElementById('catalogTitleColor').value,
         customText: document.getElementById('catalogCustomText').value.trim(),
@@ -427,11 +455,21 @@ window.editCatalog = function (catalogId) {
                 document.querySelectorAll('.product-checkbox').forEach(cb => {
                     cb.checked = productIds.includes(cb.value);
                 });
+
+                // Check Promotions
+                if (data.metadata && data.metadata.promotions && Array.isArray(data.metadata.promotions)) {
+                    const promoIds = data.metadata.promotions.map(p => p.id);
+                    document.querySelectorAll('.promotion-checkbox').forEach(cb => {
+                        cb.checked = promoIds.includes(cb.value);
+                    });
+                }
+
                 updateSelectedCount();
             }
         }).catch(err => console.error('Error fetching catalog details:', err));
 
     loadProductsIntoModal();
+    loadPromotionsIntoModal();
     modal.classList.add('active');
 };
 

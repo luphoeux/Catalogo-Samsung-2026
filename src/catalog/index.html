@@ -1129,6 +1129,23 @@
                     yearEl.style.opacity = parseFloat(metadata.textOpacity) / 100;
                 }
 
+                // Render Promotions (Added)
+                if (metadata.promotions && Array.isArray(metadata.promotions) && metadata.promotions.length > 0) {
+                    const reservedAside = document.querySelector('.catalog-reserved');
+                    if (reservedAside) {
+                        reservedAside.innerHTML = metadata.promotions.map(p => `
+                            <a href="${p.link || '#'}" target="${p.link ? '_blank' : '_self'}" title="${p.name}" class="promotion-banner" style="display:block; margin-bottom:1.5rem; border-radius:12px; overflow:hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                                <img src="${p.image}" alt="${p.name}" style="width:100%; height:auto; display:block;">
+                            </a>
+                        `).join('');
+                        // Note: actual links for promotions are not in the current promotion object structure in promotions.js (only id, name, image).
+                        // Unless I update promotions data structure.
+                        // The user said "imágenes con un link de redirección".
+                        // BUT promotions.js currently has: "id", "name", "image".
+                        // I need to add "link" to promotions.html/js logic?
+                    }
+                }
+
                 window.allProducts = data.products || [];
                 console.log('Products data loaded:', window.allProducts);
 
