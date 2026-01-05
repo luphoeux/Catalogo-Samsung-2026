@@ -242,14 +242,12 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/layout.js"></script>
-    <script src="../data/products.js"></script>
-    <script src="../data/promotions.js"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-
-    <!-- We need admin.js for loadProductsIntoModal validation/logic if it uses global functions? 
-         catalog-system.js uses window.products.
-    -->
+    <!-- Cloud & Auth Logic -->
+    <script type="module" src="js/auth-guard.js"></script>
     <script src="js/admin.js"></script>
+    <script type="module" src="js/admin-firebase.js"></script>
+
+    <!-- UI Logic (Still needed for Layout/Preview) -->
     <script src="js/catalog-system.js"></script>
 
     <script>

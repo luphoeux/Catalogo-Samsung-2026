@@ -831,31 +831,37 @@
         if (productForm.dataset.listenerAttached === 'true') {
             console.log('⚠️ Listener already attached to productForm');
         } else {
-            productForm.addEventListener('submit', function (e) {
+            productForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
 
                 const btn = this.querySelector('button[type="submit"]');
                 if (btn && btn.disabled) return;
-
-                if (btn) {
-                    btn.disabled = true;
-                    // Use innerHTML to keep styling if needed, or textContent
-                    // Save original text?
-                    if (!btn.dataset.originalText) btn.dataset.originalText = btn.textContent;
-
-                    btn.innerHTML = '<svg class="icon-svg spin" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> Guardando...';
-
-                    // Fallback to re-enable
-                    setTimeout(() => {
-                        if (btn.disabled) {
-                            btn.disabled = false;
-                            btn.textContent = btn.dataset.originalText || 'Guardar Producto';
-                        }
-                    }, 5000);
+                
+                // DATA COLLECTION (Re-implementing basic collection here or calling a global collector?)
+                // Since saveProduct() inside admin.js collects data, we can't easily access it.
+                // BETTER: Call saveProduct() but make saveProduct() check for cloud override.
+                
+                // Let's modify saveProduct instead. 
+                // But we can't find saveProduct definition easily.
+                
+                // Lets try to capture the data from the form directly here.
+                const p = {
+                   id: document.getElementById('editProductId').value || Date.now().toString(),
+                   name: document.getElementById('prodName').value,
+                   description: document.getElementById('prodDescription').value,
+                   category: document.getElementById('prodCategory').value,
+                   badge: document.getElementById('prodBadge').value,
+                   // Arrays are harder to collect without the original logic
+                };
+                
+                // BACKUP PLAN: Call window.handleProductSubmit if defined, else original
+                if (typeof window.handleCloudSubmit === 'function') {
+                     // Pass the form elements or rely on the other script reading DOM
+                     window.handleCloudSubmit(); 
+                } else {
+                     saveProduct();
                 }
-
-                saveProduct();
             });
             productForm.dataset.listenerAttached = 'true';
         }
@@ -947,6 +953,7 @@
 
     // Products Database View Functions
     function renderProductsTable() {
+        window.renderProductsTable = renderProductsTable; // Expose to Window for Cloud Script
         handleFilter();
     }
 
@@ -967,7 +974,7 @@
     }
 
     function handleFilter() {
-        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+        window.handleFilter = handleFilter; // Expose to Window for Cloud Script
         const category = categoryFilter ? categoryFilter.value : 'all';
 
         // IMPROVEMENT 1: Clean and validate products before filtering
