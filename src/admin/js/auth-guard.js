@@ -1,4 +1,4 @@
-import { auth, onAuthStateChanged, signOut } from '../js/firebase-init.js';
+import { auth, onAuthStateChanged, signOut } from '../../js/firebase-init.js';
 
 // Protect routes
 onAuthStateChanged(auth, (user) => {

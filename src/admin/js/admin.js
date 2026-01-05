@@ -1,4 +1,16 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+﻿// Initialize Global Data if not already present
+window.products = window.products || [];
+window.categories = window.categories || {};
+window.colorVariables = window.colorVariables || {};
+window.tags = window.tags || {};
+window.promotions = window.promotions || {};
+window.combos = window.combos || {};
+window.textVariables = window.textVariables || {};
+window.cachedCleanProducts = null;
+window.productsPerPage = 50;
+window.currentPage = 1;
+
+document.addEventListener('DOMContentLoaded', () => {
     // ==================== DATA PERSISTENCE SYSTEM ====================
 
     const STORAGE_KEY = 'samsung_catalog_products';
@@ -178,7 +190,7 @@
         }
     }
 
-    function refreshAllViews() {
+    window.refreshAllViews = function() {
         if (typeof handleFilter === 'function') handleFilter();
         if (typeof renderCatalogs === 'function') renderCatalogs();
         if (typeof renderCategoriesTable === 'function') renderCategoriesTable();
@@ -443,7 +455,7 @@
     }
 
     // Load persisted data on startup
-    loadPersistedData();
+    // loadPersistedData(); // Disabled for Firebase
 
     // Initialize Save Time Display
     const now = new Date().toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' });
@@ -541,10 +553,7 @@
             setTimeout(() => clearInterval(checkData), 5000);
         }
 
-        if (typeof products === 'undefined') {
-            window.showToast('Error: No se encontraron datos de productos (data.js no cargado)', 'error');
-            return;
-        }
+        // Guard removed for Firebase integration
     }
     // -----------------------------------
 
@@ -846,8 +855,12 @@
                 // But we can't find saveProduct definition easily.
                 
                 // Lets try to capture the data from the form directly here.
-                const p = {
-                   id: document.getElementById('editProductId').value || Date.now().toString(),
+                const rawId = document.getElementById('editProductId').value || Date.now().toString();
+            // Sanitize ID: Firestore doesn't allow slashes in document IDs as they represent subcollections
+            const sanitizedId = String(rawId).replace(/\//g, '-');
+            
+            const p = {
+                id: sanitizedId,
                    name: document.getElementById('prodName').value,
                    description: document.getElementById('prodDescription').value,
                    category: document.getElementById('prodCategory').value,
@@ -973,28 +986,48 @@
         categoryFilter.innerHTML = optionsHTML;
     }
 
+    // window.clearProductCache is already defined at the top or here
+    window.clearProductCache = () => { window.cachedCleanProducts = null; };
+
     function handleFilter() {
-        window.handleFilter = handleFilter; // Expose to Window for Cloud Script
+        window.handleFilter = handleFilter;
+        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
         const category = categoryFilter ? categoryFilter.value : 'all';
 
-        // IMPROVEMENT 1: Clean and validate products before filtering
-        const validProducts = products.map(p => validateAndCleanProduct(p)).filter(p => p !== null);
+        // Cache cleaned products to avoid redundant work
+        if (!window.cachedCleanProducts || window.cachedCleanProducts.length !== window.products.length) {
+            window.cachedCleanProducts = window.products.map(p => validateAndCleanProduct(p)).filter(p => p !== null);
+        }
 
-        filteredProducts = validProducts.filter(product => {
+        filteredProducts = window.cachedCleanProducts.filter(product => {
             const matchesSearch = product.name.toLowerCase().includes(searchTerm) ||
                 (product.sku && product.sku.toLowerCase().includes(searchTerm));
             const matchesCategory = category === 'all' || product.category === category;
             return matchesSearch && matchesCategory;
         });
 
+        window.currentPage = 1; // Reset to first page on filter
         renderTable();
     }
 
-    // IMPROVEMENT 4: Optimize product rendering for appending data
+    // Debounce function
+    function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => { func.apply(this, args); }, timeout);
+        };
+    }
+
+    // Update input listener with debounce
+    if (searchInput) {
+        searchInput.removeEventListener('input', handleFilter);
+        searchInput.addEventListener('input', debounce(handleFilter));
+    }
+
     function renderTable() {
         if (!tableBody) return;
 
-        // Use DocumentFragment for better performance
         const fragment = document.createDocumentFragment();
 
         if (filteredProducts.length === 0) {
@@ -1002,16 +1035,37 @@
             return;
         }
 
-        filteredProducts.forEach(product => {
+        // Pagination/Progressive Rendering
+        const start = 0;
+        const end = window.currentPage * window.productsPerPage;
+        const pagedProducts = filteredProducts.slice(start, end);
+
+        pagedProducts.forEach(product => {
             const rowFragment = createProductRow(product);
             fragment.appendChild(rowFragment);
         });
 
-        // Clear and append all at once for better performance
         tableBody.innerHTML = '';
         tableBody.appendChild(fragment);
 
-        // Populate category filter if not already done
+        // Add "Load More" button if there are more products
+        if (end < filteredProducts.length) {
+            const loadMoreTr = document.createElement('tr');
+            loadMoreTr.innerHTML = `
+                <td colspan="6" style="text-align:center; padding: 1.5rem; background: #f8f9fa; border-top: 1px solid #eee;">
+                    <button id="loadMoreBtn" class="btn-secondary" style="margin: 0 auto; display: block;">
+                        Cargar más (${filteredProducts.length - end} restantes)
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(loadMoreTr);
+            
+            document.getElementById('loadMoreBtn').addEventListener('click', () => {
+                window.currentPage++;
+                renderTable();
+            });
+        }
+
         if (categoryFilter && categoryFilter.options.length <= 1) {
             populateCategoryFilter();
         }
@@ -1546,17 +1600,28 @@
                 });
             }
 
+            // If NO colors found after migration/loading, add a default one
+            if (document.getElementById('colorsContainer').children.length === 0) {
+                console.log('ℹ️ No color data found, adding default color row');
+                addColorRow();
+            }
+
             setTimeout(window.updateLivePreview, 100);
 
         } else {
             modalTitle.textContent = 'Nuevo Producto';
+            modalTitle.style.color = '';
             document.getElementById('editProductId').value = '';
             document.getElementById('productForm').reset(); // reset form
             document.getElementById('prodName').value = '';
             const descEl2 = document.getElementById('prodDescription');
             if (descEl2) descEl2.value = '';
             document.getElementById('prodCategory').value = 'smartphones';
-            // ... triggers ...
+            
+            // For new products, add at least one color and one price variant
+            addColorRow();
+            addPriceVariantRow({ active: true });
+
             setTimeout(window.updateLivePreview, 100);
         }
     }
@@ -1565,6 +1630,7 @@
     function closeModal() {
         modal.classList.remove('active');
     }
+    window.closeModal = closeModal;
 
     window.editProduct = function (id) {
         openModal(id);
@@ -1671,15 +1737,21 @@
 
         // Don't force any default color - let user choose
 
-        if (typeof colorVariables !== 'undefined') {
-            const sortedColors = Object.entries(colorVariables).map(([name, val]) => ({
-                name: name,
+        if (typeof window.colorVariables !== 'undefined') {
+            const sortedColors = Object.entries(window.colorVariables).map(([colorName, val]) => ({
+                name: colorName,  // The key is already the color name
                 id: val.id,
                 hex: val.hex
             })).sort((a, b) => a.name.localeCompare(b.name));
 
+            // If no color selected for NEW row, pick the first one as default
+            if (!defaultColorId && sortedColors.length > 0) {
+                defaultColorId = sortedColors[0].id;
+                console.log('✨ Auto-selecting default color:', sortedColors[0].name);
+            }
+
             sortedColors.forEach(c => {
-                const selected = defaultColorId === c.id ? 'selected' : '';
+                const selected = String(defaultColorId) === String(c.id) ? 'selected' : '';
                 if (selected) {
                     console.log('✅ Found matching color:', c.name, 'with ID:', c.id);
                 }
@@ -1785,14 +1857,14 @@
         console.log('  - Color ID:', colorId);
         console.log('  - colorVariables exists:', !!window.colorVariables);
 
-        if (colorId && colorVariables) {
+        if (colorId && window.colorVariables) {
             let colorHex = '#f0f0f0';
             let found = false;
-            for (const [name, data] of Object.entries(colorVariables)) {
+            for (const [colorName, data] of Object.entries(window.colorVariables)) {
                 if (data.id === colorId) {
                     colorHex = data.hex || '#f0f0f0';
                     found = true;
-                    console.log('  ✅ Color found:', name, 'hex:', colorHex);
+                    console.log('  ✅ Color found:', colorName, 'hex:', colorHex);
                     break;
                 }
             }
@@ -2272,14 +2344,14 @@
         console.log('  - Color ID:', colorId);
         console.log('  - colorVariables exists:', !!window.colorVariables);
 
-        if (colorId && colorVariables) {
+        if (colorId && window.colorVariables) {
             let colorHex = '#f0f0f0';
             let found = false;
-            for (const [name, data] of Object.entries(colorVariables)) {
+            for (const [colorName, data] of Object.entries(window.colorVariables)) {
                 if (data.id === colorId) {
                     colorHex = data.hex || '#f0f0f0';
                     found = true;
-                    console.log('  ✅ Color found:', name, 'hex:', colorHex);
+                    console.log('  ✅ Color found:', colorName, 'hex:', colorHex);
                     break;
                 }
             }
@@ -2565,14 +2637,14 @@
                     if (inp.value) images.push(inp.value);
                 });
 
-                // Get name/hex
+                // Get name/hex - now key is the color name
                 let colorName = '';
                 let hex = '#ccc';
                 if (window.colorVariables) {
                     for (const [name, data] of Object.entries(window.colorVariables)) {
                         if (data.id === colorId) {
-                            colorName = name;
-                            hex = data.hex || data;
+                            colorName = name;  // Key is already the color name
+                            hex = data.hex || '#ccc';
                             break;
                         }
                     }
@@ -2693,20 +2765,15 @@
                     if (input.value.trim()) images.push(input.value.trim());
                 });
 
-                // Resolve Name/Hex
+                // Resolve Name/Hex - key is now the color name
                 let colorName = '';
                 let hex = '';
                 if (window.colorVariables && select.selectedIndex >= 0) {
-                    // Check if option text matches key or if we need to search by ID
-                    // Ideally we used ID as value.
-                    // Let's safe-search by ID
-                    if (window.colorVariables) {
-                        for (const [cName, cData] of Object.entries(window.colorVariables)) {
-                            if (cData.id === colorId) {
-                                colorName = cName;
-                                hex = cData.hex;
-                                break;
-                            }
+                    for (const [name, cData] of Object.entries(window.colorVariables)) {
+                        if (cData.id === colorId) {
+                            colorName = name;  // Key is already the color name
+                            hex = cData.hex;
+                            break;
                         }
                     }
                 }
@@ -4418,8 +4485,6 @@
         renderCombosTable();
     }
 
-});
-
 // ==================== GLOBAL MODAL BEHAVIOR ====================
 (function () {
     function initModalProtection() {
@@ -4665,4 +4730,17 @@
             }, null, true);
         }
     });
-})();
+    })();
+
+    // Expose all render functions to window for external scripts (like admin-firebase.js)
+    window.renderProductsTable = typeof renderProductsTable !== 'undefined' ? renderProductsTable : window.renderProductsTable;
+    window.renderCategoriesTable = typeof renderCategoriesTable !== 'undefined' ? renderCategoriesTable : window.renderCategoriesTable;
+    window.renderColorsTable = typeof renderColorsTable !== 'undefined' ? renderColorsTable : window.renderColorsTable;
+    window.renderVariablesTable = typeof renderVariablesTable !== 'undefined' ? renderVariablesTable : window.renderVariablesTable;
+    window.renderTagsTable = typeof renderTagsTable !== 'undefined' ? renderTagsTable : window.renderTagsTable;
+    window.renderPromotionsTable = typeof renderPromotionsTable !== 'undefined' ? renderPromotionsTable : window.renderPromotionsTable;
+    window.renderCombosTable = typeof renderCombosTable !== 'undefined' ? renderCombosTable : window.renderCombosTable;
+    window.handleFilter = typeof handleFilter !== 'undefined' ? handleFilter : window.handleFilter;
+
+
+}); // End of main DOMContentLoaded

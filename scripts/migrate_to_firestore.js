@@ -60,9 +60,15 @@ async function migrateData() {
         const batch = db.batch();
         for (const [name, val] of Object.entries(colors)) {
             const docId = val.id || name;
-            batch.set(db.collection('colors').doc(docId), val);
+            // Include the color name in the document
+            const colorData = {
+                ...val,
+                name: name  // Add the name field
+            };
+            batch.set(db.collection('colors').doc(docId), colorData);
         }
         await batch.commit();
+        console.log(`✅ Migrated ${Object.keys(colors).length} colors`);
     }
 
     // 4. Migrate Text Variables

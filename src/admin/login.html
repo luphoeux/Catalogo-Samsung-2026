@@ -75,6 +75,7 @@
     <script type="module">
         import { auth, googleProvider, signInWithPopup, onAuthStateChanged } from '../js/firebase-init.js';
 
+
         // Check if already logged in
         onAuthStateChanged(auth, (user) => {
             if (user) {

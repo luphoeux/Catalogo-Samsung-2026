@@ -1,5 +1,5 @@
 
-import { db, storage, auth, collection, getDocs, doc, setDoc, addDoc, updateDoc, deleteDoc, ref, uploadBytes, getDownloadURL, onAuthStateChanged, signOut } from './firebase-init.js';
+import { db, storage, auth, collection, getDocs, doc, setDoc, addDoc, updateDoc, deleteDoc, ref, uploadBytes, getDownloadURL, onAuthStateChanged, signOut } from '../../js/firebase-init.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -33,31 +33,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function loadAllData() {
         showLoadingState(true);
         try {
-            // 1. Load Categories
-            const catSnap = await getDocs(collection(db, 'categories'));
+            console.time('FirestoreLoad');
+            const collections = ['categories', 'colors', 'tags', 'promotions', 'variables', 'combos', 'products'];
+            
+            const [catSnap, colorSnap, tagSnap, promoSnap, varSnap, comboSnap, prodSnap] = await Promise.all(
+                collections.map(c => getDocs(collection(db, c)))
+            );
+
+            // 1. Categories
             catSnap.forEach(doc => window.categories[doc.id] = doc.data());
             
-            // 2. Load Colors
-            const colorSnap = await getDocs(collection(db, 'colors'));
-            colorSnap.forEach(doc => window.colorVariables[doc.id] = doc.data());
+            // 2. Colors - Use name as key, not ID
+            colorSnap.forEach(doc => {
+                const data = doc.data();
+                const colorName = data.name || doc.id; // Fallback to ID if name is missing
+                window.colorVariables[colorName] = data;
+            });
             
-            // 3. Load Extra Vars
-            const tagSnap = await getDocs(collection(db, 'tags'));
+            // 3. Tags
             tagSnap.forEach(doc => window.tags[doc.id] = doc.data());
 
-            const promoSnap = await getDocs(collection(db, 'promotions'));
+            // 4. Promotions
             promoSnap.forEach(doc => window.promotions[doc.id] = doc.data());
             
-            const varSnap = await getDocs(collection(db, 'variables'));
+            // 5. Variables
             varSnap.forEach(doc => window.textVariables[doc.id] = doc.data().value);
 
-            // 3. Load Products
-            const prodSnap = await getDocs(collection(db, 'products'));
+            // 6. Combos
+            comboSnap.forEach(doc => window.combos[doc.id] = doc.data());
+
+            // 7. Products
+            window.products = []; // Clear current array
             prodSnap.forEach(doc => {
                 window.products.push(doc.data());
             });
 
-            console.log(`📦 Loaded ${window.products.length} products from Cloud.`);
+            console.timeEnd('FirestoreLoad');
+            console.log(`📦 Loaded ${window.products.length} products (plus metadata) from Cloud.`);
 
             // Verify if there are no products (first run?)
             if (window.products.length === 0) {
@@ -138,8 +150,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
             // Collect Data manually from DOM
+            const rawId = document.getElementById('editProductId').value || Date.now().toString();
+            // Sanitize ID: Firestore doesn't allow slashes in document IDs
+            const sanitizedId = String(rawId).replace(/\//g, '-');
+            
             const product = {
-                id: document.getElementById('editProductId').value || Date.now().toString(),
+                id: sanitizedId,
                 name: document.getElementById('prodName').value,
                 description: document.getElementById('prodDescription').value,
                 category: document.getElementById('prodCategory').value,
@@ -186,10 +202,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function refreshAllViews() {
+        if (typeof window.clearProductCache === 'function') window.clearProductCache();
+        
         // Safe check for render functions (imported or global)
-        if (window.renderProductsTable) window.renderProductsTable();
-        if (window.renderCategoriesTable) window.renderCategoriesTable();
-        // Add others as needed
+        if (typeof window.refreshAllViews === 'function') {
+            window.refreshAllViews();
+        } else {
+            console.warn('⚠️ window.refreshAllViews not found, using local fallback');
+            if (window.renderProductsTable) window.renderProductsTable();
+            if (window.renderCategoriesTable) window.renderCategoriesTable();
+            if (window.renderColorsTable) window.renderColorsTable();
+            if (window.renderVariablesTable) window.renderVariablesTable();
+            if (window.renderTagsTable) window.renderTagsTable();
+            if (window.renderPromotionsTable) window.renderPromotionsTable();
+            if (window.renderCombosTable) window.renderCombosTable();
+        }
     }
 
     function setupEventListeners() {
