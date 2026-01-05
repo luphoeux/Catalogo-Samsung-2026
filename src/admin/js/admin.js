@@ -138,7 +138,11 @@
         const btn = document.getElementById(btnId);
         if (btn) {
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = `<span class="material-icons">${icon}</span>`;
+            if (icon === 'check') {
+                btn.innerHTML = `<svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            } else {
+                btn.innerHTML = `<span class="material-icons">${icon}</span>`;
+            }
             btn.style.borderColor = 'var(--primary-color)';
             btn.style.backgroundColor = '#e3f2fd';
             setTimeout(() => {
@@ -483,7 +487,7 @@
             banner.style.border = '1px solid #ffcdd2';
             banner.style.fontWeight = 'bold';
             banner.style.textAlign = 'center';
-            banner.innerHTML = '<span class="material-icons" style="vertical-align:bottom; margin-right:5px;">warning</span> ESTÁS EDITANDO UNA COPIA DEL CATÁLOGO. LOS CAMBIOS NO AFECTAN AL INVENTARIO GLOBAL.';
+            banner.innerHTML = '<svg class="icon-svg" style="width:20px;height:20px;vertical-align:bottom; margin-right:5px; color:#c62828;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> ESTÁS EDITANDO UNA COPIA DEL CATÁLOGO. LOS CAMBIOS NO AFECTAN AL INVENTARIO GLOBAL.';
             validHeader.after(banner);
         }
 
@@ -772,7 +776,7 @@
 
     // DOM Elements - Products View
     const tableBody = document.getElementById('tableBody');
-    const searchInput = document.getElementById('adminSearch');
+    const searchInput = document.getElementById('productSearch');
     const categoryFilter = document.getElementById('categoryFilter');
     const addProductBtn = document.getElementById('addProductBtn');
 
@@ -840,7 +844,7 @@
                     // Save original text?
                     if (!btn.dataset.originalText) btn.dataset.originalText = btn.textContent;
 
-                    btn.innerHTML = '<span class="material-icons spin" style="font-size:16px;">autorenew</span> Guardando...';
+                    btn.innerHTML = '<svg class="icon-svg spin" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> Guardando...';
 
                     // Fallback to re-enable
                     setTimeout(() => {
@@ -946,6 +950,22 @@
         handleFilter();
     }
 
+    // Populate category filter dropdown
+    function populateCategoryFilter() {
+        if (!categoryFilter) return;
+
+        // Get unique categories from products
+        const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))].sort();
+
+        // Build options HTML
+        let optionsHTML = '<option value="all">Todas las Categorías</option>';
+        uniqueCategories.forEach(cat => {
+            optionsHTML += `<option value="${cat}">${cat}</option>`;
+        });
+
+        categoryFilter.innerHTML = optionsHTML;
+    }
+
     function handleFilter() {
         const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
         const category = categoryFilter ? categoryFilter.value : 'all';
@@ -976,33 +996,65 @@
         }
 
         filteredProducts.forEach(product => {
-            const tr = createProductRow(product);
-            fragment.appendChild(tr);
+            const rowFragment = createProductRow(product);
+            fragment.appendChild(rowFragment);
         });
 
         // Clear and append all at once for better performance
         tableBody.innerHTML = '';
         tableBody.appendChild(fragment);
+
+        // Populate category filter if not already done
+        if (categoryFilter && categoryFilter.options.length <= 1) {
+            populateCategoryFilter();
+        }
     }
 
-    // Helper function to create a product row (New Flat Structure)
+
+
+    // Toggle Product Details Row
+    window.toggleProductDetails = function (btn, uniqueId) {
+        const detailRow = document.getElementById('details-' + uniqueId);
+        const icon = btn.querySelector('svg');
+        if (detailRow) {
+            if (detailRow.style.display === 'none') {
+                detailRow.style.display = 'table-row';
+                btn.style.transform = 'rotate(180deg)';
+                btn.style.background = '#e3f2fd';
+                btn.style.color = '#1976d2';
+            } else {
+                detailRow.style.display = 'none';
+                btn.style.transform = 'rotate(0deg)';
+                btn.style.background = 'transparent';
+                btn.style.color = '#666';
+            }
+        }
+    }
+
+    // Helper function to create a product row (New Flat Structure with Expandable Details)
     function createProductRow(product) {
+        const fragment = document.createDocumentFragment();
+        const uniqueRowId = 'prod-' + product.id + '-' + Math.random().toString(36).substr(2, 5);
+
         const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #f0f0f0';
 
         // 1. Analyze Variants
         const variants = product.variants || [];
         const hasVariants = variants.length > 0;
+        const isMultiVariant = variants.length > 1;
 
         // 2. Image (First available)
         const imageSrc = hasVariants && variants[0].image ? variants[0].image : '';
         const imgHtml = imageSrc
             ? `<img src="${imageSrc}" class="product-mini-img" style="width:40px;height:40px;object-fit:contain;">`
-            : `<div style="width:40px;height:40px;background:#eee;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#999;">No IMG</div>`;
+            : `<div style="width:40px;height:40px;background:#eee;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#999;"><svg class="icon-svg" style="width:20px;height:20px;opacity:0.5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3H5c-1.105 0-2 .895-2 2v14c0 1.105.895 2 2 2h14c1.105 0 2-.895 2-2V5c0-1.105-.895-2-2-2ZM5 19V5h14v14H5Zm12-6.571-3.14-2.512c-.255-.205-.624-.205-.879 0L7.126 14.5a.65.65 0 0 0-.214.502.665.665 0 0 0 .665.665h8.847a.665.665 0 0 0 .664-.665.672.672 0 0 0-.088-.331Zm-2.618-1.547L12 12.871l-2.071 1.657h4.868l-.415-3.646ZM16 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"></path></svg></div>`;
 
         // 3. Price Range
         let priceDisplay = '-';
         if (hasVariants) {
-            const prices = variants.map(v => Number(v.price)).filter(p => p > 0);
+            // Filter normally priced variants
+            const prices = variants.filter(v => !v.isInformative && v.price > 0).map(v => Number(v.price));
             if (prices.length > 0) {
                 const min = Math.min(...prices);
                 const max = Math.max(...prices);
@@ -1016,48 +1068,237 @@
             ? '<span style="background:#d4edda; color:#155724; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">En Stock</span>'
             : '<span style="background:#f8d7da; color:#721c24; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">Agotado</span>';
 
-        // 5. SKU Display
-        const skuDisplay = hasVariants ? (variants.length > 1 ? `${variants[0].sku} <small style="color:#777;">(+${variants.length - 1})</small>` : variants[0].sku) : '-';
+        // 5. SKU Display (Show first + Count)
+        const skuDisplay = hasVariants ? (variants.length > 1 ? `<span style="font-weight:600;">${variants[0].sku}</span> <span style="color:#777; font-size:0.8rem;">(+${variants.length - 1} más)</span>` : variants[0].sku) : '-';
+
+        // 6. Expand Button Logic - Always show since all products have colors or price variants
+        const hasExpandableContent = (product.colors && product.colors.length > 0) || (product.priceVariants && product.priceVariants.length > 0) || isMultiVariant;
+        const expandBtn = hasExpandableContent
+            ? `<button onclick="toggleProductDetails(this, '${uniqueRowId}')" style="background:transparent; border:none; cursor:pointer; padding:4px; border-radius:50%; transition:all 0.2s; display:flex; align-items:center; justify-content:center; color:#666;" title="Ver Detalles">
+                 <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+               </button>`
+            : '';
+
+        // Calculate total variants count
+        const colorsCount = (product.colors && product.colors.length) || 0;
+        const priceVariantsCount = (product.priceVariants && product.priceVariants.length) || 0;
+        const totalVariants = colorsCount + priceVariantsCount;
+
+        const variantsDisplay = totalVariants > 0
+            ? `<div style="display:flex; align-items:center; gap:8px;">
+                <span style="background:#e3f2fd; color:#1565c0; padding:4px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">
+                    ${colorsCount} ${colorsCount === 1 ? 'color' : 'colores'}
+                </span>
+                ${priceVariantsCount > 0 ? `<span style="background:#fff3e0; color:#e65100; padding:4px 8px; border-radius:12px; font-size:0.75rem; font-weight:600;">
+                    ${priceVariantsCount} ${priceVariantsCount === 1 ? 'precio' : 'precios'}
+                </span>` : ''}
+            </div>`
+            : '-';
 
         tr.innerHTML = `
             <td style="width:40px; text-align:center;">
                 <input type="checkbox" class="product-checkbox" data-product-id="${product.id}" 
                        style="width:18px; height:18px; cursor:pointer;">
             </td>
+            <td style="width:40px; text-align:center;">
+                ${expandBtn}
+            </td>
             <td>
                 <div style="display:flex; align-items:center; gap:12px;">
                     ${imgHtml}
                     <div>
                         <div style="font-weight:600; color:#333;">${product.name}</div>
-                        <!-- <div style="font-size:0.75rem; color:#888;">ID: ${product.id}</div> -->
                     </div>
                 </div>
             </td>
             <td>${product.category || '-'}</td>
-            <td style="font-family:monospace;">${skuDisplay}</td>
-            <td style="font-weight:600;">${priceDisplay}</td>
-            <td>${stockHtml}</td>
-            <td>
-                <div class="action-buttons">
-                    <button class="btn-icon" onclick="
-                        const params = new URLSearchParams(window.location.search);
-                        const currentCatalogId = params.get('catalogId');
-                        
-                        // If we are already on the correct page context, just open modal
-                        // This avoids annoying reloads and confusion
-                        if (currentCatalogId) {
-                            window.openModal('${product.id}');
-                        } else {
-                             // Global Mode
-                             window.openModal('${product.id}');
-                        }
-                    " title="Editar"><span class="material-icons">edit</span></button>
-                    <button class="btn-icon delete" onclick="deleteProduct('${product.id}')" title="Eliminar"><span class="material-icons">delete</span></button>
-                </div>
+            <td>${variantsDisplay}</td>
+            <td style="white-space: nowrap; text-align: center;">
+                 <span class="action-icon" title="Editar" onclick="window.openModal('${product.id}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                </span>
+                <span class="action-icon" title="Eliminar" onclick="deleteProduct('${product.id}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                </span>
             </td>
         `;
 
-        return tr;
+        fragment.appendChild(tr);
+
+        // Details Row (Hidden by default)
+        if (isMultiVariant || (product.colors && product.colors.length > 0) || (product.priceVariants && product.priceVariants.length > 0)) {
+            const detailTr = document.createElement('tr');
+            detailTr.id = 'details-' + uniqueRowId;
+            detailTr.style.display = 'none';
+            detailTr.style.background = '#f8f9fa';
+
+            // Build Colors Section
+            const colors = product.colors || [];
+            let colorsSection = '';
+            if (colors.length > 0) {
+                const colorRows = colors.map(c => {
+                    // Get color name and hex from colorVariables
+                    // c.name contains the actual color name (e.g., "Negro", "Azul Metálico")
+                    const colorName = c.name || c.color || '-';
+                    const colorData = window.colorVariables && window.colorVariables[colorName];
+                    const colorHex = colorData?.hex || c.hex || '#cccccc';
+
+                    const images = c.images || [];
+                    const imagePreview = images.length > 0
+                        ? `<img src="${images[0]}" style="width:40px;height:40px;object-fit:contain;border:1px solid #e0e0e0;border-radius:6px;background:white;">`
+                        : `<div style="width:40px;height:40px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+                             <svg style="width:20px;height:20px;opacity:0.3;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                               <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                               <polyline points="21 15 16 10 5 21"></polyline>
+                             </svg>
+                           </div>`;
+
+                    return `
+                        <tr style="border-bottom:1px solid #f0f0f0; transition: background 0.15s;">
+                            <td style="padding:12px; text-align:center;">${imagePreview}</td>
+                            <td style="padding:12px;">
+                                <span style="font-family:monospace; font-size:0.875rem; color:#424242; font-weight:500;">${c.sku || '-'}</span>
+                            </td>
+                            <td style="padding:12px;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <div style="width:24px;height:24px;background:${colorHex};border:2px solid #e0e0e0;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,0.1);flex-shrink:0;"></div>
+                                    <span style="font-size:0.875rem; color:#424242; font-weight:500;">${colorName}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                colorsSection = `
+                    <div style="margin-bottom:24px;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding:10px 0; border-bottom:2px solid #1976d2;">
+                            <svg style="width:20px;height:20px;color:#1976d2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                            </svg>
+                            <h4 style="margin:0; font-size:1rem; color:#1976d2; font-weight:600; letter-spacing:0.3px;">Colores Disponibles</h4>
+                            <span style="background:#e3f2fd; color:#1565c0; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:600; margin-left:auto;">${colors.length}</span>
+                        </div>
+                        <table style="width:100%; background:white; border-radius:10px; overflow:hidden; border:1px solid #e0e0e0;">
+                            <thead style="background:linear-gradient(to bottom, #f8f9fa, #f1f3f5); font-size:0.75rem; text-transform:uppercase; color:#5f6368; font-weight:600; letter-spacing:0.5px;">
+                                <tr>
+                                    <th style="padding:12px; text-align:center; width:80px; border-bottom:2px solid #e0e0e0;">IMAGEN</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">SKU DEL COLOR</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">NOMBRE DEL COLOR</th>
+                                </tr>
+                            </thead>
+                            <tbody>${colorRows}</tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Build Price Variants Section
+            const priceVariants = product.priceVariants || [];
+            let priceSection = '';
+            if (priceVariants.length > 0) {
+                const getVarText = (varId) => {
+                    if (window.textVariables && window.textVariables[varId]) return window.textVariables[varId].text;
+                    return '';
+                };
+
+                const priceRows = priceVariants.map(pv => {
+                    // Try multiple sources for the specification text
+                    let varText = 'Precio Base'; // Default when no specification
+
+                    // 1. Try variableId lookup
+                    if (pv.variableId && window.textVariables && window.textVariables[pv.variableId]) {
+                        varText = window.textVariables[pv.variableId].text || window.textVariables[pv.variableId];
+                    }
+                    // 2. Try variableText directly
+                    else if (pv.variableText) {
+                        varText = pv.variableText;
+                    }
+                    // 3. Try variable property
+                    else if (pv.variable) {
+                        varText = pv.variable;
+                    }
+                    // 4. Try spec property
+                    else if (pv.spec) {
+                        varText = pv.spec;
+                    }
+                    // 5. Try name property
+                    else if (pv.name) {
+                        varText = pv.name;
+                    }
+
+                    const badge = pv.isInformative
+                        ? '<span style="background:#e3f2fd; color:#0d47a1; padding:4px 8px; border-radius:6px; font-size:0.7rem; margin-left:6px; font-weight:600;">Solo Info</span>'
+                        : '';
+
+                    const activeBadge = pv.active !== false
+                        ? '<span style="background:#e8f5e9; color:#2e7d32; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:600;">✓ Activo</span>'
+                        : '<span style="background:#ffebee; color:#c62828; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:600;">✗ Inactivo</span>';
+
+                    const priceDisplay = pv.isInformative
+                        ? '<span style="color:#9e9e9e; font-style:italic;">-</span>'
+                        : `<span style="font-weight:600; color:#2e7d32; font-size:0.9rem;">Bs ${(pv.price || 0).toLocaleString()}</span>`;
+
+                    const linkDisplay = pv.link
+                        ? `<a href="${pv.link}" target="_blank" style="color:#1976d2; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:500;">
+                             <svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                               <polyline points="15 3 21 3 21 9"></polyline>
+                               <line x1="10" y1="14" x2="21" y2="3"></line>
+                             </svg>
+                             Ver
+                           </a>`
+                        : '<span style="color:#9e9e9e;">-</span>';
+
+                    return `
+                        <tr style="border-bottom:1px solid #f0f0f0; transition: background 0.15s;">
+                            <td style="padding:12px;">
+                                <span style="font-size:0.875rem; color:#424242; font-weight:500;">${varText}</span>${badge}
+                            </td>
+                            <td style="padding:12px;">${priceDisplay}</td>
+                            <td style="padding:12px; font-size:0.875rem;">${linkDisplay}</td>
+                            <td style="padding:12px; text-align:center;">${activeBadge}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                priceSection = `
+                    <div>
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding:10px 0; border-bottom:2px solid #ff9800;">
+                            <svg style="width:20px;height:20px;color:#ff9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="12" y1="1" x2="12" y2="23"></line>
+                              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                            <h4 style="margin:0; font-size:1rem; color:#ff9800; font-weight:600; letter-spacing:0.3px;">Variantes de Precio</h4>
+                            <span style="background:#fff3e0; color:#e65100; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:600; margin-left:auto;">${priceVariants.length}</span>
+                        </div>
+                        <table style="width:100%; background:white; border-radius:10px; overflow:hidden; border:1px solid #e0e0e0;">
+                            <thead style="background:linear-gradient(to bottom, #fffbf5, #fff8ed); font-size:0.75rem; text-transform:uppercase; color:#5f6368; font-weight:600; letter-spacing:0.5px;">
+                                <tr>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">ESPECIFICACIÓN</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">PRECIO</th>
+                                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e0e0e0;">LINK</th>
+                                    <th style="padding:12px; text-align:center; border-bottom:2px solid #e0e0e0;">ESTADO</th>
+                                </tr>
+                            </thead>
+                            <tbody>${priceRows}</tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            detailTr.innerHTML = `
+                <td colspan="6" style="padding:0;">
+                    <div style="padding:15px 20px 20px 60px; background:#fafafa;">
+                        ${colorsSection}
+                        ${priceSection}
+                    </div>
+                </td>
+            `;
+            fragment.appendChild(detailTr);
+        }
+
+        return fragment;
     }
 
     // Helper function to render variant cells with placeholders
@@ -1450,9 +1691,9 @@
                     <p style="margin:4px 0 0 0; font-size:0.75rem; color:#666;">Define el color y sus imágenes (no afecta el precio)</p>
                 </div>
                 <button type="button" onclick="this.closest('.variant-card').remove()" 
-                        style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s;"
+                        style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s; display:flex; align-items:center; gap:4px;"
                         onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">
-                    <span class="material-icons" style="font-size:18px; vertical-align:middle;">delete</span> Eliminar
+                    <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg> Eliminar
                 </button>
             </div>
             
@@ -1494,15 +1735,15 @@
                             <div style="width:40px; height:40px; border-radius:4px; overflow:hidden; border:1px solid #ddd; flex-shrink:0;">
                                 <img src="${img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
                             </div>
-                            <button type="button" onclick="this.closest('div').remove()" style="color:#d32f2f; background:none; border:none; cursor:pointer; padding:4px;">
-                                <span class="material-icons" style="font-size:20px;">close</span>
+                            <button type="button" onclick="this.closest('div').remove()" style="color:#d32f2f; background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+                                <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7 7 17M7 7l10 10"></path></svg>
                             </button>
                         </div>
                     `).join('') : ''}
                 </div>
                 <button type="button" onclick="addColorImageRow(this)" 
-                        style="margin-top:8px; padding:6px 12px; background:#f5f5f5; border:1px solid #ddd; border-radius:4px; cursor:pointer; font-size:0.8rem; color:#666;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle;">add_photo_alternate</span>
+                        style="margin-top:8px; padding:6px 12px; background:#f5f5f5; border:1px solid #ddd; border-radius:4px; cursor:pointer; font-size:0.8rem; color:#666; display:flex; align-items:center; gap:6px;">
+                    <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 3H7.8c-1.68 0-2.52 0-3.162.327a3 3 0 0 0-1.311 1.311C3 5.28 3 6.12 3 7.8v8.4c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C5.28 21 6.12 21 7.8 21H17c.93 0 1.395 0 1.776-.102a3 3 0 0 0 2.122-2.122C21 18.395 21 17.93 21 17m-2-9V2m-3 3h6M10.5 8.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4.49 3.418-8.459 7.69c-.476.433-.714.649-.735.836a.5.5 0 0 0 .167.431C6.105 21 6.426 21 7.07 21h9.387c1.44 0 2.159 0 2.724-.242a3 3 0 0 0 1.578-1.578c.242-.565.242-1.285.242-2.724 0-.484 0-.726-.053-.952a2.001 2.001 0 0 0-.374-.778c-.143-.182-.332-.333-.71-.636l-2.797-2.237c-.379-.303-.568-.454-.776-.508a1 1 0 0 0-.557.018c-.205.066-.384.23-.743.555Z"></path></svg>
                     Agregar otra imagen
                 </button>
             </div>
@@ -1571,8 +1812,8 @@
         div.innerHTML = `
             <input type="text" class="form-input color-image-input" placeholder="https://..." style="flex-grow:1; font-size:0.8rem;">
             <div style="width:40px; height:40px; border-radius:4px; overflow:hidden; border:1px solid #ddd; flex-shrink:0; background:#f5f5f5;"></div>
-            <button type="button" onclick="this.closest('div').remove()" style="color:#d32f2f; background:none; border:none; cursor:pointer; padding:4px;">
-                <span class="material-icons" style="font-size:20px;">close</span>
+            <button type="button" onclick="this.closest('div').remove()" style="color:#d32f2f; background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+                <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7 7 17M7 7l10 10"></path></svg>
             </button>
         `;
         imagesList.appendChild(div);
@@ -1587,7 +1828,7 @@
         card.id = uniqueCardId;
 
         // Variable Options
-        let variableOptions = '<option value="">Seleccionar Especificación...</option>';
+        let variableOptions = '';
         let varFound = false;
 
         if (typeof textVariables !== 'undefined') {
@@ -1607,6 +1848,10 @@
         const isActive = data.active !== false;
         const activeChecked = isActive ? 'checked' : '';
 
+        const isInformative = !!data.isInformative;
+        const infoChecked = isInformative ? 'checked' : '';
+        const priceVisibile = isInformative ? 'display:none;' : 'display:grid;';
+
         card.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:2px solid #fff3e0; padding-bottom:10px;">
                 <div>
@@ -1619,26 +1864,37 @@
                         <span style="font-weight:600; color:${isActive ? '#2e7d32' : '#999'}">Activo</span>
                     </label>
                     <button type="button" onclick="this.closest('.variant-card').remove()" 
-                            style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s;"
+                            style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s; display:flex; align-items:center; gap:4px;"
                             onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">
-                        <span class="material-icons" style="font-size:18px; vertical-align:middle;">delete</span> Eliminar
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg> Eliminar
                     </button>
                 </div>
             </div>
             
             <div style="background:#fff3e0; padding:12px; border-radius:8px; margin-bottom:15px;">
                 <label class="form-label" style="font-size:0.75rem; margin-bottom:4px; font-weight:600;">
-                    Especificación <span style="color:#d32f2f;">*</span>
-                    <span style="color:#999; font-weight:400; font-size:0.7rem;">(ej: tamaño, capacidad)</span>
+                    Especificación <span style="color:#999; font-weight:400; font-size:0.7rem;">(opcional - ej: tamaño, capacidad)</span>
                 </label>
                 <select class="form-select price-variable-select" style="height:38px;">
+                    <option value="">Sin Especificación</option>
                     ${variableOptions}
                 </select>
+
+                <!-- Informative Checkbox -->
+                <div style="margin-top:10px;">
+                    <label style="font-size:0.85rem; display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none; background:white; padding:8px; border-radius:4px; border:1px solid #ffe0b2;">
+                        <input type="checkbox" class="price-informative" ${infoChecked} onchange="togglePriceDetails(this)" style="width:18px; height:18px;">
+                        <div>
+                            <span style="font-weight:600; color:#e65100;">Solo Informativo (Sin Precio)</span>
+                            <span style="display:block; font-size:0.7rem; color:#666;">Útil para variaciones como RAM, Batería, etc.</span>
+                        </div>
+                    </label>
+                </div>
             </div>
 
-            <div style="background:#fff; border:1px solid #e0e0e0; padding:12px; border-radius:8px; margin-bottom:15px;">
+            <div class="price-details-box" style="background:#fff; border:1px solid #e0e0e0; padding:12px; border-radius:8px; margin-bottom:15px; ${priceVisibile}">
                 <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle; color:#ff9800;">payments</span>
+                    <svg class="icon-svg" style="width:16px;height:16px; vertical-align:middle; color:#ff9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                     Información de precio:
                 </p>
 
@@ -1673,6 +1929,19 @@
         `;
 
         container.appendChild(card);
+    }
+
+    // Toggle Price Helper
+    window.togglePriceDetails = function (checkbox) {
+        const card = checkbox.closest('.variant-card');
+        const details = card.querySelector('.price-details-box');
+        if (checkbox.checked) {
+            details.style.display = 'none';
+            // Optional: clear values or set to 0? Better keep them in case of accidental uncheck
+        } else {
+            details.style.display = 'grid'; // or block/flex depending on css
+            details.style.cssText = "background:#fff; border:1px solid #e0e0e0; padding:12px; border-radius:8px; margin-bottom:15px; display:block;";
+        }
     }
 
     // --- OLD: Refined Variant Logic (Keep for backward compatibility during migration) ---
@@ -1725,7 +1994,7 @@
                     <button type="button" onclick="this.closest('.variant-card').remove()" 
                             style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s;"
                             onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">
-                        <span class="material-icons" style="font-size:18px; vertical-align:middle;">delete</span> Eliminar
+                        <svg class="icon-svg" style="width:18px;height:18px; vertical-align:middle;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Eliminar
                     </button>
                 </div>
             </div>
@@ -1733,7 +2002,7 @@
             <!-- Identificadores de Variante -->
             <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-bottom:15px;">
                 <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle; color:#1976d2;">info</span>
+                    <svg class="icon-svg" style="width:16px;height:16px; vertical-align:middle; color:#1976d2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                     Define qué hace única a esta variante:
                 </p>
                 <div class="form-grid-2" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
@@ -1767,7 +2036,7 @@
             <!-- Información de Producto -->
             <div style="background:#fff; border:1px solid #e0e0e0; padding:12px; border-radius:8px; margin-bottom:15px;">
                 <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle; color:#ff9800;">inventory_2</span>
+                    <svg class="icon-svg" style="width:16px;height:16px; vertical-align:middle; color:#ff9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     Información del producto:
                 </p>
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
@@ -1954,14 +2223,14 @@
                                 <img src="${img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
                             </div>
                             <button type="button" onclick="this.closest('div').remove()" style="color:#d32f2f; background:none; border:none; cursor:pointer; padding:4px;">
-                                <span class="material-icons" style="font-size:20px;">close</span>
+                                <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                             </button>
                         </div>
                     `).join('') : ''}
                 </div>
                 <button type="button" onclick="addColorImageRow(this)" 
                         style="margin-top:8px; padding:6px 12px; background:#f5f5f5; border:1px solid #ddd; border-radius:4px; cursor:pointer; font-size:0.8rem; color:#666;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle;">add_photo_alternate</span>
+                    <svg class="icon-svg" style="width:16px;height:16px; vertical-align:middle;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     Agregar otra imagen
                 </button>
             </div>
@@ -2031,7 +2300,7 @@
             <input type="text" class="form-input color-image-input" placeholder="https://..." style="flex-grow:1; font-size:0.8rem;">
             <div style="width:40px; height:40px; border-radius:4px; overflow:hidden; border:1px solid #ddd; flex-shrink:0; background:#f5f5f5;"></div>
             <button type="button" onclick="this.closest('div').remove()" style="color:#d32f2f; background:none; border:none; cursor:pointer; padding:4px;">
-                <span class="material-icons" style="font-size:20px;">close</span>
+                <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         `;
         imagesList.appendChild(div);
     }
@@ -2086,17 +2355,17 @@
                         <span style="font-weight:600; color:${isActive ? '#2e7d32' : '#999'}">Activo</span>
                     </label>
                     <button type="button" onclick="this.closest('.variant-card').remove()" 
-                            style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s;"
+                            style="color:#d32f2f; background:none; border:none; cursor:pointer; font-weight:600; font-size:0.85rem; padding:4px 8px; border-radius:4px; transition:background 0.2s; display:flex; align-items:center; gap:4px;"
                             onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">
-                        <span class="material-icons" style="font-size:18px; vertical-align:middle;">delete</span> Eliminar
+                        <svg class="icon-svg" style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg> Eliminar
                     </button>
                 </div>
             </div>
             
             <!-- Identificadores de Variante -->
             <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-bottom:15px;">
-                <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle; color:#1976d2;">info</span>
+                <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600; display:flex; align-items:center; gap:6px;">
+                    <svg class="icon-svg" style="width:16px;height:16px;color:#1976d2;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"></path></svg>
                     Define qué hace única a esta variante:
                 </p>
                 <div class="form-grid-2" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
@@ -2129,8 +2398,8 @@
 
             <!-- Información de Producto -->
             <div style="background:#fff; border:1px solid #e0e0e0; padding:12px; border-radius:8px; margin-bottom:15px;">
-                <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600;">
-                    <span class="material-icons" style="font-size:16px; vertical-align:middle; color:#ff9800;">inventory_2</span>
+                <p style="margin:0 0 10px 0; font-size:0.8rem; color:#555; font-weight:600; display:flex; align-items:center; gap:6px;">
+                    <svg class="icon-svg" style="width:16px;height:16px;color:#ff9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 7.278 12 12m0 0L3.5 7.278M12 12v9.5m9-5.441V7.942c0-.343 0-.514-.05-.667a1 1 0 0 0-.215-.364c-.109-.119-.258-.202-.558-.368l-7.4-4.111c-.284-.158-.425-.237-.575-.267a1 1 0 0 0-.403 0c-.15.03-.292.11-.576.267l-7.4 4.11c-.3.167-.45.25-.558.369a1 1 0 0 0-.215.364C3 7.428 3 7.599 3 7.942v8.117c0 .342 0 .514.05.666a1 1 0 0 0 .215.364c.109.119.258.202.558.368l7.4 4.111c.284.158.425.237.576.268.133.027.27.027.402 0 .15-.031.292-.11.576-.268l7.4-4.11c.3-.167.45-.25.558-.369a.999.999 0 0 0 .215-.364c.05-.152.05-.324.05-.666ZM16.5 9.5l-9-5"></path></svg>
                     Información del producto:
                 </p>
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
@@ -2238,7 +2507,9 @@
                 <input type="text" class="form-input var-image-input" placeholder="https://..." value="${value}" oninput="updateImageRowPreview(this)" style="flex-grow:1;">
                 <img class="var-row-preview" src="${value}" style="width:38px; height:38px; object-fit:contain; border:1px solid #ddd; background:#fff; border-radius:4px; display:${value ? 'block' : 'none'};">
             </div>
-            <button type="button" onclick="this.parentElement.remove()" style="width:30px; height:38px; display:flex; align-items:center; justify-content:center; border:1px solid #ddd; background:#f8f9fa; border-radius:4px; cursor:pointer; color:#666;" title="Eliminar Imagen">âœ•</button>
+            <button type="button" onclick="this.parentElement.remove()" style="width:30px; height:38px; display:flex; align-items:center; justify-content:center; border:1px solid #ddd; background:#f8f9fa; border-radius:4px; cursor:pointer; color:#666;" title="Eliminar Imagen">
+                <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7 7 17M7 7l10 10"></path></svg>
+            </button>
         `;
         container.appendChild(div);
     }
@@ -2314,13 +2585,16 @@
         const priceVariants = [];
         document.querySelectorAll('#priceVariantsContainer .variant-card').forEach(card => {
             const select = card.querySelector('.price-variable-select');
-            // Variable text
-            const variableText = (select && select.selectedIndex >= 0) ? select.options[select.selectedIndex].text : '';
+            // Get the value (ID) first, then text only if value exists
+            const variableValue = (select && select.value) ? select.value : '';
+            const variableText = variableValue ? select.options[select.selectedIndex].text : '';
+
             const price = Number(card.querySelector('.price-price').value) || 0;
             const promoPrice = Number(card.querySelector('.price-promo').value) || 0;
             const link = card.querySelector('.var-link-input') ? card.querySelector('.var-link-input').value.trim() : '';
 
             priceVariants.push({
+                variableId: variableValue,
                 variableText: variableText,
                 price: price,
                 promoPrice: promoPrice,
@@ -2460,6 +2734,7 @@
                 const link = card.querySelector('.var-link-input') ? card.querySelector('.var-link-input').value.trim() : '';
 
                 const active = card.querySelector('.price-active') ? card.querySelector('.price-active').checked : true;
+                const isInformative = card.querySelector('.price-informative') ? card.querySelector('.price-informative').checked : false;
 
                 priceVariants.push({
                     variableId: variableId,
@@ -2467,7 +2742,8 @@
                     price: price,
                     promoPrice: promoPrice,
                     link: link,
-                    active: active
+                    active: active,
+                    isInformative: isInformative
                 });
             });
 
@@ -2498,6 +2774,7 @@
                             promoPrice: p.promoPrice,
                             link: p.link,
                             active: p.active,
+                            isInformative: p.isInformative,
                             variableId: p.variableId,
                             variableText: p.variableText,
 
@@ -2799,12 +3076,23 @@
             // Handle both old (string) and new (object) format
             const hexCode = colorData.hex || colorData;
             const colorId = colorData.id || '';
-            // Count how many products use this color
+
+            // Count how many products use this color by colorId
             let usageCount = 0;
             products.forEach(p => {
+                if (p.colors && Array.isArray(p.colors)) {
+                    p.colors.forEach(c => {
+                        if (c.colorId === colorId || c.id === colorId) {
+                            usageCount++;
+                        }
+                    });
+                }
+                // Also check variants for backward compatibility
                 if (p.variants && Array.isArray(p.variants)) {
                     p.variants.forEach(v => {
-                        if (v.color === colorName) usageCount++;
+                        if (v.colorId === colorId || v.color === colorName) {
+                            usageCount++;
+                        }
                     });
                 }
             });
@@ -2828,9 +3116,13 @@
                     </span>
                 </td>
                 <td style="white-space: nowrap; text-align: center;">
-                    <span class="action-icon" title="Editar" onclick="window.editColor('${colorName.replace(/'/g, "\\'")}')"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Eliminar" onclick="window.deleteColor('${colorName.replace(/'/g, "\\'")}')"><span class="material-icons">delete</span></span>
-                </td >
+                <span class="action-icon" title="Editar" onclick="window.editColor('${colorName.replace(/'/g, "\\'")}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                </span>
+                <span class="action-icon" title="Eliminar" onclick="window.deleteColor('${colorName.replace(/'/g, "\\'")}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                </span>
+            </td>
             `;
             colorsTableBody.appendChild(tr);
         });
@@ -3096,8 +3388,12 @@
                     </span>
                 </td>
                 <td style="white-space: nowrap; text-align: center;">
-                    <span class="action-icon" title="Editar" onclick="window.editCategory('${categoryName.replace(/'/g, "\\'")}')"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Eliminar" onclick="window.deleteCategory('${categoryName.replace(/'/g, "\\'")}')"><span class="material-icons">delete</span></span>
+                    <span class="action-icon" title="Editar" onclick="window.editCategory('${categoryName.replace(/'/g, "\\'")}')">
+                        <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                    </span>
+                    <span class="action-icon" title="Eliminar" onclick="window.deleteCategory('${categoryName.replace(/'/g, "\\'")}')">
+                        <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                    </span>
                 </td>
             `;
             categoriesTableBody.appendChild(tr);
@@ -3280,12 +3576,29 @@
         variablesTableBody.innerHTML = '';
 
         if (filteredVariables.length === 0) {
-            variablesTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 2rem;">No se encontraron variables</td></tr>';
+            variablesTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 2rem;">No se encontraron variables</td></tr>';
             return;
+        }
+
+        // Function to count how many products use this variable
+        function countVariableUsage(variableId) {
+            if (!variableId) return 0;
+            let count = 0;
+            products.forEach(product => {
+                if (product.priceVariants && Array.isArray(product.priceVariants)) {
+                    product.priceVariants.forEach(variant => {
+                        if (variant.variableId === variableId) {
+                            count++;
+                        }
+                    });
+                }
+            });
+            return count;
         }
 
         filteredVariables.forEach(([text, varData]) => {
             const variableId = varData.id || '';
+            const usageCount = countVariableUsage(variableId);
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -3294,10 +3607,19 @@
                 </td>
                 <td style="font-weight: 500;">${varData.name}</td>
                 <td>${varData.text}</td>
-                <td style="white-space: nowrap; text-align: center;">
-                    <span class="action-icon" title="Editar" onclick="window.editVariable('${text.replace(/'/g, "\\'")}')"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Eliminar" onclick="window.deleteVariable('${text.replace(/'/g, "\\'")}')"><span class="material-icons">delete</span></span>
+                <td style="text-align: center;">
+                    <span style="background: ${usageCount > 0 ? '#e3f2fd' : '#f5f5f5'}; color: ${usageCount > 0 ? '#1565c0' : '#999'}; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                        ${usageCount} ${usageCount === 1 ? 'producto' : 'productos'}
+                    </span>
                 </td>
+                <td style="white-space: nowrap; text-align: center;">
+                <span class="action-icon" title="Editar" onclick="window.editVariable('${text.replace(/'/g, "\\'")}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                </span>
+                <span class="action-icon" title="Eliminar" onclick="window.deleteVariable('${text.replace(/'/g, "\\'")}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                </span>
+            </td>
             `;
             variablesTableBody.appendChild(tr);
         });
@@ -3500,12 +3822,15 @@
         tagsTableBody.innerHTML = '';
 
         if (filteredTags.length === 0) {
-            tagsTableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 2rem;">No se encontraron etiquetas</td></tr>';
+            tagsTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 2rem;">No se encontraron etiquetas</td></tr>';
             return;
         }
 
         filteredTags.forEach(([tagName, tagData]) => {
             const tagId = tagData.id || '';
+
+            // Count products using this tag
+            const productCount = products.filter(p => p.badge === tagName).length;
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -3513,10 +3838,19 @@
                     <input type="checkbox" class="tag-checkbox" data-tag-name="${tagName.replace(/"/g, '&quot;')}" style="width:16px; height:16px; cursor:pointer;">
                 </td>
                 <td style="font-weight: 500;">${tagData.name}</td>
-                <td style="white-space: nowrap; text-align: center;">
-                    <span class="action-icon" title="Editar" onclick="window.editTag('${tagName.replace(/'/g, "\\'")}')"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Eliminar" onclick="window.deleteTag('${tagName.replace(/'/g, "\\'")}')"><span class="material-icons">delete</span></span>
+                <td style="text-align: center;">
+                    <span style="background: ${productCount > 0 ? '#e3f2fd' : '#f5f5f5'}; color: ${productCount > 0 ? '#1565c0' : '#999'}; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                        ${productCount}
+                    </span>
                 </td>
+                <td style="white-space: nowrap; text-align: center;">
+                <span class="action-icon" title="Editar" onclick="window.editTag('${tagName.replace(/'/g, "\\'")}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                </span>
+                <span class="action-icon" title="Eliminar" onclick="window.deleteTag('${tagName.replace(/'/g, "\\'")}')">
+                    <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                </span>
+            </td>
             `;
             tagsTableBody.appendChild(tr);
         });
@@ -3677,12 +4011,19 @@
         promotionsTableBody.innerHTML = '';
 
         if (filteredPromotions.length === 0) {
-            promotionsTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 2rem;">No se encontraron promociones</td></tr>';
+            promotionsTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 2rem;">No se encontraron promociones</td></tr>';
             return;
+        }
+
+        // Function to count how many products use this promotion
+        function countPromotionUsage(promoId) {
+            if (!promoId) return 0;
+            return products.filter(p => p.promotion === promoId).length;
         }
 
         filteredPromotions.forEach(([promoName, promoData]) => {
             const promoId = promoData.id || '';
+            const usageCount = countPromotionUsage(promoId);
             const imageUrl = promoData.image || '';
             const imagePreview = imageUrl ? `<a href="${imageUrl}" target="_blank" style="color: var(--samsung-blue); text-decoration: none;">Ver imagen</a>` : 'Sin imagen';
 
@@ -3695,9 +4036,18 @@
                 <td style="font-size: 0.85rem; color: #666; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${imagePreview}
                 </td>
+                <td style="text-align: center;">
+                    <span style="background: ${usageCount > 0 ? '#e3f2fd' : '#f5f5f5'}; color: ${usageCount > 0 ? '#1565c0' : '#999'}; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                        ${usageCount} ${usageCount === 1 ? 'producto' : 'productos'}
+                    </span>
+                </td>
                 <td style="white-space: nowrap; text-align: center;">
-                    <span class="action-icon" title="Editar" onclick="window.editPromotion('${promoName.replace(/'/g, "\\'")}')"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Eliminar" onclick="window.deletePromotion('${promoName.replace(/'/g, "\\'")}')"><span class="material-icons">delete</span></span>
+                    <span class="action-icon" title="Editar" onclick="window.editPromotion('${promoName.replace(/'/g, "\\'")}')">
+                        <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                    </span>
+                    <span class="action-icon" title="Eliminar" onclick="window.deletePromotion('${promoName.replace(/'/g, "\\'")}')">
+                        <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                    </span>
                 </td>
             `;
             promotionsTableBody.appendChild(tr);
@@ -3713,6 +4063,7 @@
             document.getElementById('editPromotionOldName').value = promoName;
             document.getElementById('promotionName').value = promotions[promoName].name;
             document.getElementById('promotionImage').value = promotions[promoName].image;
+            document.getElementById('promotionLink').value = promotions[promoName].link || '';
         } else {
             // Add mode
             document.getElementById('promotionModalTitle').textContent = 'Nueva promoción';
@@ -3729,6 +4080,7 @@
         const oldName = document.getElementById('editPromotionOldName').value;
         const name = document.getElementById('promotionName').value.trim();
         const image = document.getElementById('promotionImage').value.trim();
+        const link = document.getElementById('promotionLink').value.trim();
 
         if (!name || !image) {
             window.showToast('Por favor completa todos los campos', 'info');
@@ -3761,7 +4113,7 @@
         }
 
         // Update or add promotion with new structure
-        promotions[name] = { id: promoId, name: name, image: image };
+        promotions[name] = { id: promoId, name: name, image: image, link: link };
 
         closePromotionModal();
         renderPromotionsTable();
@@ -3898,8 +4250,12 @@
                     </span>
                 </td>
                 <td style="white-space: nowrap; text-align: center;">
-                    <span class="action-icon" title="Editar" onclick="window.editCombo('${comboName.replace(/'/g, "\\'")}')"><span class="material-icons">edit</span></span>
-                    <span class="action-icon" title="Eliminar" onclick="window.deleteCombo('${comboName.replace(/'/g, "\\'")}')"><span class="material-icons">delete</span></span>
+                    <span class="action-icon" title="Editar" onclick="window.editCombo('${comboName.replace(/'/g, "\\'")}')">
+                        <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.876 18.116c.046-.414.069-.62.131-.814a2 2 0 0 1 .234-.485c.111-.17.259-.317.553-.61L17 3a2.828 2.828 0 1 1 4 4L7.794 20.206c-.294.294-.442.442-.611.553a2 2 0 0 1-.485.233c-.193.063-.4.086-.814.132L2.5 21.5l.376-3.384Z"></path></svg>
+                    </span>
+                    <span class="action-icon" title="Eliminar" onclick="window.deleteCombo('${comboName.replace(/'/g, "\\'")}')">
+                        <svg class="icon-svg" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6"></path></svg>
+                    </span>
                 </td>
             `;
             combosTableBody.appendChild(tr);

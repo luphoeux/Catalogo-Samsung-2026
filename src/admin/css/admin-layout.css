@@ -12,7 +12,7 @@
     --text-main: #1f1f1f;
     --text-muted: #444746;
     --border-color: #e0e0e0;
-    --sidebar-width: 260px;
+    --sidebar-width: 220px;
     --header-height: 64px;
     --shadow-sm: none;
     --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.12);
@@ -36,7 +36,7 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-family: 'SamsungOne', sans-serif;
     color: var(--text-main);
     line-height: 1.6;
     min-height: 100vh;
@@ -199,7 +199,7 @@ body {
     display: none;
     animation: fadeIn 0.3s ease;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1600px;
 }
 
 .view-section.active {
@@ -419,12 +419,33 @@ tr:hover td {
     background-color: #f0f0f0;
 }
 
+/* Utility Class for SVGs to match material-icons sizing */
+.icon-svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    stroke-width: 2;
+    fill: none;
+    stroke: currentColor;
+    display: inline-block;
+}
+
 input[type="checkbox"] {
     width: 16px;
     height: 16px;
     accent-color: var(--primary-color);
     cursor: pointer;
 }
+
+/* Secondary Tables (Expandable Details) */
+tr[id^="details-"] table tbody tr:hover {
+    background-color: #f8f9fa !important;
+}
+
+tr[id^="details-"] table tbody tr:hover td {
+    background-color: transparent;
+}
+
 
 /* ========================================
    FILTERS
@@ -440,9 +461,9 @@ input[type="checkbox"] {
 
 .search-admin,
 .select-filter {
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 1rem;
     border: none;
-    border-radius: 50px;
+    border-radius: var(--radius-sm);
     font-family: inherit;
     font-size: 0.875rem;
     transition: box-shadow 0.2s;

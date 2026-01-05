@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogos - Admin</title>
-    <link rel="icon" type="image/png" href="../../image/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="../../image/favicon.svg">
     <link rel="stylesheet" href="css/admin-layout.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
 </head>
@@ -21,7 +21,10 @@
                 </div>
                 <div>
                     <button type="button" class="btn-primary" onclick="openCreateCatalogModal()">
-                        <span class="material-icons" style="font-size: 16px;">add</span>
+                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14m-7-7h14"></path>
+                        </svg>
                         Crear Catálogo
                     </button>
                 </div>
@@ -38,7 +41,11 @@
                 <div>
                     <button class="btn-secondary" onclick="backToCatalogs()"
                         style="margin-bottom: 0.5rem; border: none; padding-left: 0; background: transparent;">
-                        <span class="material-icons" style="vertical-align: middle; font-size: 18px;">arrow_back</span>
+                        <svg class="icon-svg" style="width:18px;height:18px;margin-right:4px;" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M19 12H5m0 0 7 7m-7-7 7-7"></path>
+                        </svg>
                         Volver a Catálogos
                     </button>
                     <h1 class="page-title" id="catalogDetailTitle">Detalle del Catálogo</h1>
@@ -46,14 +53,27 @@
                 </div>
                 <div>
                     <button class="btn-primary" onclick="openAddToCatalogModal()">
-                        <span class="material-icons" style="font-size: 16px;">add</span>
+                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14m-7-7h14"></path>
+                        </svg>
                         Agregar Productos
                     </button>
                     <button class="btn-secondary" onclick="exportCatalog(currentCatalogId)" style="margin-left: 8px;">
-                        <span class="material-icons" style="font-size: 16px;">download</span>
+                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 15v1.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C18.72 21 17.88 21 16.2 21H7.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3 18.72 3 17.88 3 16.2V15m14-5-5 5m0 0-5-5m5 5V3">
+                            </path>
+                        </svg>
                     </button>
                     <button class="btn-secondary" onclick="importCatalog(currentCatalogId)" style="margin-left: 8px;">
-                        <span class="material-icons" style="font-size: 16px;">upload</span>
+                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 15v1.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C18.72 21 17.88 21 16.2 21H7.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3 18.72 3 17.88 3 16.2V15m14-7-5-5m0 0L7 8m5-5v12">
+                            </path>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -103,11 +123,21 @@
                                 required>
                         </div>
 
-                        <div class="form-group catalog-meta-field">
-                            <label class="form-label">Título del Banner (Opcional)</label>
-                            <input type="text" class="form-input" id="catalogCustomTitle"
-                                placeholder="Ej: Catálogo Samsung 2026">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+                            <div class="form-group catalog-meta-field">
+                                <label class="form-label">Título del Banner (Opcional)</label>
+                                <input type="text" class="form-input" id="catalogCustomTitle"
+                                    placeholder="Ej: Catálogo Samsung 2026">
+                            </div>
+                            <div class="form-group catalog-meta-field">
+                                <label class="form-label">Color Título</label>
+                                <select id="catalogTitleColor" class="form-input">
+                                    <option value="black">Negro</option>
+                                    <option value="white">Blanco</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="form-group catalog-meta-field">
                             <label class="form-label">Imagen del Banner (Opcional)</label>
                             <input type="file" id="catalogBannerImage" class="form-input" accept="image/*">
@@ -117,6 +147,21 @@
                             <label class="form-label">Texto de Fondo (Opcional)</label>
                             <input type="text" class="form-input" id="catalogCustomText" value="2026"
                                 placeholder="Ej: 2026 o Navidad">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group catalog-meta-field">
+                                <label class="form-label">Color Texto Fondo</label>
+                                <select id="catalogTextColor" class="form-input">
+                                    <option value="black">Negro</option>
+                                    <option value="white">Blanco</option>
+                                </select>
+                            </div>
+                            <div class="form-group catalog-meta-field">
+                                <label class="form-label">Opacidad Fondo (%)</label>
+                                <input type="number" id="catalogTextOpacity" class="form-input" value="50" min="0"
+                                    max="100">
+                            </div>
                         </div>
                     </div>
 
@@ -154,6 +199,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Promotions Selection (Added) -->
+                    <div style="padding-top: 1rem; border-top: 1px solid #eee; margin-top: 0.5rem;">
+                        <label class="form-label">Promociones Activas</label>
+                        <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                            Selecciona los banners de promoción para este catálogo
+                        </p>
+                        <div id="catalogPromotionsList" class="products-list products-list-scroll"
+                            style="max-height: 150px;">
+                            <!-- Promotions will be loaded here -->
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -161,7 +218,10 @@
                         Cancelar
                     </button>
                     <button type="submit" class="btn-primary">
-                        <span class="material-icons" style="font-size: 16px;">add</span>
+                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14m-7-7h14"></path>
+                        </svg>
                         Crear Catálogo
                     </button>
                 </div>
@@ -183,6 +243,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/layout.js"></script>
     <script src="../data/products.js"></script>
+    <script src="../data/promotions.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
     <!-- We need admin.js for loadProductsIntoModal validation/logic if it uses global functions? 

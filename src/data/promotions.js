@@ -1,9 +1,10 @@
 // Promotions (Promociones)
 // Auto-generated from Admin Panel
 var promotions = {
-    "test": {
-        "id": "pr001",
-        "name": "test",
-        "image": "https://gemini.google.com/app?hl=es"
+    "Navidad Samsung 2025": {
+        "id": "pr001 ",
+        "name": "Navidad Samsung 2025",
+        "image": "https://samsung.com.bo/assets/img/landings/navidad2025/bandeo2.png",
+        "link": "https://samsung.com.bo/Navidad"
     }
 };

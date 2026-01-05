@@ -77,24 +77,35 @@ function createPreviewCard(product) {
     // Price Variants (or Storage for legacy)
     let variantsHtml = '';
     if (product.priceVariants && product.priceVariants.length > 0) {
-        const containerStyle = product.priceVariants.length <= 2
-            ? 'display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem;'
-            : 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; padding: 0 10px;';
+        // Filter out variants without specification (empty or "Precio Base" or "Sin Especificación")
+        const validVariants = product.priceVariants.filter(v => {
+            const text = v.variableText || v.text || '';
+            return text &&
+                text !== 'Precio Base' &&
+                text !== 'Sin Especificación' &&
+                text.trim() !== '';
+        });
 
-        variantsHtml = `
+        // Only show variants section if there are valid variants with specifications
+        if (validVariants.length > 0) {
+            const containerStyle = validVariants.length <= 2
+                ? 'display: flex; justify-content: center; gap: 8px; margin-bottom: 1.5rem;'
+                : 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; padding: 0 10px;';
+
+            variantsHtml = `
             <div style="${containerStyle}">
-                ${product.priceVariants.map((v, i) => {
-            const isActive = i === 0; // Select first by default
-            const activeStyle = isActive ? 'background: #f8f9fa; border: 1px solid #000; color: #000;' : 'background: #fff; border: 1px solid #ddd; color: #333;';
-            // Fallback for different data structures (variableText, text, or just the string if array of strings)
-            const text = v.variableText || v.text || (typeof v === 'string' ? v : ('Opción ' + (i + 1)));
-            return `<div style="${activeStyle} padding: 8px 5px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; line-height: 1; white-space: nowrap;">
+                ${validVariants.map((v, i) => {
+                const isActive = i === 0; // Select first by default
+                const activeStyle = isActive ? 'background: #f8f9fa; border: 1px solid #000; color: #000;' : 'background: #fff; border: 1px solid #ddd; color: #333;';
+                const text = v.variableText || v.text || '';
+                return `<div style="${activeStyle} padding: 8px 5px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; line-height: 1; white-space: nowrap;">
                                 <span style="font-size: 0.65rem; color: #888; margin-bottom: 3px;">Opción</span>
                                 <span>${text}</span>
                             </div>`;
-        }).join('')}
+            }).join('')}
             </div>
         `;
+        }
     }
 
     // Price Display
