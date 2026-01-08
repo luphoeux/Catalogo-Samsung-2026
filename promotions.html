@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones | Samsung Catalog Admin</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="/src/styles/admin.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar dynamically injected by layout.js -->
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h2 style="font-weight: 800; font-size: 1.8rem; margin: 0;">Gestión de Promociones</h2>
+                    <p class="text-muted mb-0">Administra banners y campañas especiales.</p>
+                </div>
+                <div>
+                    <button class="btn btn-pill btn-primary-samsung px-4" data-bs-toggle="modal" data-bs-target="#promoModal" onclick="resetForm()">
+                        + Nueva Promoción
+                    </button>
+                </div>
+            </header>
+
+            <!-- Search Bar -->
+            <div class="card-samsung mb-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted">Buscar Promoción</label>
+                        <input type="text" id="promo-search-table" class="form-control form-pill" placeholder="Nombre de la promoción...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="card-samsung p-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light small text-muted text-uppercase fw-bold">
+                            <tr>
+                                <th class="ps-4" style="width: 40px;"><input type="checkbox" class="form-check-input"></th>
+                                <th>Nombre</th>
+                                <th>Banner</th>
+                                <th>Productos</th>
+                                <th class="text-end pe-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="promotionsTable">
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">Cargando promociones...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Promo Modal -->
+    <div class="modal fade" id="promoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 25px; border: none; box-shadow: var(--card-shadow);">
+                <div class="modal-header border-0 p-4 pb-0 d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="modal-title fw-bold" style="letter-spacing: -0.5px;">Configurar Promoción</h5>
+                        <p class="text-muted small mb-0">Crea campañas y pancartas promocionales</p>
+                    </div>
+                    <button type="button" class="btn-close bg-light rounded-circle p-2" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="promotionForm" onsubmit="event.preventDefault();">
+                        <input type="hidden" id="promo-id">
+                        <div class="row g-4">
+                            <!-- Left Column: Image Upload -->
+                            <div class="col-md-5">
+                                <div class="stripe-card h-100 p-4 d-flex flex-column justify-content-center text-center position-relative overflow-hidden">
+                                    <label class="form-label fw-bold small text-uppercase text-muted mb-3 d-block" style="font-size: 0.7rem; letter-spacing: 0.5px;">Banner de Promoción</label>
+                                    
+                                    <div class="position-relative flex-grow-1 d-flex flex-column" style="cursor: pointer; min-height: 250px;" onclick="document.getElementById('promo-file-input').click()">
+                                        <!-- Inputs -->
+                                        <input type="file" id="promo-file-input" accept="image/*" class="d-none">
+                                        <input type="text" id="promo-image" class="d-none"> <!-- Stores Base64 -->
+                                        
+                                        <!-- Drop Zone -->
+                                        <div id="drop-zone" class="bg-white rounded-3 d-flex align-items-center justify-content-center flex-column flex-grow-1 position-relative overflow-hidden border-2 border-dashed" 
+                                             style="border-color: #e3e8ee; transition: all 0.2s ease;">
+                                            
+                                            <!-- Preview -->
+                                            <img id="promo-preview" src="" class="position-absolute top-0 start-0 w-100 h-100" 
+                                                 style="object-fit: cover; display: none; z-index: 2; background: white;">
+                                            
+                                            <!-- Placeholder -->
+                                            <div id="promo-preview-placeholder" class="text-secondary p-3">
+                                                <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                                    <i class="bi bi-image fs-3 text-primary opacity-50"></i>
+                                                </div>
+                                                <div class="small fw-bold" style="color: #3c4257;">Subir Banner</div>
+                                                <div style="font-size: 0.7rem;" class="text-muted mt-1">Recomendado: 600x600px</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Color Picker integrated -->
+                                    <div class="mt-4 text-start">
+                                        <label class="form-label fw-bold small text-muted" style="font-size: 0.75rem;">COLOR DE ACENTO</label>
+                                        <input type="color" class="form-control form-control-color w-100 rounded-3 border-0 shadow-sm" id="promo-color" value="#007aff" title="Elige un color">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column: Details & Products -->
+                            <div class="col-md-7">
+                                <div class="stripe-card p-4 h-100">
+                                    <!-- Basic Fields -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold small text-muted" style="font-size: 0.75rem;">TÍTULO</label>
+                                        <input type="text" class="form-control form-control-stripe" id="promo-name" required placeholder="Ej: Black Friday 2026">
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold small text-muted" style="font-size: 0.75rem;">LINK EXTERNO (Opcional)</label>
+                                        <input type="url" class="form-control form-control-stripe" id="promo-link" placeholder="https://...">
+                                    </div>
+
+                                    <hr class="border-light my-4">
+
+                                    <!-- Product Linking -->
+                                    <h6 class="fw-bold mb-3 text-dark" style="font-size: 0.95rem;">Productos Asociados</h6>
+                                    
+                                    <!-- Tools -->
+                                    <div class="bg-light rounded-3 p-3 mb-3 border" style="border-color: #e3e8ee !important;">
+                                        <div class="d-flex gap-2 align-items-center mb-2">
+                                            <select class="form-select form-control-stripe form-select-sm" id="catalog-selector">
+                                                <option value="">📂 Cargar desde Catálogo...</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Catalog Results -->
+                                        <div id="catalog-products-container" class="mt-2 pt-2 border-top" style="display: none; border-color: #ddd !important;">
+                                            
+                                            <!-- Search & Filter Toolkit -->
+                                            <div class="row g-2 mb-2">
+                                                <div class="col-8">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                                        <input type="text" class="form-control form-control-stripe border-start-0 ps-0" id="catalog-search" placeholder="Buscar por nombre o SKU...">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <select class="form-select form-select-sm form-control-stripe" id="catalog-category-filter">
+                                                        <option value="">Todas</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="fw-bold text-muted text-uppercase" style="font-size: 0.65rem;">Selección Rápida</small>
+                                                <div class="form-check form-switch form-check-reverse">
+                                                    <input class="form-check-input" type="checkbox" id="select-all-catalog">
+                                                    <label class="form-check-label small text-muted" for="select-all-catalog" style="font-size: 0.7rem;">Todos</label>
+                                                </div>
+                                            </div>
+                                            <div class="bg-white rounded-2 border overflow-auto custom-scrollbar" style="max-height: 200px;"> <!-- Increased height slightly -->
+                                                <div id="catalog-products-list" class="p-1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Selected Count -->
+                                    <div class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-primary-subtle border border-primary-subtle text-primary">
+                                        <span class="small fw-bold"><i class="bi bi-layers-fill me-2"></i>Productos Seleccionados</span>
+                                        <span class="badge bg-white text-primary border shadow-sm fw-bold fs-6" id="selected-count">0</span>
+                                    </div>
+                                    <!-- Hidden storage for SKUs to maintain compatibility with existing logic if needed, although we use global array -->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-pill btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-pill btn-primary-samsung px-4" id="btn-save-promo">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/src/js/promotions.js"></script>
+</body>
+</html>

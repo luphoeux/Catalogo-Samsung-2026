@@ -1,23 +1,21 @@
 {
-    "name": "samsung-catalogo",
-    "version": "1.0.0",
-    "description": "Samsung product catalog web project",
-    "main": "server.js",
-    "scripts": {
-        "start": "npx -y kill-port 3000 && node server.js",
-        "dev": "nodemon server.js",
-        "update-data": "node scripts/update_data_from_csv.js"
-    },
-    "author": "",
-    "license": "MIT",
-    "dependencies": {
-        "@untitledui-pro/icons": "^0.0.2",
-        "@untitledui/icons": "^0.0.19",
-        "xlsx": "^0.18.5"
-    },
-    "devDependencies": {
-        "firebase-admin": "^13.6.0",
-        "nodemon": "^3.1.0",
-        "playwright": "^1.57.0"
-    }
+  "name": "samsung-catalog-2026",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2",
+    "@popperjs/core": "^2.11.8",
+    "jquery": "^3.7.1",
+    "firebase": "^10.7.1",
+    "xlsx": "^0.18.5"
+  }
 }

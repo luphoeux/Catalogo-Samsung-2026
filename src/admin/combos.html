@@ -1,111 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Combos - Admin</title>
-    <link rel="icon" type="image/svg+xml" href="../../image/favicon.svg">
-    <link rel="stylesheet" href="css/admin-layout.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <title>Combos | Samsung Catalog Admin</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="../styles/admin.css">
 </head>
-
 <body>
-    <div class="main-content">
-        <div id="combosView" class="view-section active">
-            <div class="header-actions">
+    <div class="app-wrapper">
+        <!-- Sidebar dynamically injected by layout.js -->
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="d-flex justify-content-between align-items-center mb-5">
                 <div>
-                    <h1 class="page-title">Combos</h1>
-                    <p class="page-subtitle">Gestiona combos de productos</p>
+                    <h2 style="font-weight: 800; font-size: 1.8rem; margin: 0;">Gestión de Combos</h2>
+                    <p class="text-muted mb-0">Administra ofertas de productos en conjunto.</p>
                 </div>
                 <div>
-                    <button class="btn-primary" id="bulkDeleteCombosBtn"
-                        style="display: none; background-color: #d32f2f; margin-right: 1rem;">
-                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6">
-                            </path>
-                        </svg>
-                        Eliminar (<span id="bulkDeleteCombosCount">0</span>)
-                    </button>
-                    <button class="btn-primary" id="addComboBtn">
-                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 5v14m-7-7h14"></path>
-                        </svg>
-                        Nuevo Combo
+                    <button class="btn btn-pill btn-primary-samsung px-4" data-bs-toggle="modal" data-bs-target="#comboModal">
+                        + Nuevo Combo
                     </button>
                 </div>
-            </div>
+            </header>
 
-            <div class="admin-filters" style="margin-bottom: 1rem;">
-                <input type="text" class="search-admin" placeholder="Buscar combo..." id="comboSearch">
+            <div class="card-samsung p-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light small text-muted text-uppercase fw-bold">
+                            <tr>
+                                <th class="ps-4">Nombre del Combo</th>
+                                <th>Productos</th>
+                                <th>Precio Total</th>
+                                <th>Estado</th>
+                                <th class="text-end pe-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="combosTable">
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">No hay combos registrados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="products-table-container">
-                <table style="font-size: 0.9rem;">
-                    <thead>
-                        <tr>
-                            <th width="40" style="text-align:center;">
-                                <input type="checkbox" id="selectAllCombos"
-                                    style="width:18px; height:18px; cursor:pointer;" title="Seleccionar todos">
-                            </th>
-                            <th width="300">Nombre</th>
-                            <th width="120">Productos</th>
-                            <th width="100">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="combosTableBody">
-                        <!-- Combo rows will be injected here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <!-- Combo Edit Modal -->
-    <div id="comboModal" class="modal">
-        <div class="modal-content modal-md modal-content-padded">
-            <div class="modal-header">
-                <h2 class="modal-title" id="comboModalTitle">Editar Combo</h2>
-                <button class="close-modal" id="closeComboModal">&times;</button>
+    <!-- Combo Modal -->
+    <div class="modal fade" id="comboModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 25px; border: none; box-shadow: var(--card-shadow);">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="modal-title fw-bold">Nuevo / Editar Combo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="comboForm">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Nombre del Combo</label>
+                            <input type="text" class="form-control form-pill" id="combo-name" required placeholder="Ej: Super Pack Galaxy">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted">Productos Incluidos</label>
+                            <div class="p-3 border rounded-4 bg-light">
+                                <p class="small text-muted mb-2">Busca y añade productos al combo:</p>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control form-pill" placeholder="Buscar por SKU o nombre..." id="product-search-combo">
+                                    <button class="btn btn-primary-samsung btn-pill ms-2" type="button">Buscar</button>
+                                </div>
+                                <div id="selected-products-combo" class="d-flex flex-wrap gap-2">
+                                    <!-- Selected products tags here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-bold text-muted">Precio Combo (Bs.)</label>
+                                <input type="number" class="form-control form-pill" id="combo-price" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-bold text-muted">Fecha Límite (Opcional)</label>
+                                <input type="date" class="form-control form-pill" id="combo-expiry">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-pill btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-pill btn-primary-samsung px-4" id="btn-save-combo">Guardar Combo</button>
+                </div>
             </div>
-            <form id="comboForm">
-                <input type="hidden" id="editComboOldName">
-
-                <div class="form-group">
-                    <label class="form-label">Nombre del Combo</label>
-                    <input type="text" class="form-input" id="comboName" required placeholder="Ej: Pack Home Office">
-                    <small class="form-hint">ID automático (cb001, etc.)</small>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Productos (IDs separados por coma)</label>
-                    <textarea class="form-input" id="comboProducts" rows="3" placeholder="Ej: 101, 204, 305"></textarea>
-                    <small class="form-hint">Ingresa los IDs de los productos que componen este
-                        combo.</small>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" id="cancelComboBtn">Cancelar</button>
-                    <button type="submit" class="btn-primary">Guardar Combo</button>
-                </div>
-            </form>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Cloud & Auth Logic -->
-    <script type="module" src="js/auth-guard.js"></script>
-    <script src="js/admin.js"></script>
-    <script type="module" src="js/admin-firebase.js"></script>
-
-    <!-- UI Logic (Still needed for Layout/Preview) -->
-    <script src="js/layout.js"></script>
-    <script src="js/preview.js"></script>
-    <script src="js/export.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/combos.js"></script>
 </body>
-
 </html>

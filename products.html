@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Samsung Catalog Admin</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="/src/styles/admin.css">
+
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar dynamically injected by layout.js -->
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="d-flex justify-content-between align-items-center mb-5">
+                <div class="d-flex align-items-center">
+                    <button id="back-to-folders" class="btn btn-light btn-pill border me-3">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 class="fw-bold m-0" id="current-folder-title">Productos</h2>
+                        <p class="text-muted mb-0 small" id="current-folder-desc">Gestiona el inventario de esta carpeta</p>
+                    </div>
+                </div>
+                <div>
+                   <button id="btn-reset-db" class="btn btn-outline-danger btn-pill border btn-sm me-2" title="Reiniciar datos de esta carpeta al original del sistema">
+                        <i class="bi bi-arrow-counterclockwise"></i> Recargar Datos
+                    </button>
+                    <button class="btn btn-pill btn-light border" id="btn-export-selected">
+                        <i class="bi bi-download me-2"></i> Exportar Selección
+                    </button>
+                </div>
+            </header>
+
+            <!-- Back Button (Hidden by default) -->
+            <div class="mb-3 d-none" id="back-to-folders">
+                <a href="products.html" class="text-decoration-none text-muted small fw-bold">
+                    <i class="bi bi-arrow-left"></i> Volver a Carpetas
+                </a>
+            </div>
+
+            <!-- FOLDERS VIEW -->
+            <div id="folders-view" class="d-none">
+                <div class="row g-4" id="folders-container">
+                    <!-- Dynamic Folders -->
+                </div>
+                <!-- Create Folder Button -->
+                <div class="mt-4 text-center">
+                    <button class="btn btn-outline-primary btn-pill px-4" onclick="createNewFolder()">
+                        <i class="bi bi-folder-plus me-2"></i> Crear Nueva Carpeta
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABLE VIEW -->
+            <div id="table-view">
+                <!-- Filters -->
+                <div class="card-samsung mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold text-muted">Avanzado</label>
+                            <input type="text" id="productSearch" class="form-control form-pill" placeholder="Nombre o SKU...">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-bold text-muted">Categoría</label>
+                            <select id="mainCatFilter" class="form-select form-pill">
+                                <option value="">Todas</option>
+                                <option value="Smartphones">Smartphones</option>
+                                <option value="Tablets">Tablets</option>
+                                <option value="Smartwatches">Smartwatches</option>
+                                <option value="Galaxy Buds">Galaxy Buds</option>
+                                <option value="Galaxy Book">Galaxy Book</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Televisores">Televisores</option>
+                                <option value="Equipos de Audio">Equipos de Audio</option>
+                                <option value="Proyectores">Proyectores</option>
+                                <option value="Refrigeradores">Refrigeradores</option>
+                                <option value="Lavadoras / Secadoras">Lavadoras / Secadoras</option>
+                                <option value="Microondas">Microondas</option>
+                                <option value="Empotrados">Empotrados</option>
+                                <option value="Cocina">Cocina</option>
+                                <option value="Hornos">Hornos</option>
+                                <option value="Aspiradoras">Aspiradoras</option>
+                                <option value="Soluciones de Aire">Soluciones de Aire</option>
+                                <option value="Accesorios">Accesorios</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-bold text-muted">Familia</label>
+                            <select id="categoryFilter" class="form-select form-pill">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold text-muted">Color</label>
+                            <select id="colorFilter" class="form-select form-pill">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-end justify-content-end">
+                            <div class="text-muted small mb-2"><span id="filteredCount">0</span> ids</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="card-samsung p-0 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-fixed align-middle mb-0">
+                            <thead class="bg-light small text-muted text-uppercase fw-bold">
+                                <tr>
+                                    <th class="ps-4 col-name">Nombre de Pantalla</th>
+                                    <th class="col-sku">SKU</th>
+                                    <th class="col-color">Color</th>
+                                    <th class="col-category">Categoría</th>
+                                <th class="col-desc">Descripción</th>
+                                <th class="col-specs">Variables</th>
+                                <th class="col-price">Precio</th>
+                                    <th class="col-price">Oferta</th>
+                                    <th class="col-actions text-end pe-4">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <tr>
+                                    <td colspan="5" class="text-center py-5">Cargando base de datos local...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="p-4 border-top d-flex justify-content-between align-items-center">
+                        <div class="text-muted small" id="paginationInfo">Mostrando 1 a 50 de 700</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light border text-dark btn-pill" id="prevPage">Anterior</button>
+                            <button class="btn btn-sm btn-outline-light border text-dark btn-pill" id="nextPage">Siguiente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 25px; border: none; box-shadow: var(--card-shadow);">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="modal-title" style="font-weight: 700;">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="editForm">
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                <div class="mb-3 p-3 bg-light rounded-4 d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <img id="edit-img-preview" src="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary btn-pill w-100">Cambiar Imagen</button>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Nombre de Pantalla</label>
+                                    <input type="text" class="form-control form-pill" id="edit-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Descripción Comercial</label>
+                                    <textarea class="form-control rounded-4 p-3" id="edit-description" rows="3" style="font-size: 0.9rem;" placeholder="Descripción corta del producto..."></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Variables (separadas por coma)</label>
+                                    <input type="text" class="form-control form-pill" id="edit-specs" placeholder='Ej: 512GB, RAM 12GB'>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold text-muted">SKU</label>
+                                        <input type="text" class="form-control form-pill" id="edit-sku" readonly style="background: #f8f9fa;">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold text-muted">Categoría</label>
+                                        <select id="edit-main-category" class="form-select form-pill">
+                                            <option value="Smartphones">Smartphones</option>
+                                            <option value="Tablets">Tablets</option>
+                                            <option value="Smartwatches">Smartwatches</option>
+                                            <option value="Galaxy Buds">Galaxy Buds</option>
+                                            <option value="Galaxy Book">Galaxy Book</option>
+                                            <option value="Mobile">Mobile</option>
+                                            <option value="Accesorios">Accesorios</option>
+                                            <option value="Equipos de Audio">Equipos de Audio</option>
+                                            <option value="Proyectores">Proyectores</option>
+                                            <option value="Monitor">Monitor</option>
+                                            <option value="Televisores">Televisores</option>
+                                            <option value="Refrigeradores">Refrigeradores</option>
+                                            <option value="Lavadoras / Secadoras">Lavadoras / Secadoras</option>
+                                            <option value="Microondas">Microondas</option>
+                                            <option value="Empotrados">Empotrados</option>
+                                            <option value="Cocina">Cocina</option>
+                                            <option value="Hornos">Hornos</option>
+                                            <option value="Aspiradoras">Aspiradoras</option>
+                                            <option value="Soluciones de Aire">Soluciones de Aire</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold text-muted">Color (Nombre)</label>
+                                        <input type="text" class="form-control form-pill" id="edit-color">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold text-muted">Código Hex (#)</label>
+                                        <div class="d-flex align-items-center">
+                                            <input type="text" class="form-control form-pill me-2" id="edit-color-hex" placeholder="#000000">
+                                            <div id="edit-color-preview" style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid #ddd; flex-shrink: 0;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-3">
+                                        <label class="form-label small fw-bold text-muted">Familia / Categoría</label>
+                                        <input type="text" class="form-control form-pill" id="edit-category" readonly style="background: #f8f9fa;">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">URL del Producto (Samsung.com.bo)</label>
+                                    <input type="text" class="form-control form-pill" id="edit-product-url">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">URL de Imagen</label>
+                                    <input type="text" class="form-control form-pill" id="edit-image-url">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold text-muted">Precio (Bs.)</label>
+                                        <input type="number" class="form-control form-pill" id="edit-price" step="0.01">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold text-muted">Precio Oferta (Bs.)</label>
+                                        <input type="number" class="form-control form-pill" id="edit-sale-price" step="0.01">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Combo / Regalos Incluidos</label>
+                                    <div class="p-3 bg-light rounded-4">
+                                        <select id="select-gifts" class="form-select form-pill mb-3">
+                                            <option value="">Añadir un regalo/item...</option>
+                                        </select>
+                                        <div id="product-gifts-container" class="d-flex flex-wrap gap-2">
+                                            <!-- Selected gifts tags will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Etiquetas Visuales</label>
+                                    <div class="p-4 bg-light rounded-4">
+                                        <div id="available-tags-list" class="d-flex flex-wrap gap-2">
+                                            <!-- Tags checkboxes or buttons -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-pill btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-pill btn-primary-samsung px-4" id="btn-save-product">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script type="module" src="/src/js/products.js"></script>
+</body>
+</html>

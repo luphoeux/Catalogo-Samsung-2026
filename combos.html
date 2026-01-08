@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combos | Samsung Catalog Admin</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="/src/styles/admin.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar dynamically injected by layout.js -->
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h2 style="font-weight: 800; font-size: 1.8rem; margin: 0;">Gestión de Regalos (Add-ons)</h2>
+                    <p class="text-muted mb-0">Administra los items que se pueden incluir como combo (Toallas, Tomatodos, etc).</p>
+                </div>
+                <div>
+                    <button class="btn btn-pill btn-primary-samsung px-4" data-bs-toggle="modal" data-bs-target="#giftModal">
+                        + Nuevo Item (Regalo)
+                    </button>
+                </div>
+            </header>
+
+            <div class="card-samsung p-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light small text-muted text-uppercase fw-bold">
+                            <tr>
+                                <th class="ps-4">Item / Regalo</th>
+                                <th>Categoría</th>
+                                <th>Imagen URL</th>
+                                <th class="text-end pe-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="giftsTable">
+                            <!-- Items will be injected here -->
+                        </tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Gift Modal -->
+    <div class="modal fade" id="giftModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-stripe">
+            <div class="modal-content">
+                <div class="modal-header border-0 p-4 pb-0 d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="modal-title fw-bold" style="letter-spacing: -0.5px;">Gestor de Regalos</h5>
+                        <p class="text-muted small mb-0">Crea items promocionales o regalos para tus combos</p>
+                    </div>
+                    <button type="button" class="btn-close bg-light rounded-circle p-2" data-bs-dismiss="modal"></button>
+                </div>
+                
+                <div class="modal-body p-4">
+                    <form id="giftForm" onsubmit="event.preventDefault();">
+                        <input type="hidden" id="gift-id">
+                        <div class="row g-4">
+                            <!-- Left Column: Visual & Details -->
+                            <div class="col-md-5 d-flex flex-column">
+                                <div class="stripe-card h-100 p-0 overflow-hidden">
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        
+                                        <!-- Image Upload Zone -->
+                                        <div class="mb-4 text-center">
+                                            <label class="form-label fw-bold small text-uppercase text-muted mb-3 d-block" style="font-size: 0.7rem; letter-spacing: 0.5px;">Imagen del Item</label>
+                                            
+                                            <div class="position-relative" style="cursor: pointer;" onclick="document.getElementById('gift-file-input').click()">
+                                                <!-- Hidden Basics -->
+                                                <input type="file" id="gift-file-input" accept="image/*" class="d-none">
+                                                <input type="text" id="gift-image" class="d-none">
+                                                
+                                                <!-- Clickable Area -->
+                                                <div id="drop-zone" class="bg-white rounded-3 d-flex align-items-center justify-content-center flex-column position-relative overflow-hidden" 
+                                                     style="height: 200px; border: 1px dashed #e3e8ee; transition: all 0.2s ease;">
+                                                    
+                                                    <!-- Image Preview -->
+                                                    <img id="gift-preview" src="" class="position-absolute top-0 start-0 w-100 h-100" 
+                                                         style="object-fit: contain; display: none; padding: 10px; z-index: 2; background: white;">
+                                                    
+                                                    <!-- Placeholder -->
+                                                    <div id="gift-preview-placeholder" class="text-secondary p-3">
+                                                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                                            <i class="bi bi-cloud-arrow-up fs-4 text-primary opacity-50"></i>
+                                                        </div>
+                                                        <div class="small fw-bold" style="color: #3c4257;">Subir Imagen</div>
+                                                        <div style="font-size: 0.7rem;" class="text-muted mt-1">PNG, JPG hasta 5MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Basic Info -->
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small text-muted" style="font-size: 0.75rem;">NOMBRE DEL REGALO</label>
+                                            <input type="text" class="form-control form-control-stripe" id="gift-name" placeholder="Ej: Galaxy Buds2 Pro">
+                                        </div>
+                                        <div class="mb-0">
+                                            <label class="form-label fw-bold small text-muted" style="font-size: 0.75rem;">DESCRIPCIÓN CORTA</label>
+                                            <input type="text" class="form-control form-control-stripe" id="gift-desc" placeholder="Ej: Incluye audífonos de regalo">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column: Connections -->
+                            <div class="col-md-7">
+                                <div class="ps-md-2 h-100 d-flex flex-column">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <h6 class="fw-bold mb-0 text-dark" style="font-size: 0.95rem;">Productos Vinculados</h6>
+                                        <span class="badge bg-light text-secondary border fw-normal" id="linked-count-badge">0 items</span>
+                                    </div>
+                                    
+                                    <!-- Tools Container -->
+                                    <div class="bg-light rounded-3 p-3 mb-3 border" style="border-color: #e3e8ee !important;">
+                                        <!-- Search -->
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control form-control-stripe border-end-0" id="sku-search" placeholder="Buscar SKU..." style="border-radius: 6px 0 0 6px;">
+                                            <button class="btn btn-stripe-primary px-3" type="button" id="btn-add-sku" style="border-radius: 0 6px 6px 0;">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- Catalog Filter -->
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <select class="form-select form-control-stripe form-select-sm" id="catalog-selector">
+                                                <option value="">Filtrar por Catálogo...</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Catalog Results (Conditional) -->
+                                        <div id="catalog-products-container" class="mt-3 pt-3 border-top" style="display: none; border-color: #e3e8ee !important;">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="fw-bold text-muted text-uppercase" style="font-size: 0.7rem;">Resultados</small>
+                                                <div class="form-check form-switch form-check-reverse">
+                                                    <input class="form-check-input" type="checkbox" id="select-all-catalog">
+                                                    <label class="form-check-label small text-muted" for="select-all-catalog">Todos</label>
+                                                </div>
+                                            </div>
+                                            <div class="bg-white rounded-2 border overflow-auto custom-scrollbar" style="max-height: 150px; border-color: #e3e8ee !important;">
+                                                <div id="catalog-products-list" class="p-1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Linked List Area -->
+                                    <div class="flex-grow-1 border rounded-3 p-0 position-relative d-flex flex-column overflow-hidden bg-white" style="min-height: 200px; border-color: #e3e8ee !important;">
+                                        <div class="border-bottom px-3 py-2 small fw-bold text-muted bg-light">
+                                            Lista de Vinculación
+                                        </div>
+                                        <div class="p-2 overflow-auto custom-scrollbar flex-grow-1" id="linked-products-list" style="max-height: 250px;">
+                                            <!-- Empty State -->
+                                            <div class="h-100 d-flex flex-column align-items-center justify-content-center text-muted opacity-50 py-4">
+                                                <i class="bi bi-box-seam fs-1 mb-2"></i>
+                                                <p class="small mb-0">Sin productos</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-stripe-light px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-stripe-primary px-4 shadow-sm" id="btn-save-gift">
+                        Guardar Regalo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/src/js/combos.js"></script>
+</body>
+</html>

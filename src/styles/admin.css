@@ -1,0 +1,321 @@
+:root {
+  --navbar-bg: #ffffff;
+  --sidebar-bg: #ffffff;
+  --primary: #007aff;
+  --primary-light: rgba(0, 122, 255, 0.1);
+  --text-main: #2f2f2f;
+  --text-muted: #8e8e93;
+  --bg-main: #f8f9fa;
+  --card-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.06);
+}
+
+body {
+  background-color: var(--bg-main);
+  font-family: "Montserrat", sans-serif;
+  color: var(--text-main);
+  margin: 0;
+}
+
+/* Layout */
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 2rem 1.5rem;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 2rem;
+}
+
+/* Sidebar Nav */
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  color: var(--text-main);
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.nav-link svg {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Cards & Components */
+.card-samsung {
+  background: white;
+  border-radius: 20px;
+  border: none;
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-pill {
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-samsung {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary-samsung:hover {
+  background: #0062cc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+}
+
+.form-pill {
+  border-radius: 50px;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #e1e8ef;
+}
+
+/* Product Specifics */
+.product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.badge-active {
+    background: #e6f6ec;
+    color: #28c76f;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+}
+
+.badge-inactive {
+    background: #feeaea;
+    color: #ea5455;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+}
+
+/* Table Management */
+.table-fixed {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table th, .table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Specific Column Widths */
+.col-name { width: 25%; }
+.col-sku { width: 10%; }
+.col-color { width: 8%; }
+.col-category { width: 12%; }
+.col-family { width: 15%; }
+.col-price { width: 10%; }
+.col-status { width: 10%; }
+.col-actions { width: 10%; }
+
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal !important;
+    line-height: 1.2;
+}
+
+.table-responsive {
+    border-radius: 20px;
+    overflow-x: auto;
+}
+@media (min-width: 992px) {
+    .selection-panel {
+        position: sticky;
+        top: 2rem;
+        height: calc(100vh - 4rem);
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#selected-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 200px;
+    padding-right: 5px;
+}
+
+#selected-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+#selected-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#selected-list::-webkit-scrollbar-thumb {
+    background: #dde1e5;
+    border-radius: 10px;
+}
+
+.selected-product-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+/* Stripe-inspired UI Enhancements */
+:root {
+    --stripe-blurple: #635bff;
+    --stripe-blurple-dark: #4b45c6;
+    --stripe-text: #3c4257;
+    --stripe-bg: #f7fafc;
+    --stripe-border: #e3e8ee;
+}
+
+.stripe-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(60,66,87, 0.08), 0 1px 1px rgba(0,0,0, 0.03);
+    border: 1px solid var(--stripe-border);
+    transition: box-shadow 0.2s ease;
+}
+
+.stripe-card:hover {
+    box-shadow: 0 7px 14px rgba(60,66,87, 0.1), 0 3px 6px rgba(0,0,0, 0.08);
+}
+
+.form-control-stripe {
+    border: 1px solid var(--stripe-border);
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.03);
+    border-radius: 6px;
+    color: var(--stripe-text);
+    font-weight: 500;
+    padding: 0.6rem 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.form-control-stripe:focus {
+    border-color: var(--stripe-blurple);
+    box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.15);
+    outline: none;
+}
+
+.btn-stripe-primary {
+    background: var(--stripe-blurple);
+    color: white;
+    box-shadow: 0 2px 5px rgba(60,66,87, 0.12), 0 1px 1px rgba(0,0,0, 0.08);
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-stripe-primary:hover {
+    background: var(--stripe-blurple-dark);
+    color: white;
+    box-shadow: 0 7px 14px rgba(60,66,87, 0.1), 0 3px 6px rgba(0,0,0, 0.08);
+    transform: translateY(-1px);
+}
+
+.btn-stripe-light {
+    background: #fff;
+    color: var(--stripe-text);
+    border: 1px solid var(--stripe-border);
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.04);
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.btn-stripe-light:hover {
+    background: #fcfdfe;
+    border-color: #dce1e7;
+    color: #000;
+}
+
+/* Modal refinements */
+.modal-stripe .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(50,50,93,0.1), 0 5px 15px rgba(0,0,0,0.07);
+    border: none;
+}
+
+.modal-stripe .modal-header {
+    border-bottom: 1px solid var(--stripe-border);
+    background: #fbfcfe;
+    border-radius: 12px 12px 0 0;
+    padding: 1.5rem;
+}
+
+.modal-stripe .modal-footer {
+    border-top: 1px solid var(--stripe-border);
+    background: #fbfcfe;
+    border-radius: 0 0 12px 12px;
+    padding: 1.2rem;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cfd7df;
+    border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #aab7c4;
+}

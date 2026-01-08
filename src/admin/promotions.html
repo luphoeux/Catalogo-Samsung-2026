@@ -1,121 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promociones - Admin</title>
-    <link rel="icon" type="image/svg+xml" href="../../image/favicon.svg">
-    <link rel="stylesheet" href="css/admin-layout.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <title>Promociones | Samsung Catalog Admin</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="../styles/admin.css">
 </head>
-
 <body>
-    <div class="main-content">
-        <div id="promotionsView" class="view-section active">
-            <div class="header-actions">
+    <div class="app-wrapper">
+        <!-- Sidebar dynamically injected by layout.js -->
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="d-flex justify-content-between align-items-center mb-5">
                 <div>
-                    <h1 class="page-title">Promociones</h1>
-                    <p class="page-subtitle">Gestiona promociones bancarias y ofertas</p>
+                    <h2 style="font-weight: 800; font-size: 1.8rem; margin: 0;">Gestión de Promociones</h2>
+                    <p class="text-muted mb-0">Administra banners y campañas especiales.</p>
                 </div>
                 <div>
-                    <button class="btn-primary" id="bulkDeletePromotionsBtn"
-                        style="display: none; background-color: #d32f2f; margin-right: 1rem;">
-                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M16 6v-.8c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C14.48 2 13.92 2 12.8 2h-1.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C8 3.52 8 4.08 8 5.2V6m2 5.5v5m4-5v5M3 6h18m-2 0v11.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.72 22 15.88 22 14.2 22H9.8c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 19.72 5 18.88 5 17.2V6">
-                            </path>
-                        </svg>
-                        Eliminar (<span id="bulkDeletePromotionsCount">0</span>)
-                    </button>
-                    <button class="btn-primary" id="addPromotionBtn">
-                        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 5v14m-7-7h14"></path>
-                        </svg>
-                        Nueva Promoción
+                    <button class="btn btn-pill btn-primary-samsung px-4" data-bs-toggle="modal" data-bs-target="#promoModal">
+                        + Nueva Promoción
                     </button>
                 </div>
-            </div>
+            </header>
 
-            <div class="admin-filters" style="margin-bottom: 1rem;">
-                <input type="text" class="search-admin" placeholder="Buscar promoción..." id="promotionSearch">
+            <div class="card-samsung p-0 overflow-hidden">
+                <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-light">
+                    <div class="input-group" style="max-width: 300px;">
+                        <span class="input-group-text bg-white border-end-0 rounded-start-pill"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control border-start-0 rounded-end-pill" id="promo-search-table" placeholder="Buscar promoción...">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light small text-muted text-uppercase fw-bold">
+                            <tr>
+                                <th class="ps-4" style="width: 50px;"><input type="checkbox" class="form-check-input"></th>
+                                <th>Nombre</th>
+                                <th>Imagen (Vista Previa)</th>
+                                <th>Uso en Productos</th>
+                                <th class="text-end pe-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="promotionsTable">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="products-table-container">
-                <table style="font-size: 0.9rem;">
-                    <thead>
-                        <tr>
-                            <th width="40" style="text-align:center;">
-                                <input type="checkbox" id="selectAllPromotions"
-                                    style="width:18px; height:18px; cursor:pointer;" title="Seleccionar todos">
-                            </th>
-                            <th width="250">Nombre</th>
-                            <th>Imagen (Vista Previa)</th>
-                            <th width="160" style="text-align: center;">Uso en Productos</th>
-                            <th width="160" style="text-align: center;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="promotionsTableBody">
-                        <!-- Promotion rows will be injected here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </main>
     </div>
 
-    <!-- Promotion Edit Modal -->
-    <div id="promotionModal" class="modal">
-        <div class="modal-content modal-sm modal-content-padded">
-            <div class="modal-header">
-                <h2 class="modal-title" id="promotionModalTitle">Editar Promoción</h2>
-                <button class="close-modal" id="closePromotionModal">&times;</button>
+    <!-- Promo Modal -->
+    <div class="modal fade" id="promoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 25px; border: none; box-shadow: var(--card-shadow);">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="modal-title fw-bold">Editar Promoción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="promoForm">
+                        <input type="hidden" id="promo-id">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Nombre de la Promoción</label>
+                                    <input type="text" class="form-control form-pill" id="promo-name" required placeholder="Ej: Navidad, Black Friday">
+                                    <div class="form-text small">El ID se generará automáticamente (pr001, pr002, etc.)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Imagen (URL)</label>
+                                    <input type="text" class="form-control form-pill" id="promo-image" required placeholder="https://example.com/imagen.jpg">
+                                    <div class="mt-2 p-2 border rounded-3 bg-light text-center">
+                                        <img id="promo-preview" src="" style="max-width: 100%; max-height: 120px; display: none; object-fit: cover;">
+                                        <span id="promo-placeholder" class="small text-muted">Vista previa de la imagen</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Enlace de Redirección (Opcional)</label>
+                                    <input type="text" class="form-control form-pill" id="promo-link" placeholder="https://samsung.com/bo/...">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Color de Acento (Borde/Botón)</label>
+                                    <input type="color" class="form-control form-control-color w-100 border-0 bg-transparent" id="promo-accent" value="#1428a0">
+                                </div>
+                            </div>
+                            <div class="col-md-6 border-start ps-4">
+                                <label class="form-label small fw-bold text-muted">Vincular Productos (por SKU)</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control form-pill-start" id="sku-search" placeholder="SKU o Nombre...">
+                                    <button class="btn btn-primary-samsung rounded-end-pill px-3" type="button" id="btn-add-sku">Añadir</button>
+                                </div>
+                                <div class="p-3 bg-light rounded-4" style="min-height: 200px; max-height: 300px; overflow-y: auto;">
+                                    <div id="linked-products-list" class="d-flex flex-column gap-2">
+                                        <!-- SKUs list -->
+                                        <div class="text-center text-muted small mt-5">Busca productos para aplicarles esta promoción.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-pill btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-pill btn-primary-samsung px-4" id="btn-save-promo">Guardar Promoción</button>
+                </div>
             </div>
-            <form id="promotionForm">
-                <input type="hidden" id="editPromotionOldName">
-
-                <div class="form-group">
-                    <label class="form-label">Nombre de la Promoción</label>
-                    <input type="text" class="form-input" id="promotionName" required
-                        placeholder="Ej: Navidad, Black Friday">
-                    <small class="form-hint">El ID se generará automáticamente (pr001, pr002,
-                        etc.)</small>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Imagen (URL)</label>
-                    <input type="url" class="form-input" id="promotionImage" required
-                        placeholder="https://example.com/imagen.jpg">
-                    <small class="form-hint">URL de la imagen de la promoción</small>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Enlace de Redirección (Opcional)</label>
-                    <input type="url" class="form-input" id="promotionLink" placeholder="https://samsung.com/bo/...">
-                    <small class="form-hint">A donde lleva al hacer clic</small>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" id="cancelPromotionBtn">Cancelar</button>
-                    <button type="submit" class="btn-primary" style="display: inline-flex;">Guardar
-                        Promoción</button>
-                </div>
-            </form>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Cloud & Auth Logic -->
-    <script type="module" src="js/auth-guard.js"></script>
-    <script src="js/admin.js"></script>
-    <script type="module" src="js/admin-firebase.js"></script>
-
-    <!-- UI Logic (Still needed for Layout/Preview) -->
-    <script src="js/layout.js"></script>
-    <script src="js/preview.js"></script>
-    <script src="js/export.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/promotions.js"></script>
 </body>
-
 </html>
